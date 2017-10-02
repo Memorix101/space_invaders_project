@@ -1,0 +1,23 @@
+OUTPUT_FORMAT("a.out-arm-little")
+OUTPUT_ARCH(arm)
+SECTIONS
+{
+  .text    :
+  {
+    CREATE_OBJECT_SYMBOLS
+    *(.text)
+  }
+  .data  :
+  {
+    *(.data)
+    CONSTRUCTORS
+  }
+  .bss  :
+  {
+   ;
+   *(.bss)
+   *(COMMON)
+   ;
+   ;
+  }
+}

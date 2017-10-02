@@ -1,0 +1,133 @@
+*asm:
+%{mbig-endian:-EB} %{mcpu=*:-m%*} %{march=*:-m%*} %{mapcs-*:-mapcs-%*} %{mapcs-float:-mfloat} %{msoft-float:-mno-fpu} %{mthumb-interwork:-mthumb-interwork} %(subtarget_extra_asm_spec)
+
+*asm_final:
+
+
+*asm_options:
+%a %Y %{c:%W{o*}%{!o*:-o %w%b%O}}%{!c:-o %d%w%u%O}
+
+*invoke_as:
+%{!S:-o %{|!pipe:%g.s} |
+ as %(asm_options) %{!pipe:%g.s} %A }
+
+*cpp:
+%(cpp_cpu_arch) %(cpp_apcs_pc) %(cpp_float) %(cpp_endian) %(subtarget_cpp_spec) %(cpp_isa) %(cpp_interwork)
+
+*cpp_options:
+%{C:%{!E:%eGNU C does not support -C without using -E}} %{std*} %{nostdinc*} %{C} %{v} %{I*} %{P} %{$} %I %{MD:-M -MF %W{!o: %b.d}%W{o*:%.d%*}} %{MMD:-MM -MF %W{!o: %b.d}%W{o*:%.d%*}} %{M} %{MM} %W{MF*} %{MG} %{MP} %{MQ*} %{MT*} %{M|MD|MM|MMD:%{o*:-MQ %*}} %{!no-gcc:-D__GNUC__=%v1 -D__GNUC_MINOR__=%v2 -D__GNUC_PATCHLEVEL__=%v3} %{!undef:%{!ansi:%{!std=*:%p}%{std=gnu*:%p}} %P} %{trigraphs} %c %{Os:-D__OPTIMIZE_SIZE__} %{O*:%{!O0:-D__OPTIMIZE__}} %{fno-inline|O0|!O*:-D__NO_INLINE__} %{ffast-math:-D__FAST_MATH__} %{fshort-wchar:-U__WCHAR_TYPE__ -D__WCHAR_TYPE__=short\ unsigned\ int} %{ffreestanding:-D__STDC_HOSTED__=0} %{fno-hosted:-D__STDC_HOSTED__=0} %{!ffreestanding:%{!fno-hosted:-D__STDC_HOSTED__=1}} %{fshow-column} %{fno-show-column} %{fleading-underscore} %{fno-leading-underscore} %{fno-operator-names} %{ftabstop=*} %{remap} %{g3:-dD} %{W*} %{w} %{pedantic*} %{H} %{d*} %C %{D*&U*&A*} %{i*} %Z %i %{E:%{!M*:%W{o*}}}
+
+*trad_capable_cpp:
+%{traditional|ftraditional|traditional-cpp:trad}cpp0
+
+*cc1:
+
+
+*cc1_options:
+%{pg:%{fomit-frame-pointer:%e-pg and -fomit-frame-pointer are incompatible}} %1 %{!Q:-quiet} -dumpbase %B %{d*} %{m*} %{a*} %{g*} %{O*} %{W*} %{w} %{pedantic*} %{std*} %{ansi} %{traditional} %{v:-version} %{pg:-p} %{p} %{f*} %{Qn:-fno-ident} %{--help:--help} %{--target-help:--target-help} %{!fsyntax-only:%{S:%W{o*}%{!o*:-o %b.s}}} %{fsyntax-only:-o %j} %{-param*}
+
+*cc1plus:
+
+
+*endfile:
+crtend%O%s
+
+*link:
+%{mbig-endian:-EB} -X
+
+*lib:
+%{!shared:%{g*:-lg} %{!p:%{!pg:-lc}}%{p:-lc_p}%{pg:-lc_p}}
+
+*libgcc:
+-lgcc
+
+*startfile:
+crtbegin%O%s crt0%O%s
+
+*switches_need_spaces:
+
+
+*signed_char:
+%{!fsigned-char:-D__CHAR_UNSIGNED__}
+
+*predefines:
+-Acpu=arm -Amachine=arm
+
+*cross_compile:
+1
+
+*version:
+3.0.2
+
+*multilib:
+. !marm !mthumb !mno-thumb-interwork !mthumb-interwork;arm marm !mthumb !mno-thumb-interwork !mthumb-interwork;thumb !marm mthumb !mno-thumb-interwork !mthumb-interwork;normal !marm !mthumb mno-thumb-interwork !mthumb-interwork;interwork !marm !mthumb !mno-thumb-interwork mthumb-interwork;arm/normal marm !mthumb mno-thumb-interwork !mthumb-interwork;arm/interwork marm !mthumb !mno-thumb-interwork mthumb-interwork;thumb/normal !marm mthumb mno-thumb-interwork !mthumb-interwork;thumb/interwork !marm mthumb !mno-thumb-interwork mthumb-interwork;
+
+*multilib_defaults:
+marm mlittle-endian msoft-float mapcs-32 mno-thumb-interwork fno-leading-underscore
+
+*multilib_extra:
+
+
+*multilib_matches:
+marm marm;mthumb mthumb;mno-thumb-interwork mno-thumb-interwork;mthumb-interwork mthumb-interwork;
+
+*multilib_exclusions:
+
+
+*linker:
+collect2
+
+*link_libgcc:
+%D
+
+*md_exec_prefix:
+
+
+*md_startfile_prefix:
+
+
+*md_startfile_prefix_1:
+
+
+*cpp_cpu_arch:
+%{march=arm2:-D__ARM_ARCH_2__} %{march=arm250:-D__ARM_ARCH_2__} %{march=arm3:-D__ARM_ARCH_2__} %{march=arm6:-D__ARM_ARCH_3__} %{march=arm600:-D__ARM_ARCH_3__} %{march=arm610:-D__ARM_ARCH_3__} %{march=arm7:-D__ARM_ARCH_3__} %{march=arm700:-D__ARM_ARCH_3__} %{march=arm710:-D__ARM_ARCH_3__} %{march=arm720:-D__ARM_ARCH_3__} %{march=arm7100:-D__ARM_ARCH_3__} %{march=arm7500:-D__ARM_ARCH_3__} %{march=arm7500fe:-D__ARM_ARCH_3__} %{march=arm7m:-D__ARM_ARCH_3M__} %{march=arm7dm:-D__ARM_ARCH_3M__} %{march=arm7dmi:-D__ARM_ARCH_3M__} %{march=arm7tdmi:-D__ARM_ARCH_4T__} %{march=arm8:-D__ARM_ARCH_4__} %{march=arm810:-D__ARM_ARCH_4__} %{march=arm9:-D__ARM_ARCH_4T__} %{march=arm920:-D__ARM_ARCH_4__} %{march=arm920t:-D__ARM_ARCH_4T__} %{march=arm9tdmi:-D__ARM_ARCH_4T__} %{march=strongarm:-D__ARM_ARCH_4__} %{march=strongarm110:-D__ARM_ARCH_4__} %{march=strongarm1100:-D__ARM_ARCH_4__} %{march=xscale:-D__ARM_ARCH_5TE__} %{march=xscale:-D__XSCALE__} %{march=armv2:-D__ARM_ARCH_2__} %{march=armv2a:-D__ARM_ARCH_2__} %{march=armv3:-D__ARM_ARCH_3__} %{march=armv3m:-D__ARM_ARCH_3M__} %{march=armv4:-D__ARM_ARCH_4__} %{march=armv4t:-D__ARM_ARCH_4T__} %{march=armv5:-D__ARM_ARCH_5__} %{march=armv5t:-D__ARM_ARCH_5T__} %{march=armv5e:-D__ARM_ARCH_5E__} %{march=armv5te:-D__ARM_ARCH_5TE__} %{!march=*:  %{mcpu=arm2:-D__ARM_ARCH_2__}  %{mcpu=arm250:-D__ARM_ARCH_2__}  %{mcpu=arm3:-D__ARM_ARCH_2__}  %{mcpu=arm6:-D__ARM_ARCH_3__}  %{mcpu=arm600:-D__ARM_ARCH_3__}  %{mcpu=arm610:-D__ARM_ARCH_3__}  %{mcpu=arm7:-D__ARM_ARCH_3__}  %{mcpu=arm700:-D__ARM_ARCH_3__}  %{mcpu=arm710:-D__ARM_ARCH_3__}  %{mcpu=arm720:-D__ARM_ARCH_3__}  %{mcpu=arm7100:-D__ARM_ARCH_3__}  %{mcpu=arm7500:-D__ARM_ARCH_3__}  %{mcpu=arm7500fe:-D__ARM_ARCH_3__}  %{mcpu=arm7m:-D__ARM_ARCH_3M__}  %{mcpu=arm7dm:-D__ARM_ARCH_3M__}  %{mcpu=arm7dmi:-D__ARM_ARCH_3M__}  %{mcpu=arm7tdmi:-D__ARM_ARCH_4T__}  %{mcpu=arm8:-D__ARM_ARCH_4__}  %{mcpu=arm810:-D__ARM_ARCH_4__}  %{mcpu=arm9:-D__ARM_ARCH_4T__}  %{mcpu=arm920:-D__ARM_ARCH_4__}  %{mcpu=arm920t:-D__ARM_ARCH_4T__}  %{mcpu=arm9tdmi:-D__ARM_ARCH_4T__}  %{mcpu=strongarm:-D__ARM_ARCH_4__}  %{mcpu=strongarm110:-D__ARM_ARCH_4__}  %{mcpu=strongarm1100:-D__ARM_ARCH_4__}  %{mcpu=xscale:-D__ARM_ARCH_5TE__}  %{mcpu=xscale:-D__XSCALE__}  %{!mcpu*:%(cpp_cpu_arch_default)}} 
+
+*cpp_cpu_arch_default:
+-D__ARM_ARCH_4T__
+
+*cpp_apcs_pc:
+%{mapcs-32:%{mapcs-26:%e-mapcs-26 and -mapcs-32 may not be used together}  -D__APCS_32__} %{mapcs-26:-D__APCS_26__} %{!mapcs-32: %{!mapcs-26:%(cpp_apcs_pc_default)}} 
+
+*cpp_apcs_pc_default:
+-D__APCS_32__
+
+*cpp_float:
+%{msoft-float:  %{mhard-float:%e-msoft-float and -mhard_float may not be used together}   -D__SOFTFP__} %{!mhard-float:%{!msoft-float:%(cpp_float_default)}} 
+
+*cpp_float_default:
+
+
+*cpp_endian:
+%{mbig-endian:								  %{mlittle-endian:							    %e-mbig-endian and -mlittle-endian may not be used together}	  -D__ARMEB__ %{mwords-little-endian:-D__ARMWEL__} %{mthumb:-D__THUMBEB__}}%{mlittle-endian:-D__ARMEL__ %{mthumb:-D__THUMBEL__}}			%{!mlittle-endian:%{!mbig-endian:%(cpp_endian_default)}}		
+
+*cpp_endian_default:
+-D__ARMEL__ %{mthumb:-D__THUMBEL__}
+
+*cpp_isa:
+%{mthumb:-D__thumb__} %{!mthumb:-D__arm__}
+
+*cpp_interwork:
+						%{mthumb-interwork:							  %{mno-thumb-interwork: %eIncompatible interworking options}		  -D__THUMB_INTERWORK__}						%{!mthumb-interwork:%{!mno-thumb-interwork:%(cpp_interwork_default)}}	
+
+*cpp_interwork_default:
+
+
+*subtarget_cpp_spec:
+-D__ELF__
+
+*subtarget_extra_asm_spec:
+
+
+*link_command:
+%{!fsyntax-only:%{!c:%{!M:%{!MM:%{!E:%{!S:    %(linker) %l %X %{o*} %{A} %{d} %{e*} %{m} %{N} %{n} %{r} %{s} %{t}    %{u*} %{x} %{z} %{Z} %{!A:%{!nostdlib:%{!nostartfiles:%S}}}    %{static:} %{L*} %(link_libgcc) %o %{!nostdlib:%{!nodefaultlibs:%G %L %G}}    %{!A:%{!nostdlib:%{!nostartfiles:%E}}} %{T*} }}}}}}
+

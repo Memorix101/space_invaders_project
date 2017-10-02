@@ -1,0 +1,32 @@
+Dev-Kit Advance
+by Jason Wilkins <fenix at io dot com>
+
+Here is some preliminary stuff to get you started.  This file should
+contain much more info in the future.
+
+If you are using the windows command prompt (DOS or CMD), this works
+best if you unzip all the packages into the root directory of the
+drive and leave the name of the install directory as devkitadv.
+
+If you are using the cygwin shell, unzip the packages into the root
+of your cygwin directory.  Again, leave the name of the install 
+directory as devkitadv.
+
+To use from the command prompt, put c:\devkitadv\bin into your path 
+like this
+
+PATH=c:\devkitadv\bin;%PATH%
+
+If you are using cygwin then you do it like this:
+
+PATH=/devkitadv/bin:$PATH
+
+If you are bone headed and decide that you want to install into a different
+directory, then you will have to define the GCC_EXEC_PREFIX environment
+variable to point to that install directory.
+
+GCC_EXEC_PREFIX=c:/devkitadv/lib/gcc-lib/
+
+Where c:/devkitadv/ is the installation directory.
+
+Use forward slashes.  The trailing slash is required.
