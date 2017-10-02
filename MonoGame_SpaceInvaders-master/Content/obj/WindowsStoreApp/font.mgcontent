@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/memor/Documents/SourceTree/MonoGame_SpaceInvaders/Content/font.spritefont</SourceFile>
+  <SourceTime>2016-11-26T01:33:33.228196+01:00</SourceTime>
+  <DestFile>C:/Users/memor/Documents/SourceTree/MonoGame_SpaceInvaders/Content/bin/WindowsStoreApp/font.xnb</DestFile>
+  <DestTime>2016-11-26T13:43:19.6144622+01:00</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2016-03-30T08:36:08+02:00</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2016-03-30T08:36:08+02:00</ProcessorTime>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>
