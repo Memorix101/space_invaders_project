@@ -1,0 +1,3 @@
+[submodule "g-eon-space-invaders"]
+	path = g-eon-space-invaders
+	url = https://github.com/G-eon/g-eon-space-invaders.git
