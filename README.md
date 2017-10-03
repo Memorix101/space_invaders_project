@@ -18,6 +18,8 @@ Porting a space invaders game to different platforms and frameworks
 
 - HTML5
   - Godot
+  
+- G-eon
 
 ![screenshot 13](https://cloud.githubusercontent.com/assets/1466920/20637134/2a66e3ae-b37d-11e6-9181-ae7c45695b75.png)
 
