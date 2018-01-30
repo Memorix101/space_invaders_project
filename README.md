@@ -2,10 +2,18 @@
 Porting a space invaders game to different platforms and frameworks
 
 ### Platforms
-- PC
+- Android
+  - Godot
+  - MonoGame
+
+- iOS
+  - MonoGame
+
+- PC (Windows (Win32/ UWP) / Linux / Mac)
   - MonoGame (Windows 10 UWP)
   - SDL2
   - GLFW3
+  - Godot
 
 - Xbox One
   - MonoGame (UWP)
