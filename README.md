@@ -17,6 +17,7 @@ Porting a space invaders game to different platforms and frameworks
 
 - Xbox One
   - MonoGame (UWP)
+  - Godot
 
 - GameBoy Advanced
 - MS-DOS
