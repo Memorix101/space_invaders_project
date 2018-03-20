@@ -1,0 +1,36 @@
+﻿  stdafx.cpp
+  space_invaders_raylib.cpp
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(142): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(143): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(218): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(284): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(303): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(319): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(319): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(395): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(396): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(455): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(456): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(500): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(500): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(529): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(547): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(638): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(612): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
+d:\sourcetree\space_invaders_project\raylib_space_invaders-master\space_invaders_raylib\space_invaders_raylib.cpp(685): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
+  raylib.lib(core.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating code
+  Finished generating code
+raylib.lib(core.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(core.obj)' or at 'D:\SourceTree\space_invaders_project\raylib_space_invaders-master\Debug\raylib.pdb'; linking object as if no debug info
+raylib.lib(textures.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(textures.obj)' or at 'D:\SourceTree\space_invaders_project\raylib_space_invaders-master\Debug\raylib.pdb'; linking object as if no debug info
+raylib.lib(text.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(text.obj)' or at 'D:\SourceTree\space_invaders_project\raylib_space_invaders-master\Debug\raylib.pdb'; linking object as if no debug info
+raylib.lib(audio.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(audio.obj)' or at 'D:\SourceTree\space_invaders_project\raylib_space_invaders-master\Debug\raylib.pdb'; linking object as if no debug info
+raylib.lib(rlgl.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(rlgl.obj)' or at 'D:\SourceTree\space_invaders_project\raylib_space_invaders-master\Debug\raylib.pdb'; linking object as if no debug info
+raylib.lib(utils.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(utils.obj)' or at 'D:\SourceTree\space_invaders_project\raylib_space_invaders-master\Debug\raylib.pdb'; linking object as if no debug info
+raylib.lib(shapes.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(shapes.obj)' or at 'D:\SourceTree\space_invaders_project\raylib_space_invaders-master\Debug\raylib.pdb'; linking object as if no debug info
+raylib.lib(stb_vorbis.obj) : warning LNK4099: PDB 'raylib.pdb' was not found with 'raylib.lib(stb_vorbis.obj)' or at 'D:\SourceTree\space_invaders_project\raylib_space_invaders-master\Debug\raylib.pdb'; linking object as if no debug info
+  space_invaders_raylib.vcxproj -> D:\SourceTree\space_invaders_project\raylib_space_invaders-master\Debug\space_invaders_raylib.exe
