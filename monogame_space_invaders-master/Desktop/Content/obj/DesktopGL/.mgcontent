@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/invader32x32x4.png</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/player.png</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/pusher.wav</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/space3.png</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/starfield.png</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/blaster.mp3</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/bodenstaendig_2000_in_rock_4bit.mp3</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/bullet.png</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/CatAstroPhi_shmup_normal.wav</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/enemy-bullet.png</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/explode.png</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/explode1.wav</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/invader.png</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/BGPattern_blue.png</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/arcade.png</File>
+    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/font.spritefont</File>
+  </SourceFiles>
+</SourceFileCollection>
