@@ -13,7 +13,7 @@ Porting a space invaders game to different platforms, frameworks and game engine
   - Godot
   - Unity
   - Unreal Engine 4
-<br/>
+  <br/>
 - PC (Windows (Win32/UWP) / Linux / Mac)
   - MonoGame (UWP/Win32)
   - SDL2
@@ -21,33 +21,33 @@ Porting a space invaders game to different platforms, frameworks and game engine
   - Godot
   - Unity
   - Unreal Engine 4
-<br/>
+  <br/>
 - Xbox One (UWP only; [Xbox Live Creators Program](https://docs.microsoft.com/en-gb/gaming/xbox-live/get-started-with-creators/get-started-with-xbox-live-creators))
   - MonoGame 
   - Godot
   - Unity
   - Unreal Engine 4
-<br/>
+  <br/>
 - GameBoy Advanced
     - [smgbalib](http://sebastianmihai.com/main.php?t=40&n=Gameboy-Advance-development-smgbalib-library)
-<br/>
+  <br/>
 - MS-DOS
     - Allegro 4.2.3 ([djgpp](http://www.delorie.com/djgpp/))
-<br/>
+  <br/>
 - Sega Dreamcast
     - [KallistiOS](https://segaretro.org/KallistiOS)
-<br/>
+  <br/>
 - Sega Saturn
     - Jo Engine
-<br/>
+  <br/>
 - PlayStation Portable
     - SDL 1.2 ([Minimalist PSPSDK](https://sourceforge.net/projects/minpspw/))
-<br/>
+  <br/>
 - HTML5
   - Godot
   - Unity
   - Unreal Engine 4
- <br/> 
+  <br/> 
 - G-eon
     - G-eon SDK
 
