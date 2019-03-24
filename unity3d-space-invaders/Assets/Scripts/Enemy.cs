@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour
     private float startPos;
     private const int moveSpeed = 2;
 
+    private bool isHit = false;
+
     private int spriteSize = 1; //27px in Unity units
 
     private GameObject player;
@@ -25,6 +27,8 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        isHit = false;
 
         startPos = transform.position.x;
         enemyPosX = transform.position.x;
@@ -82,12 +86,14 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag != "EnemyBullet")
+        if (col.gameObject.tag != "EnemyBullet" && !isHit)
         {
             //Debug.Log(col.gameObject.name + " : " + gameObject.name + " : " + Time.time);
             GameObject GO = Instantiate(ExploGO, transform.position, Quaternion.identity);
 
-            if(player != null)
+            isHit = true;
+
+            if (player != null)
                 player.GetComponent<Player>().AddScore();
 
             Destroy(GO, 1f);

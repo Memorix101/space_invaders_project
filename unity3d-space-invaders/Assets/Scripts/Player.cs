@@ -41,6 +41,12 @@ public class Player : MonoBehaviour
             LaserRB.AddForce(transform.up * 250f);
             Destroy(LaserGO, 5f);
         }
+
+        if (score >= 4000)
+        {
+            GameOver_UI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "You Win!";
+            GameOver_UI.SetActive(true);
+        }
     }
 
     void FixedUpdate()
@@ -63,6 +69,7 @@ public class Player : MonoBehaviour
             GameObject GO = Instantiate(ExploGO, transform.position, Quaternion.identity);
             Destroy(GO, 1f);
             Destroy(col.gameObject);
+            GameOver_UI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Game Over!";
             GameOver_UI.SetActive(true);
             Destroy(gameObject);
         }
