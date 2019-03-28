@@ -1,21 +1,22 @@
-# space_invaders_project
-Porting a space invaders game to different platforms, frameworks and game engines
+![space_invaders_banner](https://user-images.githubusercontent.com/1466920/54886277-a9087a00-4e86-11e9-84b6-07ff961d3888.png)
+
+######Porting a space invaders game to different platforms, frameworks and game engines
+
 
 ### Platforms
 - Android
-  - MonoGame
   - Godot
   - Unity
   - Unreal Engine 4
   <br/>
 - iOS
-  - MonoGame
   - Godot
   - Unity
   - Unreal Engine 4
   <br/>
 - PC (Windows / Linux / Mac)
-  - MonoGame (UWP/Win32)
+  - MonoGame (UWP / Desktop)
+  - [raylib](https://www.raylib.com/)
   - SDL2
   - GLFW3
   - Godot
@@ -49,13 +50,13 @@ Porting a space invaders game to different platforms, frameworks and game engine
   - Unreal Engine 4
   <br/> 
 - G-eon
-    - G-eon SDK
+    - [G-eon SDK](https://github.com/G-eon/g-eon-wiki/wiki)
 
 ### Game Engines
 - Unity
 - Unreal Engine 4
 - Godot
 
-![screenshot 13](https://cloud.githubusercontent.com/assets/1466920/20637134/2a66e3ae-b37d-11e6-9181-ae7c45695b75.png)
+![screenshot 29](https://cloud.githubusercontent.com/assets/1466920/20732319/754e4344-b68e-11e6-9b74-653128c85ec8.png)
 
-[Watch it on YouTube](https://www.youtube.com/watch?v=cywd2-lcHms&feature=youtu.be)
+[Watch the MonoGame UWP version on YouTube](https://www.youtube.com/watch?v=cywd2-lcHms&feature=youtu.be)
