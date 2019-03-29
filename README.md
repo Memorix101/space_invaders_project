@@ -5,12 +5,10 @@
 - Android
   - Godot
   - Unity
-  - Unreal Engine 4
   <br/>
 - iOS
   - Godot
   - Unity
-  - Unreal Engine 4
   <br/>
 - PC (Windows / Linux / Mac)
   - MonoGame (UWP / Desktop)
@@ -19,13 +17,11 @@
   - GLFW3
   - Godot
   - Unity
-  - Unreal Engine 4
   <br/>
 - Xbox One ([UWP](https://docs.microsoft.com/en-us/windows/uwp/design/basics/design-and-ui-intro) only; [Xbox Live Creators Program](https://docs.microsoft.com/en-gb/gaming/xbox-live/get-started-with-creators/get-started-with-xbox-live-creators))
   - MonoGame 
   - Godot
   - Unity
-  - Unreal Engine 4
   <br/>
 - GameBoy Advanced
     - [smgbalib](http://sebastianmihai.com/main.php?t=40&n=Gameboy-Advance-development-smgbalib-library)
@@ -45,14 +41,12 @@
 - HTML5
   - Godot
   - Unity
-  - Unreal Engine 4
   <br/> 
 - G-eon
     - [G-eon SDK](https://github.com/G-eon/g-eon-wiki/wiki)
 
 ### Game Engines
 - Unity
-- Unreal Engine 4
 - Godot
 
 ![screenshot 29](https://cloud.githubusercontent.com/assets/1466920/20732319/754e4344-b68e-11e6-9b74-653128c85ec8.png)
