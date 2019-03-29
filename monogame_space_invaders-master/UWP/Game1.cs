@@ -149,7 +149,7 @@ namespace UWP_SpaceInvaders
 
                 if (enemy[e].shoot)
                 {
-                    enemyLaser.Add(new EnemyLaser(new Vector2(enemy[e].Position.X + player.SpriteWidth / 2 - 4.5f, enemy[e].Position.Y - 9), Content));
+                    enemyLaser.Add(new EnemyLaser(new Vector2(enemy[e].Position.X + 32 / 2 - 4.5f, enemy[e].Position.Y + 9), Content));
                     snd_blasterEnemy.Play();
                 }
 

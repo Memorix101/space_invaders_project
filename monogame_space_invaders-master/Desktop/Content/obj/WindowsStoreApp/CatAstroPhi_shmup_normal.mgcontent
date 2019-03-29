@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/CatAstroPhi_shmup_normal.wav</SourceFile>
+  <SourceFile>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/CatAstroPhi_shmup_normal.wav</SourceFile>
   <SourceTime>2016-11-26T23:13:04+01:00</SourceTime>
-  <DestFile>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/bin/WindowsStoreApp/CatAstroPhi_shmup_normal.xnb</DestFile>
-  <DestTime>2018-07-02T19:58:01.0329997+02:00</DestTime>
+  <DestFile>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/bin/WindowsStoreApp/CatAstroPhi_shmup_normal.xnb</DestFile>
+  <DestTime>2019-03-29T22:49:10.9547607+01:00</DestTime>
   <Importer>WavImporter</Importer>
-  <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
+  <ImporterTime>2018-12-08T17:35:54+01:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>
-  <ProcessorTime>2017-03-01T16:05:36+01:00</ProcessorTime>
+  <ProcessorTime>2018-12-08T17:35:54+01:00</ProcessorTime>
   <Parameters>
     <Key>Quality</Key>
     <Value>Best</Value>

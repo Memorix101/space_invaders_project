@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/bodenstaendig.ogg</SourceFile>
+  <SourceTime>2019-03-29T21:48:08.6232766+01:00</SourceTime>
+  <DestFile>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/bin/DesktopGL/bodenstaendig.xnb</DestFile>
+  <DestTime>2019-03-29T22:50:45.3620235+01:00</DestTime>
+  <Importer>OggImporter</Importer>
+  <ImporterTime>2018-12-08T17:35:54+01:00</ImporterTime>
+  <Processor>SongProcessor</Processor>
+  <ProcessorTime>2018-12-08T17:35:54+01:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/bin/DesktopGL/bodenstaendig.ogg</string>
+  </BuildOutput>
+</PipelineBuildEvent>

@@ -17,6 +17,7 @@
   - GLFW3
   - Godot
   - Unity
+  - SFML 2.5
   <br/>
 - Xbox One ([UWP](https://docs.microsoft.com/en-us/windows/uwp/design/basics/design-and-ui-intro) only; [Xbox Live Creators Program](https://docs.microsoft.com/en-gb/gaming/xbox-live/get-started-with-creators/get-started-with-xbox-live-creators))
   - MonoGame 

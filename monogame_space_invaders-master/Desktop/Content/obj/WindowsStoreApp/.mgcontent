@@ -4,21 +4,41 @@
   <Platform>WindowsStoreApp</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/invader32x32x4.png</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/player.png</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/pusher.wav</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/space3.png</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/starfield.png</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/blaster.mp3</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/bodenstaendig_2000_in_rock_4bit.mp3</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/bullet.png</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/CatAstroPhi_shmup_normal.wav</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/enemy-bullet.png</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/explode.png</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/explode1.wav</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/invader.png</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/BGPattern_blue.png</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/arcade.png</File>
-    <File>C:/Users/memor/source/repos/SpaceInvaders_Desktop/SpaceInvaders_Desktop/Content/font.spritefont</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/arcade.png</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/BGPattern_blue.png</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/blaster.mp3</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/bodenstaendig.ogg</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/bodenstaendig_2000_in_rock_4bit.mp3</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/bullet.png</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/CatAstroPhi_shmup_normal.wav</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/enemy-bullet.png</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/explode.png</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/explode1.wav</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/font.spritefont</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/invader.png</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/invader32x32x4.png</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/player.png</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/pusher.wav</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/space3.png</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/starfield.png</File>
   </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
 </SourceFileCollection>

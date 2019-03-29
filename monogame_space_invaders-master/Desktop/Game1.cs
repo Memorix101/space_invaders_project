@@ -107,7 +107,7 @@ namespace SpaceInvaders_Desktop
             arcade = Content.Load<Texture2D>("arcade");
             Font1 = Content.Load<SpriteFont>("font");
 
-            music = Content.Load<Song>("bodenstaendig_2000_in_rock_4bit");
+            music = Content.Load<Song>("bodenstaendig");
             MediaPlayer.Play(music);
             MediaPlayer.IsRepeating = true;
 
@@ -154,7 +154,7 @@ namespace SpaceInvaders_Desktop
 
                 if (enemy[e].shoot)
                 {
-                    enemyLaser.Add(new EnemyLaser(new Vector2(enemy[e].Position.X + player.SpriteWidth / 2 - 4.5f, enemy[e].Position.Y - 9), Content));
+                    enemyLaser.Add(new EnemyLaser(new Vector2(enemy[e].Position.X + 32 / 2 - 4.5f, enemy[e].Position.Y + 9), Content));
                     snd_blasterEnemy.Play();
                 }
 

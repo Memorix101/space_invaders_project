@@ -1,9 +1,19 @@
 space_invaders_raylib-master/.vs/
 raylib_space_invaders-master/.vs/space_invaders_raylib/v15/
 
+monogame_space_invaders-master/Desktop/\.vs/
+monogame_space_invaders-master/Desktop/obj/
+monogame_space_invaders-master/Desktop/bin/
+
+monogame_space_invaders-master/UWP/\.vs/
+monogame_space_invaders-master/UWP/obj/
+monogame_space_invaders-master/UWP/bin/
+
 unity3d-space-invaders/\.vs/
+
 ue4_space_invaders/
 
-sfml2-space-invaders-master/
+sfml2-space-invaders-master/Debug/
+sfml2-space-invaders-master/\.vs/
 
 lwjgl3-space-invaders-master/
