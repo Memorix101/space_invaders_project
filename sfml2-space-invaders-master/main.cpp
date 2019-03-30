@@ -47,8 +47,8 @@ int main()
 	_beam.LoadResources();
 
 	std::list<Enemy> enemy;
-	Enemy _enemy;	
-	
+	Enemy _enemy;
+
 	std::list<Explosion> explo_fx;
 	Explosion _explo_fx;
 
@@ -143,12 +143,13 @@ int main()
 
 		//std::cout << timer << std::endl;
 
-		if (gamestart) {
+		if (gamestart) {			
+
 			player.Input(deltaTime);
 			player.Update(deltaTime);
 
-			for (auto it = enemy.begin(); it != enemy.end(); it++)			{
-				it->Update(deltaTime);
+			for (auto it = enemy.begin(); it != enemy.end(); it++) {
+
 				if (it->shoot)
 				{
 					_beam.reversed = true;
@@ -159,7 +160,7 @@ int main()
 
 				for (auto itb = laser.begin(); itb != laser.end(); itb++)
 				{
-					if (itb->TileBoundingBox().intersects(it->TileBoundingBox()))
+					if (it->TileBoundingBox().intersects(itb->TileBoundingBox()))
 					{
 						// Debug.WriteLine("BOOM!");      
 						score += 100;
@@ -173,10 +174,14 @@ int main()
 				}
 			}
 
-			for (auto it = beam.begin(); it != beam.end(); it++)
-			{
+		escapeFromeHere:
+
+
+			for (auto it = enemy.begin(); it != enemy.end(); it++)
 				it->Update(deltaTime);
 
+			for (auto it = beam.begin(); it != beam.end(); it++)
+			{
 				if (it->TileBoundingBox().intersects(player.TileBoundingBox()))
 				{
 					_explo_fx.setPosition(sf::Vector2f(it->getPosition().x - 128 / 2, it->getPosition().y - 128 / 2));
@@ -194,11 +199,13 @@ int main()
 				}
 			}
 
-		escapeFromeHere:
+			for (auto it = beam.begin(); it != beam.end(); it++)
+				it->Update(deltaTime);
 
 			for (auto it = laser.begin(); it != laser.end(); it++)
 			{
 				it->Update(deltaTime);
+
 				if (it->getPosition().y <= 0)
 				{
 					laser.erase(it);
@@ -260,7 +267,7 @@ int main()
 		else
 		{
 			window.draw(fmg_logo.sprite);
-		}		
+		}
 
 		window.display();
 	}
