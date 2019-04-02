@@ -6,11 +6,13 @@
   - Godot
   - Unity
   - Unreal Engine 4
+  - LibGDX
   <br/>
 - iOS
   - Godot
   - Unity
   - Unreal Engine 4
+  - LibGDX
   <br/>
 - PC (Windows / Linux / Mac)
   - MonoGame (UWP / Desktop)
@@ -21,6 +23,7 @@
   - Unity
   - SFML 2.5
   - Unreal Engine 4
+  - LibGDX
   <br/>
 - Xbox One ([UWP](https://docs.microsoft.com/en-us/windows/uwp/design/basics/design-and-ui-intro) only; [Xbox Live Creators Program](https://docs.microsoft.com/en-gb/gaming/xbox-live/get-started-with-creators/get-started-with-xbox-live-creators))
   - MonoGame 
@@ -47,6 +50,7 @@
   - Godot
   - Unity
   - Unreal Engine 4
+  - LibGDX
   <br/> 
 - G-eon
     - [G-eon SDK](https://github.com/G-eon/g-eon-wiki/wiki)
