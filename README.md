@@ -17,6 +17,7 @@
 - PC (Windows / Linux / Mac)
   - MonoGame (UWP / Desktop)
   - [raylib](https://www.raylib.com/)
+  - SDL
   - SDL2
   - GLFW3
   - Godot
