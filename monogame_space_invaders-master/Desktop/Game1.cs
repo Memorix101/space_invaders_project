@@ -17,6 +17,7 @@ namespace SpaceInvaders_Desktop
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Texture2D fmg_logo;
         Texture2D background;
         Texture2D frameBackground;
         Texture2D arcade;
@@ -29,6 +30,9 @@ namespace SpaceInvaders_Desktop
         List<Enemy> enemy;
         int rowCount;
         int itemCount;
+
+        bool gamestart = false;
+        float timer = 0f;
 
         Viewport backgroundViewport; //total screenszie
         Viewport gameViewport;
@@ -76,9 +80,7 @@ namespace SpaceInvaders_Desktop
                 itemCount++;
 
                 Random r = new Random();
-                int ran = r.Next(3, 30);
-                Debug.WriteLine(ran);
-                enemy.Add(new Enemy(new Vector2(itemCount * 40, 40 * rowCount), itemCount, ran));
+                enemy.Add(new Enemy(new Vector2(itemCount * 40, 40 * rowCount), itemCount, r.Next(3, 20)));
 
                 // Debug.WriteLine("row:" + rowCount);
                 // Debug.WriteLine("item:" + itemCount * 40);
@@ -102,6 +104,7 @@ namespace SpaceInvaders_Desktop
             foreach (Enemy e in enemy)
                 e.LoadResources(Content);
 
+            fmg_logo = Content.Load<Texture2D>("fmg_15b");
             background = Content.Load<Texture2D>("space3");
             frameBackground = Content.Load<Texture2D>("BGPattern_blue");
             arcade = Content.Load<Texture2D>("arcade");
@@ -125,89 +128,95 @@ namespace SpaceInvaders_Desktop
 
         protected override void Update(GameTime gameTime)
         {
-            // TODO: Add your update logic here
 
-            //Update Windowsize
-            gameViewport.X = (int)Window.ClientBounds.Width / 2 - gameViewport.Width / 2;
-            gameViewport.Y = (int)Window.ClientBounds.Height / 2 - gameViewport.Height / 2;
+            timer += 1 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            player.Update(gameTime);
+            if (timer >= 3f)
+                gamestart = true;
 
-            if (player.shoot)
+            if (gamestart)
             {
-                Debug.WriteLine("SHOOT");
-                laser.Add(new Laser(new Vector2(player.Position.X + player.SpriteWidth / 2 - 1.5f, player.Position.Y - 32), Content)); //1.5f is half of laser width ;)
-                snd_blaster.Play();
-            }
+                //Update Windowsize
+                gameViewport.X = (int)Window.ClientBounds.Width / 2 - gameViewport.Width / 2;
+                gameViewport.Y = (int)Window.ClientBounds.Height / 2 - gameViewport.Height / 2;
 
-            for (int i = laser.Count - 1; i >= 0; i--)
-            {
-                laser[i].Update(gameTime);
+                player.Update(gameTime);
 
-                if (laser[i].Position.Y <= 0)
-                    laser.RemoveAt(i);
-            }
-
-            for (int e = enemy.Count - 1; e >= 0; e--)
-            {
-                enemy[e].Update(gameTime);
-
-                if (enemy[e].shoot)
+                if (player.shoot)
                 {
-                    enemyLaser.Add(new EnemyLaser(new Vector2(enemy[e].Position.X + 32 / 2 - 4.5f, enemy[e].Position.Y + 9), Content));
-                    snd_blasterEnemy.Play();
+                    Debug.WriteLine("SHOOT");
+                    laser.Add(new Laser(new Vector2(player.Position.X + player.SpriteWidth / 2 - 1.5f, player.Position.Y - 32), Content)); //1.5f is half of laser width ;)
+                    snd_blaster.Play();
                 }
 
-                for (int l = laser.Count - 1; l >= 0; l--)
+                for (int i = laser.Count - 1; i >= 0; i--)
                 {
-                    if (laser[l].TileBoundingBox.Intersects(enemy[e].TileBoundingBox))
+                    laser[i].Update(gameTime);
+
+                    if (laser[i].Position.Y <= 0)
+                        laser.RemoveAt(i);
+                }
+
+                for (int e = enemy.Count - 1; e >= 0; e--)
+                {
+                    enemy[e].Update(gameTime);
+
+                    if (enemy[e].shoot)
                     {
-                        // Debug.WriteLine("BOOM!");      
-                        score += 100;
-                        explosion.Add(new Explosion(new Vector2(laser[l].Position.X - 128 / 2, laser[l].Position.Y - 128 / 2), Content));
-                        laser.RemoveAt(l);
-                        enemy.RemoveAt(e);
-                        snd_explo.Play();
-                        break;
+                        enemyLaser.Add(new EnemyLaser(new Vector2(enemy[e].Position.X + 32 / 2 - 4.5f, enemy[e].Position.Y + 9), Content));
+                        snd_blasterEnemy.Play();
+                    }
+
+                    for (int l = laser.Count - 1; l >= 0; l--)
+                    {
+                        if (laser[l].TileBoundingBox.Intersects(enemy[e].TileBoundingBox))
+                        {
+                            // Debug.WriteLine("BOOM!");      
+                            score += 100;
+                            explosion.Add(new Explosion(new Vector2(laser[l].Position.X - 128 / 2, laser[l].Position.Y - 128 / 2), Content));
+                            laser.RemoveAt(l);
+                            enemy.RemoveAt(e);
+                            snd_explo.Play();
+                            break;
+                        }
                     }
                 }
-            }
 
-            for (int i = enemyLaser.Count - 1; i >= 0; i--)
-            {
-                enemyLaser[i].Update(gameTime);
-
-                if (enemyLaser[i].TileBoundingBox.Intersects(player.TileBoundingBox))
+                for (int i = enemyLaser.Count - 1; i >= 0; i--)
                 {
-                    enemyLaser.RemoveAt(i);
-                    explosion.Add(new Explosion(new Vector2(player.Position.X - 128 / 2, player.Position.Y - 128 / 2), Content));
-                    player.dead = true;
-                    snd_explo.Play();
+                    enemyLaser[i].Update(gameTime);
+
+                    if (enemyLaser[i].TileBoundingBox.Intersects(player.TileBoundingBox))
+                    {
+                        enemyLaser.RemoveAt(i);
+                        explosion.Add(new Explosion(new Vector2(player.Position.X - 128 / 2, player.Position.Y - 128 / 2), Content));
+                        player.dead = true;
+                        snd_explo.Play();
+                    }
+
+                    if (enemyLaser[i].Position.Y >= 480)
+                        enemyLaser.RemoveAt(i);
                 }
 
-                if (enemyLaser[i].Position.Y >= 480)
-                    enemyLaser.RemoveAt(i);
+                for (int i = explosion.Count - 1; i >= 0; i--)
+                {
+                    explosion[i].Update(gameTime);
+
+                    if (explosion[i].animationCompleted)
+                        explosion.RemoveAt(i);
+                }
+
+                if (enemy.Count == 0)
+                {
+                    msg = "You Win!";
+                }
+                else if (player.dead)
+                {
+                    msg = "Game Over!";
+                }
+
+                // Microsoft.Xna.Framework.Input.GamePad.SetVibration(PlayerIndex.One, 0.25f, 0f);
             }
-
-            for (int i = explosion.Count - 1; i >= 0; i--)
-            {
-                explosion[i].Update(gameTime);
-
-                if (explosion[i].animationCompleted)
-                    explosion.RemoveAt(i);
-            }
-
-            if (enemy.Count == 0)
-            {
-                msg = "You Win!";
-            }
-            else if (player.dead)
-            {
-                msg = "Game Over!";
-            }
-
-
-            // Microsoft.Xna.Framework.Input.GamePad.SetVibration(PlayerIndex.One, 0.25f, 0f);
 
             base.Update(gameTime);
         }
@@ -218,33 +227,41 @@ namespace SpaceInvaders_Desktop
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            spriteBatch.Draw(frameBackground, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), null, new Color(0.25f, 0.25f, 0.25f)); // stretches image to prefered size     
 
-            spriteBatch.Draw(arcade, new Rectangle((int)Window.ClientBounds.Width / 2 - arcade.Width / 2, ((int)Window.ClientBounds.Height / 2 - arcade.Height / 2) + 35, arcade.Width, arcade.Height), null, new Color(0.5f, 0.5f, 0.5f));
+            if (gamestart)
+            {
+                spriteBatch.Draw(frameBackground, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), null, new Color(0.25f, 0.25f, 0.25f)); // stretches image to prefered size     
 
-            spriteBatch.End();
+                spriteBatch.Draw(arcade, new Rectangle((int)Window.ClientBounds.Width / 2 - arcade.Width / 2, ((int)Window.ClientBounds.Height / 2 - arcade.Height / 2) + 35, arcade.Width, arcade.Height), null, new Color(0.5f, 0.5f, 0.5f));
 
-            GraphicsDevice.Viewport = gameViewport;
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            spriteBatch.Draw(background, new Rectangle(0, 0, 680, 480), null, Color.White); // stretches image to prefered size
+                spriteBatch.End();
 
-            player.Draw(spriteBatch);
+                GraphicsDevice.Viewport = gameViewport;
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+                spriteBatch.Draw(background, new Rectangle(0, 0, 680, 480), null, Color.White); // stretches image to prefered size
 
-            foreach (Laser l in laser)
-                l.Draw(spriteBatch);
+                player.Draw(spriteBatch);
 
-            foreach (EnemyLaser l in enemyLaser)
-                l.Draw(spriteBatch);
+                foreach (Laser l in laser)
+                    l.Draw(spriteBatch);
 
-            foreach (Explosion e in explosion)
-                e.Draw(spriteBatch);
+                foreach (EnemyLaser l in enemyLaser)
+                    l.Draw(spriteBatch);
 
-            foreach (Enemy e in enemy)
-                e.Draw(spriteBatch);
+                foreach (Explosion e in explosion)
+                    e.Draw(spriteBatch);
 
-            spriteBatch.DrawString(Font1, "Score: " + score.ToString("0000"), new Vector2(640 - Font1.MeasureString("Score: 0000").X - 16, 16), Color.White);
+                foreach (Enemy e in enemy)
+                    e.Draw(spriteBatch);
 
-            spriteBatch.DrawString(Font1, msg, new Vector2(640 / 2 - Font1.MeasureString(msg).X / 2, 480 / 2 - Font1.MeasureString(msg).Y / 2), Color.White);
+                spriteBatch.DrawString(Font1, "Score: " + score.ToString("0000"), new Vector2(640 - Font1.MeasureString("Score: 0000").X - 16, 16), Color.White);
+
+                spriteBatch.DrawString(Font1, msg, new Vector2(640 / 2 - Font1.MeasureString(msg).X / 2, 480 / 2 - Font1.MeasureString(msg).Y / 2), Color.White);
+            }
+            else
+            {
+                spriteBatch.Draw(fmg_logo, Vector2.Zero, null, Color.White);
+            }
 
             spriteBatch.End();
 

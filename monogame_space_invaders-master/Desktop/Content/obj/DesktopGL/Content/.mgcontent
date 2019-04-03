@@ -14,6 +14,7 @@
     <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/enemy-bullet.png</File>
     <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/explode.png</File>
     <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/explode1.wav</File>
+    <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/fmg_15b.png</File>
     <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/font.spritefont</File>
     <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/invader.png</File>
     <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/invader32x32x4.png</File>
@@ -23,6 +24,7 @@
     <File>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/starfield.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

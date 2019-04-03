@@ -72,3 +72,4 @@ D:\SourceTree\space_invaders_project\monogame_space_invaders-master\Desktop\bin\
 D:\SourceTree\space_invaders_project\monogame_space_invaders-master\Desktop\bin\DesktopGL\AnyCPU\Debug\Content\bodenstaendig_2000_in_rock_4bit.xnb
 D:\SourceTree\space_invaders_project\monogame_space_invaders-master\Desktop\bin\DesktopGL\AnyCPU\Debug\Content\bodenstaendig.ogg
 D:\SourceTree\space_invaders_project\monogame_space_invaders-master\Desktop\bin\DesktopGL\AnyCPU\Debug\Content\bodenstaendig_2000_in_rock_4bit.ogg
+D:\SourceTree\space_invaders_project\monogame_space_invaders-master\Desktop\bin\DesktopGL\AnyCPU\Debug\Content\fmg_15b.xnb

@@ -43,7 +43,7 @@ namespace SpaceInvaders_Desktop
 
         public void Update(GameTime gameTime)
         {
-            PosY += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            PosY += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             pos = new Vector2(PosX, PosY);
             
         }

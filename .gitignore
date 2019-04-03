@@ -22,3 +22,6 @@ ue4_space_invaders/Build/
 ue4_space_invaders/Binaries/
 ue4_space_invaders/\.vs/
 ue4_space_invaders/Bin/
+sdl-space-invaders-master/\.vs/
+
+sdl-space-invaders-master/Debug/
