@@ -1,1 +1,0 @@
-C:\Users\memor\Documents\SourceTree\MonoGame_SpaceInvaders\UWP_SpaceInvaders.csproj;arm
