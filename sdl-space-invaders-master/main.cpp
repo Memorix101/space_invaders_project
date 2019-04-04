@@ -273,7 +273,7 @@ void updateEnemies()
 
 		if (enemy[e]->shoot == 1 && enemy[e]->alive == 1)
 		{
-			addEnemyBullet(enemy[e]->pos.x + enemy[e]->rect.w / 2 - 4, enemy[e]->pos.y - 4);
+			addEnemyBullet(enemy[e]->pos.x + enemy[e]->rect.w / 2 - 4, enemy[e]->pos.y + 9);
 			Mix_PlayChannel(-1, snd_pusher, 0);
 		}
 
@@ -535,6 +535,7 @@ int main(int argc, char* argv[]) {
 	//Set up screen
 	Uint32 flags = SDL_SWSURFACE | SDL_DOUBLEBUF;// | SDL_FULLSCREEN;// | SDL_INIT_JOYSTICK; // | SDL_FULLSCREEN;
 	screen = SDL_SetVideoMode(640, 480, 16, flags);
+	SDL_WM_SetCaption("SDL Space Invaders", NULL);
 
 	//printf("%i joysticks were found.\n\n", SDL_NumJoysticks());
 	printf("The names of the joysticks are:\n");
