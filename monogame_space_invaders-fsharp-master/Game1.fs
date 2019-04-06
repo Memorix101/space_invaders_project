@@ -25,11 +25,14 @@ type Game1 () as this =
     let mutable background_tex2d: Texture2D = null
     let mutable gameover_ui: Texture2D = null
     let mutable win_ui: Texture2D = null
+    let mutable fmg_splash: Texture2D = null
     let mutable scoreFont: SpriteFont = null
     let mutable score = 0
     let mutable rowCount = 0
     let mutable itemCount = 0
     let mutable stageClear = false
+    let mutable gameStart = false
+    let mutable gameTimer = 0.0
     let mutable player = Player(Vector2(300.0f, 450.0f))
     let lasers = List<Bullet>()
     let enemies = List<Enemy>()
@@ -83,6 +86,7 @@ type Game1 () as this =
     override this.LoadContent() =
         spriteBatch <- new SpriteBatch(this.GraphicsDevice)
 
+        fmg_splash <- this.Content.Load<Texture2D>("fmg_splash")
         background_tex2d <- this.Content.Load<Texture2D>("space3")
         gameover_ui <- this.Content.Load<Texture2D>("gameover_ui")
         win_ui <- this.Content.Load<Texture2D>("win_ui")
@@ -97,88 +101,97 @@ type Game1 () as this =
         snd_blasterEnemy <- this.Content.Load<SoundEffect>("pusher")
         snd_explo <- this.Content.Load<SoundEffect>("explode1")
  
-    override this.Update(gameTime) =
+    override this.Update(gameTime) =        
         if GamePad.GetState(PlayerIndex.One).Buttons.Back = ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)
             then this.Exit()
 
-        player.update(gameTime)
+        gameTimer <- gameTimer + (float) gameTime.ElapsedGameTime.TotalSeconds
 
-        if player.shoot
-           then
-           lasers.Add(Bullet(Vector2(player.position.X + (float32) player.TileBoundingBox.Width / 2.0f - 1.5f, player.position.Y - 32.0f), false, this.Content)); //1.5f is half of laser width ;)
-           snd_blasterInstance <- snd_blaster.CreateInstance()
-           snd_blasterInstance.Play() |> ignore
+        if gameTimer > 3.0 then
+            gameStart <- true
 
-        if Keyboard.GetState().IsKeyDown(Keys.Enter) && player.dead = true || Keyboard.GetState().IsKeyDown(Keys.Enter) && stageClear = true
-            then 
-                restart()
+        if gameStart = true then
+            player.update(gameTime)
 
-        for i in enemies.Count-1 .. -1 .. 0 do
-            enemies.Item(i).update(gameTime)     
-            if enemies.Item(i).shoot = true 
+            if player.shoot
                 then
-                    //printf "pew pew!\n"
-                    enemyLasers.Add(Bullet(Vector2(enemies.Item(i).position.X + 32.0f / 2.0f - 4.5f, enemies.Item(i).position.Y + 9.0f), true, this.Content));
-                    snd_blasterEnemyInstance <- snd_blasterEnemy.CreateInstance()
-                    snd_blasterEnemyInstance.Play() |> ignore
-            for l in lasers.Count-1 .. -1 .. 0 do 
-                if lasers.Item(l).TileBoundingBox.Intersects(enemies.Item(i).TileBoundingBox) && enemies.Item(i).dead = false
+                lasers.Add(Bullet(Vector2(player.position.X + (float32) player.TileBoundingBox.Width / 2.0f - 1.5f, player.position.Y - 32.0f), false, this.Content)); //1.5f is half of laser width ;)
+                snd_blasterInstance <- snd_blaster.CreateInstance()
+                snd_blasterInstance.Play() |> ignore
+
+            if Keyboard.GetState().IsKeyDown(Keys.Enter) && player.dead = true || Keyboard.GetState().IsKeyDown(Keys.Enter) && stageClear = true
+                then 
+                    restart()
+
+            for i in enemies.Count-1 .. -1 .. 0 do
+                enemies.Item(i).update(gameTime)     
+                if enemies.Item(i).shoot = true 
                     then
-                        //printf "BOOM!\n"
-                        score <- score + 100
-                        let spriteWidth = enemies.Item(i).TileBoundingBox.Width
-                        explosions.Add(Explosion(Vector2(lasers.Item(l).position.X - (128.0f / 2.0f) + (float32) spriteWidth * 0.2f / 2.0f, lasers.Item(l).position.Y - 128.0f / 2.0f), this.Content))
-                        lasers.RemoveAt(l)
-                        enemies.Item(i).dead <- true //enemies.RemoveAt(i) //don't know how to fix this. could not find something like break or workaround
+                        //printf "pew pew!\n"
+                        enemyLasers.Add(Bullet(Vector2(enemies.Item(i).position.X + 32.0f / 2.0f - 4.5f, enemies.Item(i).position.Y + 9.0f), true, this.Content));
+                        snd_blasterEnemyInstance <- snd_blasterEnemy.CreateInstance()
+                        snd_blasterEnemyInstance.Play() |> ignore
+                for l in lasers.Count-1 .. -1 .. 0 do 
+                    if lasers.Item(l).TileBoundingBox.Intersects(enemies.Item(i).TileBoundingBox) && enemies.Item(i).dead = false
+                        then
+                            //printf "BOOM!\n"
+                            score <- score + 100
+                            let spriteWidth = enemies.Item(i).TileBoundingBox.Width
+                            explosions.Add(Explosion(Vector2(lasers.Item(l).position.X - (128.0f / 2.0f) + (float32) spriteWidth * 0.2f / 2.0f, lasers.Item(l).position.Y - 128.0f / 2.0f), this.Content))
+                            lasers.RemoveAt(l)
+                            enemies.Item(i).dead <- true //enemies.RemoveAt(i) //don't know how to fix this. could not find something like break or workaround
+                            snd_exploInstance <- snd_explo.CreateInstance()
+                            snd_exploInstance.Play() |> ignore
+
+                if enemies.Item(i).dead
+                    then enemies.RemoveAt(i)
+
+            for i in lasers.Count-1 .. -1 .. 0 do 
+                lasers.Item(i).update(gameTime)
+
+                if lasers.Item(i).position.Y <= 0.0f
+                    then lasers.RemoveAt(i);        
+
+            for i in enemyLasers.Count-1 .. -1 .. 0 do 
+                enemyLasers.Item(i).update(gameTime)
+
+                if enemyLasers.Item(i).TileBoundingBox.Intersects(player.TileBoundingBox) && player.dead = false
+                    then
+                        enemyLasers.RemoveAt(i);
+                        explosions.Add(Explosion(Vector2(player.position.X - 128.0f / 2.0f, player.position.Y - 128.0f / 2.0f), this.Content))
+                        player.dead <- true;
                         snd_exploInstance <- snd_explo.CreateInstance()
                         snd_exploInstance.Play() |> ignore
 
-            if enemies.Item(i).dead
-                then enemies.RemoveAt(i)
+                if enemyLasers.Item(i).position.Y >= 480.0f
+                    then enemyLasers.RemoveAt(i);
 
-        for i in lasers.Count-1 .. -1 .. 0 do 
-            lasers.Item(i).update(gameTime)
-
-            if lasers.Item(i).position.Y <= 0.0f
-                then lasers.RemoveAt(i);        
-
-        for i in enemyLasers.Count-1 .. -1 .. 0 do 
-            enemyLasers.Item(i).update(gameTime)
-
-            if enemyLasers.Item(i).TileBoundingBox.Intersects(player.TileBoundingBox) && player.dead = false
-                then
-                    enemyLasers.RemoveAt(i);
-                    explosions.Add(Explosion(Vector2(player.position.X - 128.0f / 2.0f, player.position.Y - 128.0f / 2.0f), this.Content))
-                    player.dead <- true;
-                    snd_exploInstance <- snd_explo.CreateInstance()
-                    snd_exploInstance.Play() |> ignore
-
-            if enemyLasers.Item(i).position.Y >= 480.0f
-                then enemyLasers.RemoveAt(i);
-
-        for i in explosions.Count-1 .. -1 .. 0 do 
-            explosions.Item(i).update(gameTime)
+            for i in explosions.Count-1 .. -1 .. 0 do 
+                explosions.Item(i).update(gameTime)
 
         base.Update(gameTime)
  
     override this.Draw(gameTime) =
         this.GraphicsDevice.Clear Color.CornflowerBlue
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend)
-        spriteBatch.Draw(background_tex2d, Vector2.Zero, Color.White)      
-        player.draw(spriteBatch)
-        for i in lasers do i.draw(spriteBatch)
-        for i in enemyLasers do i.draw(spriteBatch)
-        for i in enemies do i.draw(spriteBatch)
-        for i in explosions do i.draw(spriteBatch)
-        spriteBatch.DrawString(scoreFont, "Score: " + score.ToString("0000"), Vector2(640.0f - scoreFont.MeasureString("Score: 0000").X - 16.0f, 16.0f), Color.White);
         
-        if enemies.Count = 0
-            then 
-                spriteBatch.Draw(win_ui, Vector2.Zero, Color.White)
-                stageClear <- true
-        elif player.dead = true
-            then spriteBatch.Draw(gameover_ui, Vector2.Zero, Color.White)  
-
+        if gameStart = true then
+            spriteBatch.Draw(background_tex2d, Vector2.Zero, Color.White)      
+            player.draw(spriteBatch)
+            for i in lasers do i.draw(spriteBatch)
+            for i in enemyLasers do i.draw(spriteBatch)
+            for i in enemies do i.draw(spriteBatch)
+            for i in explosions do i.draw(spriteBatch)
+            spriteBatch.DrawString(scoreFont, "Score: " + score.ToString("0000"), Vector2(640.0f - scoreFont.MeasureString("Score: 0000").X - 16.0f, 16.0f), Color.White);
+        
+            if enemies.Count = 0
+                then 
+                    spriteBatch.Draw(win_ui, Vector2.Zero, Color.White)
+                    stageClear <- true
+            elif player.dead = true
+                then spriteBatch.Draw(gameover_ui, Vector2.Zero, Color.White)  
+        else
+            spriteBatch.Draw(fmg_splash, Vector2.Zero, Color.White)     
         spriteBatch.End()
 
         base.Draw(gameTime)
