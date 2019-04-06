@@ -1,4 +1,4 @@
-# monogame_space_invaders-desktop
+# monogame_space_invaders-fsharp
 
 MonoGame DesktopGL for Windows, Mac and Linux
 
