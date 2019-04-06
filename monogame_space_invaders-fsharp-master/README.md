@@ -2,4 +2,4 @@
 
 MonoGame DesktopGL for Windows, Mac and Linux in F#
 
-![screenshot 13](https://cloud.githubusercontent.com/assets/1466920/20637134/2a66e3ae-b37d-11e6-9181-ae7c45695b75.png)
+![](https://user-images.githubusercontent.com/1466920/55671919-44411c80-5895-11e9-92c8-54acd4549aa4.png)
