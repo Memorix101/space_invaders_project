@@ -1,6 +1,6 @@
-# MonoGame_SpaceInvaders
+# monogame_space_invaders-uwp
 
-UWP MonoGame App for Windows 10 Anniversary and Xbox One
+MonoGame UWP for Windows 10 Anniversary and Xbox One
 
 ![screenshot 13](https://cloud.githubusercontent.com/assets/1466920/20637134/2a66e3ae-b37d-11e6-9181-ae7c45695b75.png)
 
