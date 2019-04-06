@@ -1,3 +1,5 @@
 https://devkitpro.org/wiki/devkitPro_pacman
 https://wiibrew.org/wiki/List_of_development_tools
 https://github.com/GRRLIB/GRRLIB
+
+/opt/devkitPro/examples/wii/space-invaders

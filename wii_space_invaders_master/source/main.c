@@ -611,6 +611,7 @@ void reset()
 	currentFrame = 0.0f;
 	memset(bullets, 0, sizeof(bullets));
 	memset(enemy_bullets, 0, sizeof(enemy_bullets));
+	memset(explo, 0, sizeof(explo));
 	rowCount = 0;
 	itemCount = 0;
 	initEnemies();
@@ -731,6 +732,7 @@ int main(int argc, char* argv[]) {
 	memset(enemy, 0, sizeof(enemy));
 	memset(bullets, 0, sizeof(bullets));
 	memset(enemy_bullets, 0, sizeof(enemy_bullets));
+	memset(explo, 0, sizeof(explo));
 	GRRLIB_Exit();
 
 	return 0;
