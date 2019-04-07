@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-#if UNITY_STANDALONE
+#if UNITY_STANDALONE||UNITY_WEBGL
         xAxis = Input.GetAxis("Horizontal");
 #endif
         velocity = new Vector2(xAxis, 0);

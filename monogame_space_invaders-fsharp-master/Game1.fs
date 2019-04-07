@@ -119,7 +119,8 @@ type Game1 () as this =
                 snd_blasterInstance <- snd_blaster.CreateInstance()
                 snd_blasterInstance.Play() |> ignore
 
-            if Keyboard.GetState().IsKeyDown(Keys.Enter) && player.dead = true || Keyboard.GetState().IsKeyDown(Keys.Enter) && stageClear = true
+            if Keyboard.GetState().IsKeyDown(Keys.Enter) && player.dead = true || Keyboard.GetState().IsKeyDown(Keys.Enter) && stageClear = true 
+                || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Start) && player.dead = true  || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Start) && stageClear = true
                 then 
                     restart()
 
@@ -142,7 +143,8 @@ type Game1 () as this =
                             enemies.Item(i).dead <- true //enemies.RemoveAt(i) //don't know how to fix this. could not find something like break or workaround
                             snd_exploInstance <- snd_explo.CreateInstance()
                             snd_exploInstance.Play() |> ignore
-
+            
+            for i in enemies.Count-1 .. -1 .. 0 do
                 if enemies.Item(i).dead
                     then enemies.RemoveAt(i)
 
@@ -164,6 +166,10 @@ type Game1 () as this =
                         snd_exploInstance.Play() |> ignore
 
                 if enemyLasers.Item(i).position.Y >= 480.0f
+                    then enemyLasers.Item(i).dispose <- true
+
+            for i in enemyLasers.Count-1 .. -1 .. 0 do 
+                if enemyLasers.Item(i).dispose = true
                     then enemyLasers.RemoveAt(i);
 
             for i in explosions.Count-1 .. -1 .. 0 do 

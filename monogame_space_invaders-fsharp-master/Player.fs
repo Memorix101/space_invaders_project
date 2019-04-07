@@ -11,17 +11,20 @@ type Player (pos: Vector2) = class
     let mutable _TileBoundingBox: Rectangle = Rectangle(0, 0, 0, 0)
     let mutable _sprite: Texture2D = null
     let mutable keyState = KeyboardState()
+
+    let mutable cbuttonState = GamePadState() 
+    let mutable lastcbuttonState = GamePadState()
+    let mutable cpadState = GamePadState()
     
+    let move_speed: float32 = 350.0f
+
     //public variables
     member val dead = false with get, set
     member val shoot = false with get, set
     member val position = pos with get, set
     member this.TileBoundingBox = _TileBoundingBox
 
-    //functions
-    member this.test = //test function
-        printf "Hello World"
-    
+    //functions    
     member this.loadResources(con: ContentManager) =
         _sprite <- con.Load<Texture2D>("player");
         this.position <- Vector2(640.0f / 2.0f - (float32) _sprite.Bounds.Width / 2.0f, this.position.Y)
@@ -31,17 +34,24 @@ type Player (pos: Vector2) = class
 
         if this.dead = false 
             then
-                if Keyboard.GetState().IsKeyDown(Keys.Space) && keyState.IsKeyDown(Keys.Space) = false
+
+                cpadState <- GamePad.GetState(PlayerIndex.One)         
+                lastcbuttonState <-  cbuttonState
+
+                if Keyboard.GetState().IsKeyDown(Keys.Space) && keyState.IsKeyDown(Keys.Space) = false 
+                    || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A) && lastcbuttonState.IsButtonUp(Buttons.A)
                     then
                         this.shoot <- true
                     else
                         this.shoot <- false
 
-                if Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left)
-                    then this.position <- Vector2(this.position.X - 250.0f * (float32) gameTime.ElapsedGameTime.TotalSeconds, this.position.Y)
+                cbuttonState <- cpadState
 
-                if Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right)
-                    then this.position <- Vector2(this.position.X + 250.0f * (float32) gameTime.ElapsedGameTime.TotalSeconds, this.position.Y)
+                if Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left) || cpadState.ThumbSticks.Left.X <= -0.5f
+                    then this.position <- Vector2(this.position.X - move_speed * (float32) gameTime.ElapsedGameTime.TotalSeconds, this.position.Y)
+
+                if Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right) || cpadState.ThumbSticks.Left.X >= 0.5f
+                    then this.position <- Vector2(this.position.X + move_speed * (float32) gameTime.ElapsedGameTime.TotalSeconds, this.position.Y)
 
                 keyState <- Keyboard.GetState()
 

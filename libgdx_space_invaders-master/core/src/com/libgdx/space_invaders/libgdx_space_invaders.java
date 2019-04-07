@@ -20,6 +20,8 @@ public class libgdx_space_invaders extends ApplicationAdapter {
     SpriteBatch batch;
     Texture background_sprite;
     Texture fmg_logo;
+    Texture gameover_ui;
+    Texture win_ui;
     BitmapFont score_font;
 
     int score = 0;
@@ -28,6 +30,7 @@ public class libgdx_space_invaders extends ApplicationAdapter {
 
     float timer;
     boolean game_start = false;
+    boolean gameover = false;
 
     Music music;
     Sound snd_blaster;
@@ -40,21 +43,23 @@ public class libgdx_space_invaders extends ApplicationAdapter {
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     ArrayList<Explosion> explode_fx = new ArrayList<Explosion>();
 
-    @Override
-    public void create() {
+    void restart()
+    {
+        player.dead  = false;
+        player.pos = new Vector2(640/2 - player.sprite.getDepth()/2,10);
+        laser.clear();;
+        enemies.clear();
+        pusher.clear();
+        explode_fx.clear();
+        itemCount = 0;
+        rowCount = 0;
+        score = 0;
+        gameover = false;
+        spawnEnemies();
+    }
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("vermin_vibes_1989.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 32;
-        score_font = generator.generateFont(parameter);
-        generator.dispose(); // don't forget to dispose to avoid memory leaks!
-
-        batch = new SpriteBatch();
-        background_sprite = new Texture("space3.png");
-        fmg_logo = new Texture("fmg_splash.png");
-
-        player.Create();
-
+    void spawnEnemies()
+    {
         // create enemies
         for (int i = 0; i < 40; i++) {
             if (i % 10 == 0) {
@@ -68,6 +73,26 @@ public class libgdx_space_invaders extends ApplicationAdapter {
             int ran = r.nextInt(30 - 3) + 1;
             enemies.add(new Enemy(new Vector2(itemCount * 40, 40 * rowCount + 200), itemCount, ran));
         }
+    }
+
+    @Override
+    public void create() {
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("vermin_vibes_1989.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 32;
+        score_font = generator.generateFont(parameter);
+        generator.dispose(); // don't forget to dispose to avoid memory leaks!
+
+        batch = new SpriteBatch();
+        background_sprite = new Texture("space3.png");
+        fmg_logo = new Texture("fmg_splash.png");
+        gameover_ui = new Texture("gameover_ui.psd");
+        win_ui = new Texture("win_ui.psd");
+
+        player.Create();
+
+        spawnEnemies();
 
         music = Gdx.audio.newMusic(Gdx.files.internal("bodenstaendig.ogg"));
         music.setLooping(true);
@@ -91,6 +116,14 @@ public class libgdx_space_invaders extends ApplicationAdapter {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !player.dead) {
                 laser.add(new Bullet(player.pos, false));
                 snd_blaster.play();
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && gameover) {
+                restart();
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                Gdx.app.exit();
             }
 
             for (int e = enemies.size() - 1; e >= 0; e--) {
@@ -171,11 +204,15 @@ public class libgdx_space_invaders extends ApplicationAdapter {
             score_font.draw(batch, "SCORE: " + String.format("%04d", score), 640 - 190, 480 - 10);
 
             if (score >= 4000) {
-                score_font.draw(batch, "YOU WIN!", 640 / 2 - 35, 480 / 2 - 10);
+                //score_font.draw(batch, "YOU WIN!", 640 / 2 - 35, 480 / 2 - 10);
+                batch.draw(win_ui, 0, 0);
+                gameover = true;
             }
 
             if (player.dead) {
-                score_font.draw(batch, "GAME OVER!", 640 / 2 - 70, 480 / 2 - 10);
+                //score_font.draw(batch, "GAME OVER!", 640 / 2 - 70, 480 / 2 - 10);
+                batch.draw(gameover_ui, 0, 0);
+                gameover = true;
             }
         } else {
             batch.draw(fmg_logo, 0, 0);

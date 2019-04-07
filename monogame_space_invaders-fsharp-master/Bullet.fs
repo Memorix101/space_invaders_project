@@ -25,9 +25,9 @@ type Bullet (pos: Vector2, isEnemy: bool, con: ContentManager) = class
     member val position = pos with get, set
     member val enemyBullet = _enemyBullet with get, set
     member this.TileBoundingBox = _TileBoundingBox
+    member val dispose = false with get, set
 
-
-    
+    //functions
     member this.update(gameTime: GameTime) =
         if this.enemyBullet = false 
             then 
