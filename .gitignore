@@ -57,3 +57,7 @@ unity3d-space-invaders/obj/
 unity3d-space-invaders/Win64/
 
 unity3d-space-invaders/Library/
+
+sdl2-space-invaders-master/\.vs/
+
+sdl2-space-invaders-master/Debug/
