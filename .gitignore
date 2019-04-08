@@ -61,3 +61,13 @@ unity3d-space-invaders/Library/
 sdl2-space-invaders-master/\.vs/
 
 sdl2-space-invaders-master/Debug/
+
+monogame_space_invaders-fsharp-master/obj/
+
+monogame_space_invaders-fsharp-master/bin/
+
+monogame_space_invaders-fsharp-master/\.vs/
+
+monogame_space_invaders-fsharp-master/Content/obj/
+
+monogame_space_invaders-fsharp-master/Content/bin/

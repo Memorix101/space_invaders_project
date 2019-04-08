@@ -54,7 +54,22 @@ struct enemy_t {
 SDL_Event e;
 SDL_Surface* screen = NULL;
 SDL_Window* gWindow = NULL;
+
 SDL_GameController* controller = NULL;
+#define XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE  7849
+#define XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE 8689
+#define XINPUT_GAMEPAD_TRIGGER_THRESHOLD    3
+float LX = 0;
+float LY = 0;
+
+//determine how far the controller is pushed
+float magnitude = sqrt(LX * LX + LY * LY);
+
+//determine the direction the controller is pushed
+float normalizedLX = LX / magnitude;
+float normalizedLY = LY / magnitude;
+
+float normalizedMagnitude = 0;
 
 //player
 #define MAX_BULLETS 50
@@ -97,8 +112,8 @@ SDL_Surface* bullet_tex2d;
 SDL_Surface* enemy_bullet_tex2d;
 SDL_Surface* explo_tex2d;
 SDL_Surface* fmg_splash_tex2d;
-//SDL_Surface* gameover_tex2D;
-//SDL_Surface* win_tex2d;
+SDL_Surface* gameover_tex2D;
+SDL_Surface* win_tex2d;
 //SDL_Surface* scoreFont;
 
 void load_assets()
@@ -110,8 +125,8 @@ void load_assets()
 	enemy_bullet_tex2d = IMG_Load("rd/enemy-bullet.png");
 	explo_tex2d = IMG_Load("rd/explode.png");
 	fmg_splash_tex2d = IMG_Load("rd/fmg_splash.png");
-	//gameover_tex2D = IMG_Load();
-	//win_tex2d = IMG_Load();
+	gameover_tex2D = IMG_Load("rd/gameover_ui.png");
+	win_tex2d = IMG_Load("rd/win_ui.png");
 	//scoreFont = IMG_Load();
 }
 
@@ -155,8 +170,7 @@ void removeEnemyBullet(int i)
 
 void updateEnemyBullet()
 {
-	int i;
-	for (i = 0; i < MAX_ENEMY_BULLETS; i++) if (enemy_bullets[i])
+	for (int i = 0; i < MAX_ENEMY_BULLETS; i++) if (enemy_bullets[i])
 	{
 		enemy_bullets[i]->pos.y += 15;
 
@@ -169,8 +183,7 @@ void updateEnemyBullet()
 
 void drawEnemyBullet()
 {
-	int i;
-	for (i = 0; i < MAX_ENEMY_BULLETS; i++) if (enemy_bullets[i])
+	for (int i = 0; i < MAX_ENEMY_BULLETS; i++) if (enemy_bullets[i])
 	{
 		SDL_BlitSurface(enemy_bullets[i]->tex, NULL, screen, &enemy_bullets[i]->pos);
 	}
@@ -220,8 +233,7 @@ void addEnemy()
 
 void initEnemies()
 {
-	int i;
-	for (i = 0; i < MAX_ENEMIES; i++)
+	for (int i = 0; i < MAX_ENEMIES; i++)
 	{
 
 		if (i % 10 == 0)
@@ -236,7 +248,6 @@ void initEnemies()
 	}
 }
 
-
 void animatorEnemies()
 {
 	currentFrame += 1;
@@ -250,7 +261,6 @@ void animatorEnemies()
 	for (e = 0; e < MAX_ENEMIES; e++) if (enemy[e]) {
 		enemy[e]->rect.x = currentFrame * 32;
 	}
-
 }
 
 void updateEnemies()
@@ -259,8 +269,7 @@ void updateEnemies()
 
 	const int moveSpeed = 1;
 
-	int e;
-	for (e = 0; e < MAX_ENEMIES; e++) if (enemy[e]) {
+	for (int e = 0; e < MAX_ENEMIES; e++) if (enemy[e]) {
 		if (enemy[e]->goLeft == 0)
 		{
 			enemy[e]->pos.x += moveSpeed;
@@ -286,7 +295,6 @@ void updateEnemies()
 		//c = enemy[1]->shootTimer += 1 * DeltaTime;;
 		//printf("%0.8f\n", c);
 
-
 		if (enemy[e]->shootTimer >= enemy[e]->shootTimeLimit)
 		{
 			enemy[e]->shootTimer = 0;
@@ -302,7 +310,6 @@ void updateEnemies()
 			addEnemyBullet(enemy[e]->pos.x + enemy[e]->rect.w / 2 - 4, enemy[e]->pos.y - 4);
 			Mix_PlayChannel(-1, snd_pusher, 0);
 		}
-
 		enemy[e]->hitbox.x = enemy[e]->pos.x;
 		enemy[e]->hitbox.y = enemy[e]->pos.y;
 	}
@@ -310,8 +317,7 @@ void updateEnemies()
 
 void drawEnemies()
 {
-	int e;
-	for (e = 0; e < MAX_ENEMIES; e++) if (enemy[e]) {
+	for (int e = 0; e < MAX_ENEMIES; e++) if (enemy[e]) {
 		if (enemy[e]->alive == 1) {
 			//SDL_FillRect(screen, &enemy[e]->hitbox, SDL_MapRGB(screen->format, 255, 0, 0));
 			SDL_BlitSurface(enemy[e]->tex, &enemy[e]->rect, screen, &enemy[e]->pos);
@@ -418,8 +424,7 @@ void removeBullet(int i)
 
 void updateBullet()
 {
-	int i;
-	for (i = 0; i < MAX_BULLETS; i++) if (bullets[i])
+	for (int i = 0; i < MAX_BULLETS; i++) if (bullets[i])
 	{
 		bullets[i]->pos.y -= 15;
 
@@ -432,8 +437,7 @@ void updateBullet()
 
 void drawBullet()
 {
-	int i;
-	for (i = 0; i < MAX_BULLETS; i++) if (bullets[i])
+	for (int i = 0; i < MAX_BULLETS; i++) if (bullets[i])
 	{
 		SDL_BlitSurface(bullets[i]->tex, NULL, screen, &bullets[i]->pos);
 	}
@@ -473,8 +477,7 @@ void addExplo(float x, float y)
 
 void animatorExplo()
 {
-	int e;
-	for (e = 0; e < MAX_EXPLO; e++) if (explo[e]) {
+	for (int e = 0; e < MAX_EXPLO; e++) if (explo[e]) {
 		explo[e]->currentFrame_ex += 1;
 		explo[e]->rect.x = explo[e]->currentFrame_ex * 128;
 
@@ -483,15 +486,13 @@ void animatorExplo()
 			explo[e]->animationFinished = 1;
 		}
 	}
-
 }
 
 void updateExplo()
 {
 	animatorExplo();
 
-	int i;
-	for (i = 0; i < MAX_EXPLO; i++) if (explo[i])
+	for (int i = 0; i < MAX_EXPLO; i++) if (explo[i])
 	{
 		if (explo[i]->animationFinished == 1)
 		{
@@ -503,8 +504,7 @@ void updateExplo()
 
 void drawExplo()
 {
-	int i;
-	for (i = 0; i < MAX_EXPLO; i++) if (explo[i])
+	for (int i = 0; i < MAX_EXPLO; i++) if (explo[i])
 	{
 		SDL_BlitSurface(explo[i]->tex, &explo[i]->rect, screen, &explo[i]->pos);
 	}
@@ -525,10 +525,9 @@ void removeExplo(int i)
 
 void updateLogic()
 {
-	int i, e;
-	for (i = 0; i < MAX_BULLETS; i++) if (bullets[i])
+	for (int i = 0; i < MAX_BULLETS; i++) if (bullets[i])
 	{
-		for (e = 0; e < MAX_ENEMIES; e++) if (enemy[e]) {
+		for (int e = 0; e < MAX_ENEMIES; e++) if (enemy[e]) {
 			if (bullets[i]->pos.x > enemy[e]->pos.x && bullets[i]->pos.x < enemy[e]->pos.x + enemy[e]->hitbox.w &&
 				bullets[i]->pos.y > enemy[e]->pos.y && bullets[i]->pos.y < enemy[e]->pos.y + enemy[e]->hitbox.h &&
 				enemy[e]->alive == 1)
@@ -545,9 +544,7 @@ void updateLogic()
 		}
 	}
 
-
-	int b;
-	for (b = 0; b < MAX_ENEMY_BULLETS; b++) if (enemy_bullets[b])
+	for (int b = 0; b < MAX_ENEMY_BULLETS; b++) if (enemy_bullets[b])
 	{
 		if (enemy_bullets[b]->pos.x > player.pos.x && enemy_bullets[b]->pos.x < player.pos.x + player.hitbox.w &&
 			enemy_bullets[b]->pos.y > player.pos.y && enemy_bullets[b]->pos.y < player.pos.y + player.hitbox.h &&
@@ -555,13 +552,12 @@ void updateLogic()
 		{
 			player.alive = 0;
 			addExplo(player.pos.x - 128 / 2, player.pos.y - 128 / 2);
-			removeEnemyBullet(i);
+			removeEnemyBullet(b);
 			Mix_PlayChannel(0, snd_explo, 0);
 			//printf("BOOM!\n");
 			break;
 		}
 	}
-
 }
 
 void reset()
@@ -732,9 +728,15 @@ int main(int argc, char* argv[]) {
 				}
 
 				break;
-			/*case SDL_CONTROLLERAXISMOTION: 
+			/*case SDL_CONTROLLERAXISMOTION:  //https://docs.microsoft.com/en-gb/windows/desktop/xinput/getting-started-with-xinput#dead_zone
+				
 				// handle axis motion
-				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX && e.caxis.value <= -800)
+				LX = e.caxis.value;
+				
+				printf("LX: %d\n", (int)LX);
+				printf("magnitude: %d\n", (int)magnitude);
+
+				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX && magnitude <= -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 				{
 					move_right = 1;
 					move_left = 0;
@@ -742,10 +744,9 @@ int main(int argc, char* argv[]) {
 				else
 				{
 					move_right = 0;
-				}
-				 
+				}				 
 				
-				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX && e.caxis.value >= 800)
+				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX && magnitude >= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 				{
 					move_left = 1;
 					move_right = 0;
@@ -753,6 +754,25 @@ int main(int argc, char* argv[]) {
 				else
 				{
 					move_left = 0;
+				}
+
+				//check if the controller is outside a circular dead zone
+				if (magnitude > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+				{
+					//clip the magnitude at its expected maximum value
+					if (magnitude > 32767) magnitude = 32767;
+
+					//adjust magnitude relative to the end of the dead zone
+					magnitude -= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
+
+					//optionally normalize the magnitude with respect to its expected range
+					//giving a magnitude value of 0.0 to 1.0
+					normalizedMagnitude = magnitude / (32767 - XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+				}
+				else //if the controller is in the deadzone zero out the magnitude
+				{
+					magnitude = 0.0;
+					normalizedMagnitude = 0.0;
 				}
 				break;*/
 
@@ -786,13 +806,15 @@ int main(int argc, char* argv[]) {
 		}
 		else
 		{
-			SDL_BlitSurface(gameOver, NULL, screen, &game_over_pos);
+			//SDL_BlitSurface(gameOver, NULL, screen, &game_over_pos);
+			SDL_BlitSurface(gameover_tex2D, NULL, screen, NULL);
 			gameover = 1;
 		}
 
 		if (dead_enemies == 40)
 		{
-			SDL_BlitSurface(youWin, NULL, screen, &youWin_pos);
+			//SDL_BlitSurface(youWin, NULL, screen, &youWin_pos);
+			SDL_BlitSurface(win_tex2d, NULL, screen, NULL);
 			gameover = 1;
 		}
 
@@ -821,8 +843,8 @@ int main(int argc, char* argv[]) {
 	SDL_FreeSurface(enemy_bullet_tex2d);
 	SDL_FreeSurface(explo_tex2d);
 	SDL_FreeSurface(fmg_splash_tex2d);
-	//SDL_FreeSurface(gameover_tex2D);
-	//SDL_FreeSurface(win_tex2d);
+	SDL_FreeSurface(gameover_tex2D);
+	SDL_FreeSurface(win_tex2d);
 	//SDL_FreeSurface(scoreFont);
 	TTF_CloseFont(vermin_ttf);
 	Mix_FreeMusic(music);

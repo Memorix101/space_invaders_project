@@ -186,8 +186,8 @@ type Game1 () as this =
             player.draw(spriteBatch)
             for i in lasers do i.draw(spriteBatch)
             for i in enemyLasers do i.draw(spriteBatch)
-            for i in enemies do i.draw(spriteBatch)
             for i in explosions do i.draw(spriteBatch)
+            for i in enemies do i.draw(spriteBatch)
             spriteBatch.DrawString(scoreFont, "Score: " + score.ToString("0000"), Vector2(640.0f - scoreFont.MeasureString("Score: 0000").X - 16.0f, 16.0f), Color.White);
         
             if enemies.Count = 0
