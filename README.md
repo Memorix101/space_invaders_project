@@ -59,6 +59,9 @@
 - Nintendo Wii
   - [GRRLIB](https://github.com/GRRLIB/GRRLIB)
   <br/> 
+- Nintendo Switch
+  - SDL2 (devkitPro)
+  <br/> 
 ### Game Engines
 - Unity
 - Godot
