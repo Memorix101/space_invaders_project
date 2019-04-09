@@ -81,13 +81,14 @@ int rowCount = 0;
 int itemCount = 0;
 char textBuffer[64];
 int score = 0;
+int gameover = 0;
+int quit = 0;
 
 //time
 float Timestep = 0;
 float lastdelta = 0;
 float curTime = 0;
 float prewarm = 0;
-
 
 //Music
 Mix_Music *music = NULL;
@@ -119,6 +120,8 @@ SDL_Surface * explo_tex = NULL;
 SDL_Surface * fmg_splash_tex = NULL;
 SDL_Surface * space_tex = NULL;
 SDL_Surface*  fontTex = NULL;
+SDL_Surface* gameover_tex2D = NULL;
+SDL_Surface* win_tex2d = NULL;
 
 void preload_asset()
 {
@@ -130,6 +133,8 @@ void preload_asset()
   player_tex = IMG_Load("rd/player.png");
   explo_tex = IMG_Load("rd/explode.png");
   fontTex = IMG_Load("rd/font.png");
+  gameover_tex2D = IMG_Load("rd/gameover_ui.png");
+	win_tex2d = IMG_Load("rd/win_ui.png");
 }
 
 //fast and dirty bitmap font
@@ -496,8 +501,6 @@ void drawEnemyBullet()
   }
 }
 
-
-
 /*
 Enemies
 */
@@ -729,8 +732,7 @@ void input()
     A_BUTTON_DOWN = 0;
   }
 
-
-  if (A_BUTTON == 1 && A_BUTTON_DOWN == 0)
+  if (A_BUTTON == 1 && A_BUTTON_DOWN == 0 && player.alive == 1)
   {
     //printf("SHOOT! \r\n");
     addBullet(player.pos.x + player.hitbox.w / 2 - 2, player.pos.y - 28);
@@ -878,7 +880,6 @@ void updateLogic()
     }
   }
 
-
   int b;
   for (b = 0; b < MAX_ENEMY_BULLETS; b++) if (enemy_bullets[b])
   {
@@ -895,6 +896,22 @@ void updateLogic()
     }
   }
 
+}
+
+void reset()
+{
+	gameover = 0;
+	score = 0;
+  enemies_killed = MAX_ENEMIES;
+	memset(enemy, 0, sizeof(enemy));
+	memset(bullets, 0, sizeof(bullets));
+	memset(enemy_bullets, 0, sizeof(enemy_bullets));
+	memset(explo, 0, sizeof(explo));
+	rowCount = 0;
+	itemCount = 0;
+	initEnemies();
+	p_move = 640 / 2 - player.tex->w / 2;
+	player.alive = 1;
 }
 
 int main(int argc, char *argv[]) {
@@ -955,15 +972,12 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  while (1)
+  while (quit == 0)
   {
-
     curTime = (float)SDL_GetTicks()/1000.0f;
     Timestep = curTime - lastdelta;
 
-
     prewarm += 1 * Timestep;
-
 
     //Handle events on queue
     while (SDL_PollEvent(&e) != 0)
@@ -993,21 +1007,25 @@ int main(int argc, char *argv[]) {
     drawBullet();
     drawEnemyBullet();
 
-
       if (player.alive == 1) {
-      //SDL_FillRect(screen, &player.hitbox, SDL_MapRGB(screen->format, 255, 0, 0));
-      SDL_BlitSurface(player.tex, NULL, screen, &player.pos);
-      }
-     else
-      {
-        createFont(fontTex, 16, ctextpos, "GAME OVER!");
+			  SDL_BlitSurface(player.tex, NULL, screen, &player.pos);
+		  }
+		  else
+		  {
+			  //SDL_BlitSurface(gameOver, NULL, screen, &game_over_pos);
+			  SDL_BlitSurface(gameover_tex2D, NULL, screen, NULL);
+			  gameover = 1;	
+        //createFont(fontTex, 16, ctextpos, "GAME OVER!");
       }
 
       sprintf(textBuffer, "SCORE:%05d", score);
       createFont(fontTex, 16, textpos, textBuffer);
 
-      if(enemies_killed <= 0)
-      createFont(fontTex, 16, wctextpos, "YOU WIN!");
+      if(enemies_killed <= 0){
+        //createFont(fontTex, 16, wctextpos, "YOU WIN!");
+        SDL_BlitSurface(win_tex2d, NULL, screen, NULL);
+			  gameover = 1;
+      }        
 
 /*
     pspDebugScreenSetXY(0, 0);
@@ -1017,13 +1035,36 @@ int main(int argc, char *argv[]) {
     //Update Screen
     SDL_Flip(screen);
 
-    if (pad.Buttons & PSP_CTRL_HOME) {
-      sceKernelExitGame();
+    if (pad.Buttons & PSP_CTRL_START && gameover == 1)
+    {
+      reset();
     }
 
-        lastdelta = curTime;
-
+    if (pad.Buttons & PSP_CTRL_HOME) {
+      quit = 1;
+      sceKernelExitGame();
+    }
+    lastdelta = curTime;
   }
+
+  SDL_FreeSurface(enemy_tex);
+	SDL_FreeSurface(player_tex);
+	SDL_FreeSurface(bullet_tex);
+	SDL_FreeSurface(enemy_bullet_tex);
+	SDL_FreeSurface(explo_tex);
+	SDL_FreeSurface(fmg_splash_tex);
+	SDL_FreeSurface(space_tex);
+	SDL_FreeSurface(fontTex);
+	SDL_FreeSurface(gameover_tex2D);
+	SDL_FreeSurface(win_tex2d);
+	Mix_FreeMusic(music);
+	Mix_FreeChunk(snd_blaster);
+	Mix_FreeChunk(snd_explo);
+	Mix_FreeChunk(snd_pusher);
+	memset(enemy, 0, sizeof(enemy));
+	memset(bullets, 0, sizeof(bullets));
+	memset(enemy_bullets, 0, sizeof(enemy_bullets));
+	memset(explo, 0, sizeof(explo));
 
   sceKernelExitGame();
 
