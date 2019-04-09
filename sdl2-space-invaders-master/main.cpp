@@ -256,7 +256,7 @@ void updateEnemies()
 {
 	animatorEnemies();
 
-	const int moveSpeed = 1;
+	const int moveSpeed = 3;
 
 	for (int e = 0; e < MAX_ENEMIES; e++) if (enemy[e]) {
 		if (enemy[e]->goLeft == 0)
@@ -594,6 +594,15 @@ int main(int argc, char* argv[]) {
 				const char* name = SDL_GameControllerNameForIndex(i);
 				if (name)
 					printf("Controller %i has game controller name '%s'\n", i, name);
+
+				// Open the device
+				haptic = SDL_HapticOpen(0);
+				if (haptic == NULL)
+					return -1;
+
+				// Initialize simple rumble
+				if (SDL_HapticRumbleInit(haptic) != 0)
+					return -1;
 				break;
 			}
 			else {
@@ -601,15 +610,6 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
-
-	// Open the device
-	haptic = SDL_HapticOpen(0);
-	if (haptic == NULL)
-		return -1;
-
-	// Initialize simple rumble
-	if (SDL_HapticRumbleInit(haptic) != 0)
-		return -1;
 
 	//Initialize SDL_mixer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
