@@ -56,20 +56,9 @@ SDL_Surface* screen = NULL;
 SDL_Window* gWindow = NULL;
 
 SDL_GameController* controller = NULL;
-#define XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE  7849
-#define XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE 8689
-#define XINPUT_GAMEPAD_TRIGGER_THRESHOLD    3
+SDL_Haptic* haptic;
+#define GAMEPAD_DEADZONE  32768.0f
 float LX = 0;
-float LY = 0;
-
-//determine how far the controller is pushed
-float magnitude = sqrt(LX * LX + LY * LY);
-
-//determine the direction the controller is pushed
-float normalizedLX = LX / magnitude;
-float normalizedLY = LY / magnitude;
-
-float normalizedMagnitude = 0;
 
 //player
 #define MAX_BULLETS 50
@@ -554,6 +543,8 @@ void updateLogic()
 			addExplo(player.pos.x - 128 / 2, player.pos.y - 128 / 2);
 			removeEnemyBullet(b);
 			Mix_PlayChannel(0, snd_explo, 0);
+			// Play effect at 50% strength for 2 seconds
+			SDL_HapticRumblePlay(haptic, 0.5, 500);
 			//printf("BOOM!\n");
 			break;
 		}
@@ -610,6 +601,15 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
+
+	// Open the device
+	haptic = SDL_HapticOpen(0);
+	if (haptic == NULL)
+		return -1;
+
+	// Initialize simple rumble
+	if (SDL_HapticRumbleInit(haptic) != 0)
+		return -1;
 
 	//Initialize SDL_mixer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
@@ -728,54 +728,33 @@ int main(int argc, char* argv[]) {
 				}
 
 				break;
-			/*case SDL_CONTROLLERAXISMOTION:  //https://docs.microsoft.com/en-gb/windows/desktop/xinput/getting-started-with-xinput#dead_zone
+			case SDL_CONTROLLERAXISMOTION:  //https://docs.microsoft.com/en-gb/windows/desktop/xinput/getting-started-with-xinput#dead_zone
 				
 				// handle axis motion
-				LX = e.caxis.value;
-				
-				printf("LX: %d\n", (int)LX);
-				printf("magnitude: %d\n", (int)magnitude);
-
-				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX && magnitude <= -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX)
 				{
-					move_right = 1;
-					move_left = 0;
-				}
-				else
+					LX = (float)e.caxis.value / 32768.0f;
+					printf("LX: %f\n", (float)LX);
+				}					
+
+				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX && LX <= -0.5f)
 				{
 					move_right = 0;
-				}				 
-				
-				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX && magnitude >= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
-				{
-					move_left = 1;
-					move_right = 0;
+					move_left = 1;					
 				}
-				else
+				
+				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX && LX >= 0.5f)
 				{
 					move_left = 0;
+					move_right = 1;					
 				}
-
-				//check if the controller is outside a circular dead zone
-				if (magnitude > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+				 
+				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX && LX < 0.5f && e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX && LX > -0.5f)
 				{
-					//clip the magnitude at its expected maximum value
-					if (magnitude > 32767) magnitude = 32767;
-
-					//adjust magnitude relative to the end of the dead zone
-					magnitude -= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
-
-					//optionally normalize the magnitude with respect to its expected range
-					//giving a magnitude value of 0.0 to 1.0
-					normalizedMagnitude = magnitude / (32767 - XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+					move_left = 0;
+					move_right = 0;
 				}
-				else //if the controller is in the deadzone zero out the magnitude
-				{
-					magnitude = 0.0;
-					normalizedMagnitude = 0.0;
-				}
-				break;*/
-
+				break;
 			}
 		}
 
@@ -789,8 +768,7 @@ int main(int argc, char* argv[]) {
 
 		updateLogic();
 
-		int e;
-		for (e = 0; e < MAX_ENEMIES; e++) if (enemy[e]) {
+		for (int e = 0; e < MAX_ENEMIES; e++) if (enemy[e]) {
 			enemy[e]->rect.x = currentFrame * 32;
 		}
 
@@ -836,6 +814,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	SDL_GameControllerClose(controller);
+	SDL_HapticClose(haptic);
 	SDL_FreeSurface(youWin);
 	SDL_FreeSurface(gameOver);
 	SDL_FreeSurface(player_tex2d);
