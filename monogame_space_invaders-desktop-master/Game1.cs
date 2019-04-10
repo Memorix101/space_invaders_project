@@ -21,6 +21,8 @@ namespace SpaceInvaders_Desktop
         Texture2D background;
         Texture2D frameBackground;
         Texture2D arcade;
+        Texture2D gameover_ui;
+        Texture2D win_ui;
 
         Player player;
         List<Laser> laser;
@@ -33,6 +35,7 @@ namespace SpaceInvaders_Desktop
 
         bool gamestart = false;
         float timer = 0f;
+        private bool gameover = false;
 
         Viewport backgroundViewport; //total screenszie
         Viewport gameViewport;
@@ -40,9 +43,7 @@ namespace SpaceInvaders_Desktop
         SpriteFont Font1;
 
         string msg = "";
-
         bool enemyHit = false;
-
         int score;
 
         Song music;
@@ -59,14 +60,26 @@ namespace SpaceInvaders_Desktop
             graphics.PreferredBackBufferWidth = 1920;
         }
 
-        protected override void Initialize()
+        private void restart()
         {
-            player = new Player();
+            gamestart = false;
+            enemy.Clear();
+            player.Position = new Vector2(640.0f / 2.0f - player.TileBoundingBox.Width / 2.0f, player.Position.Y);
+            laser.Clear();
+            enemyLaser.Clear();
+            explosion.Clear();
+            itemCount = 0;
+            rowCount = 0;
+            score = 0;
+            spawnEnemies();
+            player.dead = false;
+            gameover = false;
+            gamestart = true;
+        }
 
-            enemy = new List<Enemy>();
-            laser = new List<Laser>();
-            explosion = new List<Explosion>();
-            enemyLaser = new List<EnemyLaser>();
+        private void spawnEnemies()
+        {
+            Random r = new Random();
 
             // create enemies
             for (int i = 0; i < 40; i++)
@@ -78,13 +91,27 @@ namespace SpaceInvaders_Desktop
                 }
 
                 itemCount++;
-
-                Random r = new Random();
                 enemy.Add(new Enemy(new Vector2(itemCount * 40, 40 * rowCount), itemCount, r.Next(3, 20)));
 
                 // Debug.WriteLine("row:" + rowCount);
                 // Debug.WriteLine("item:" + itemCount * 40);
             }
+
+            foreach (Enemy e in enemy)
+                e.LoadResources(Content);
+        }
+
+        protected override void Initialize()
+        {
+            player = new Player();
+
+            enemy = new List<Enemy>();
+            laser = new List<Laser>();
+            explosion = new List<Explosion>();
+            enemyLaser = new List<EnemyLaser>();
+            
+            // create enemies
+            spawnEnemies();
 
             base.Initialize();
         }
@@ -108,6 +135,8 @@ namespace SpaceInvaders_Desktop
             background = Content.Load<Texture2D>("space3");
             frameBackground = Content.Load<Texture2D>("BGPattern_blue");
             arcade = Content.Load<Texture2D>("arcade");
+            gameover_ui = Content.Load<Texture2D>("gameover_ui");
+            win_ui = Content.Load<Texture2D>("win_ui");
             Font1 = Content.Load<SpriteFont>("font");
 
             music = Content.Load<Song>("bodenstaendig");
@@ -117,8 +146,6 @@ namespace SpaceInvaders_Desktop
             snd_blaster = Content.Load<SoundEffect>("blaster");
             snd_blasterEnemy = Content.Load<SoundEffect>("pusher");
             snd_explo = Content.Load<SoundEffect>("explode1");
-
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void UnloadContent()
@@ -195,6 +222,12 @@ namespace SpaceInvaders_Desktop
                     }
 
                     if (enemyLaser[i].Position.Y >= 480)
+                        enemyLaser[i].dispose = true;
+                }
+
+                for (int i = enemyLaser.Count - 1; i >= 0; i--)
+                {
+                    if (enemyLaser[i].dispose)
                         enemyLaser.RemoveAt(i);
                 }
 
@@ -206,16 +239,21 @@ namespace SpaceInvaders_Desktop
                         explosion.RemoveAt(i);
                 }
 
-                if (enemy.Count == 0)
+                /*if (enemy.Count == 0)
                 {
                     msg = "You Win!";
                 }
                 else if (player.dead)
                 {
                     msg = "Game Over!";
-                }
+                }*/
 
                 // Microsoft.Xna.Framework.Input.GamePad.SetVibration(PlayerIndex.One, 0.25f, 0f);
+
+                if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Start) && gameover)
+                {
+                    restart();
+                }
             }
 
             base.Update(gameTime);
@@ -256,7 +294,18 @@ namespace SpaceInvaders_Desktop
 
                 spriteBatch.DrawString(Font1, "Score: " + score.ToString("0000"), new Vector2(640 - Font1.MeasureString("Score: 0000").X - 16, 16), Color.White);
 
-                spriteBatch.DrawString(Font1, msg, new Vector2(640 / 2 - Font1.MeasureString(msg).X / 2, 480 / 2 - Font1.MeasureString(msg).Y / 2), Color.White);
+                //spriteBatch.DrawString(Font1, msg, new Vector2(640 / 2 - Font1.MeasureString(msg).X / 2, 480 / 2 - Font1.MeasureString(msg).Y / 2), Color.White);
+
+                if (enemy.Count == 0)
+                {
+                    gameover = true;
+                    spriteBatch.Draw(win_ui, new Rectangle(0, 0, 680, 480), null, Color.White);
+                }
+                else if (player.dead)
+                {
+                    gameover = true;
+                    spriteBatch.Draw(gameover_ui, new Rectangle(0, 0, 680, 480), null, Color.White);
+                }
             }
             else
             {

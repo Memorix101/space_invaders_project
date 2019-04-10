@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/bodenstaendig_2000_in_rock_4bit.mp3</SourceFile>
+  <SourceFile>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-desktop-master/Content/bodenstaendig_2000_in_rock_4bit.mp3</SourceFile>
   <SourceTime>2016-11-26T23:13:04+01:00</SourceTime>
-  <DestFile>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/bin/DesktopGL/Content/bodenstaendig_2000_in_rock_4bit.xnb</DestFile>
-  <DestTime>2019-03-29T22:51:00.4143161+01:00</DestTime>
+  <DestFile>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-desktop-master/Content/bin/DesktopGL/Content/bodenstaendig_2000_in_rock_4bit.xnb</DestFile>
+  <DestTime>2019-04-10T01:48:20.3433754+02:00</DestTime>
   <Importer>Mp3Importer</Importer>
   <ImporterTime>2018-12-08T17:35:54+01:00</ImporterTime>
   <Processor>SongProcessor</Processor>
@@ -15,6 +15,6 @@
   <Dependencies />
   <BuildAsset />
   <BuildOutput>
-    <string>D:/SourceTree/space_invaders_project/monogame_space_invaders-master/Desktop/Content/bin/DesktopGL/Content/bodenstaendig_2000_in_rock_4bit.ogg</string>
+    <string>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-desktop-master/Content/bin/DesktopGL/Content/bodenstaendig_2000_in_rock_4bit.ogg</string>
   </BuildOutput>
 </PipelineBuildEvent>

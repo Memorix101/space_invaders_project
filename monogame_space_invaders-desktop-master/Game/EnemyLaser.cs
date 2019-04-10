@@ -12,8 +12,8 @@ namespace SpaceInvaders_Desktop
         private Vector2 pos = new Vector2(0, 0);
         private Texture2D tex;
         private float PosX, PosY;
-        const int speed = 250;    
-
+        const int speed = 250;
+        public bool dispose = false;
         private Rectangle rect;
 
         public EnemyLaser(Vector2 position, ContentManager con)

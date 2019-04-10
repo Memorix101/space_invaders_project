@@ -44,6 +44,7 @@ namespace SpaceInvaders_Desktop
         public Vector2 Position
         {
             get { return pos; }
+            set { pos = value; }
         }
 
         public float SpriteWidth
