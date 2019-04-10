@@ -127,10 +127,7 @@ namespace SpaceInvaders_Desktop
             gameViewport.Height = 480;
 
             player.LoadResources(Content);
-
-            foreach (Enemy e in enemy)
-                e.LoadResources(Content);
-
+            
             fmg_logo = Content.Load<Texture2D>("fmg_15b");
             background = Content.Load<Texture2D>("space3");
             frameBackground = Content.Load<Texture2D>("BGPattern_blue");
@@ -215,10 +212,11 @@ namespace SpaceInvaders_Desktop
 
                     if (enemyLaser[i].TileBoundingBox.Intersects(player.TileBoundingBox))
                     {
-                        enemyLaser.RemoveAt(i);
+                        enemyLaser[i].dispose = true;
                         explosion.Add(new Explosion(new Vector2(player.Position.X - 128 / 2, player.Position.Y - 128 / 2), Content));
                         player.dead = true;
                         snd_explo.Play();
+                        //GamePad.SetVibration(PlayerIndex.One, 1.0f, 1.0f);
                     }
 
                     if (enemyLaser[i].Position.Y >= 480)
@@ -248,9 +246,10 @@ namespace SpaceInvaders_Desktop
                     msg = "Game Over!";
                 }*/
 
-                // Microsoft.Xna.Framework.Input.GamePad.SetVibration(PlayerIndex.One, 0.25f, 0f);
+                if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Back) || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    Exit();
 
-                if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Start) && gameover)
+               if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Start) && gameover)
                 {
                     restart();
                 }
@@ -269,9 +268,7 @@ namespace SpaceInvaders_Desktop
             if (gamestart)
             {
                 spriteBatch.Draw(frameBackground, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), null, new Color(0.25f, 0.25f, 0.25f)); // stretches image to prefered size     
-
                 spriteBatch.Draw(arcade, new Rectangle((int)Window.ClientBounds.Width / 2 - arcade.Width / 2, ((int)Window.ClientBounds.Height / 2 - arcade.Height / 2) + 35, arcade.Width, arcade.Height), null, new Color(0.5f, 0.5f, 0.5f));
-
                 spriteBatch.End();
 
                 GraphicsDevice.Viewport = gameViewport;

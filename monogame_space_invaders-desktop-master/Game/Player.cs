@@ -11,7 +11,6 @@ namespace SpaceInvaders_Desktop
     {
         Vector2 pos;
         private Texture2D tex;
-        private float playerPosX;
         const int speed = 250;
 
         public bool shoot;
@@ -55,14 +54,13 @@ namespace SpaceInvaders_Desktop
         public void LoadResources(ContentManager con)
         {
             tex = con.Load<Texture2D>("player");
-            playerPosX = 640 / 2 - tex.Bounds.Width / 2;
+            pos = new Vector2(640 / 2 - tex.Bounds.Width / 2, (480 - 60) - tex.Height / 2);
             spriteWidth = tex.Bounds.Width;
         }
 
         private void Input(GameTime gameTime)
         {
             gamePadState = GamePad.GetState(PlayerIndex.One);
-            
             lastkeyState = keyState;
 
             if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A) && lastkeyState.IsButtonUp(Buttons.A))
@@ -76,14 +74,13 @@ namespace SpaceInvaders_Desktop
 
             keyState = gamePadState;
 
-
             if (gamePadState.ThumbSticks.Left.X >= 0.5f)
             {
-                playerPosX += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                pos.X += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (gamePadState.ThumbSticks.Left.X <= -0.5f)
             {
-                playerPosX -= speed * (float)gameTime.ElapsedGameTime.TotalSeconds; 
+                pos.X -= speed * (float)gameTime.ElapsedGameTime.TotalSeconds; 
             }
 
         }
@@ -93,10 +90,8 @@ namespace SpaceInvaders_Desktop
             if (!dead)
             {
                 Input(gameTime);
-
-                playerPosX = MathHelper.Clamp(playerPosX, 0, 640 - tex.Width);
-
-                pos = new Vector2(playerPosX, (480 - 60) - tex.Height / 2);
+                pos = new Vector2(MathHelper.Clamp(pos.X, 0, 640 - tex.Width), pos.Y);
+                pos = new Vector2(pos.X, (480 - 60) - tex.Height / 2);
             }
         }
 
