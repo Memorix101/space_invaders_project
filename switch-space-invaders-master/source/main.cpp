@@ -270,7 +270,7 @@ void updateEnemies()
 			enemy[e]->pos.x -= moveSpeed;
 		}
 
-		if (enemy[e]->pos.x >= 640 - (enemy[e]->rect.w + enemy[e]->rowPosID) && enemy[e]->goLeft == 0)
+		if (enemy[e]->pos.x >= 850 - (enemy[e]->rect.w + enemy[e]->rowPosID) && enemy[e]->goLeft == 0)
 		{
 			enemy[e]->goLeft = 1;
 		}
@@ -332,7 +332,7 @@ void drawEnemies()
 void initPlayer()
 {
 	player.tex = player_tex2d;
-	p_move = 640 / 2 - player.tex->w / 2;
+	p_move = 850 / 2 - player.tex->w / 2;
 	player.pos.y = (480 - 60) - player.tex->h / 2;
 	player.hitbox.w = player.tex->w;
 	player.hitbox.h = player.tex->h;
@@ -369,9 +369,9 @@ void updatePlayer()
 	{
 		player.pos.x = 0;
 	}
-	else if (player.pos.x >= 640 - player.tex->w)
+	else if (player.pos.x >= 850 - player.tex->w)
 	{
-		player.pos.x = 640 - player.tex->w;
+		player.pos.x = 850 - player.tex->w;
 	}
 }
 
@@ -563,7 +563,7 @@ void reset()
 	rowCount = 0;
 	itemCount = 0;
 	initEnemies();
-	p_move = 640 / 2 - player.tex->w / 2;
+	p_move = 850 / 2 - player.tex->w / 2;
 	player.alive = 1;
 }
 
@@ -608,7 +608,7 @@ int main(int argc, char *argv[])
 
 	SDL_BlitSurface(fmg_splash_tex2d, NULL, screen, NULL);
 	SDL_UpdateWindowSurface(gWindow);
-	SDL_Delay(2000);
+	SDL_Delay(3000);
 	SDL_FreeSurface(fmg_splash_tex2d);
 
 	//init stuff
@@ -621,7 +621,7 @@ int main(int argc, char *argv[])
 	char textBuffer[64];
 	sprintf(textBuffer, "SCORE: % 05d", score);
 	SDL_Surface* scoreText = TTF_RenderText_Solid(vermin_ttf, textBuffer, Color);
-	score_pos.x = 720 - scoreText->w - 10;
+	score_pos.x = 850 - scoreText->w - 10;
 	score_pos.y = 10;
 
 	SDL_Surface* youWin = TTF_RenderText_Solid(vermin_ttf, "You Win!", Color);
