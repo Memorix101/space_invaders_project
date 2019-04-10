@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
+#include <switch.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
@@ -78,8 +79,8 @@ struct enemy_bullet_t* enemy_bullets[MAX_ENEMY_BULLETS] = { NULL };
 struct explo_t* explo[MAX_EXPLO] = { NULL };
 int rowCount = 0;
 int itemCount = 0;
-int DeltaTime;
-int lastTick;
+float DeltaTime;
+float lastTick;
 int score = 0;
 int gameover = 0;
 int quit = 0;
@@ -620,7 +621,7 @@ int main(int argc, char *argv[])
 	char textBuffer[64];
 	sprintf(textBuffer, "SCORE: % 05d", score);
 	SDL_Surface* scoreText = TTF_RenderText_Solid(vermin_ttf, textBuffer, Color);
-	score_pos.x = 640 - scoreText->w - 10;
+	score_pos.x = 720 - scoreText->w - 10;
 	score_pos.y = 10;
 
 	SDL_Surface* youWin = TTF_RenderText_Solid(vermin_ttf, "You Win!", Color);
@@ -646,7 +647,7 @@ int main(int argc, char *argv[])
 
 	while (quit == 0)
 	{
-		DeltaTime = (SDL_GetTicks() / 1000) - lastTick;
+		DeltaTime = (armGetSystemTick() /  100000000.0) - lastTick;
 
 		//Handle events on queue
 		while (SDL_PollEvent(&e) != 0)
@@ -780,7 +781,6 @@ int main(int argc, char *argv[])
 			gameover = 1;
 		}
 
-
 		//printf("MAXCOUNT: %d\n", dead_enemies);
 
 		//this ugly block is updating the score
@@ -789,11 +789,10 @@ int main(int argc, char *argv[])
 		scoreText = NULL;
 		scoreText = TTF_RenderText_Solid(vermin_ttf, textBuffer, Color);
 
-
 		//Update Screen
 		SDL_UpdateWindowSurface(gWindow);
 
-		lastTick = (SDL_GetTicks() / 1000);
+		lastTick = (armGetSystemTick() /  100000000.0);
 		SDL_Delay(30);
 	}
 
