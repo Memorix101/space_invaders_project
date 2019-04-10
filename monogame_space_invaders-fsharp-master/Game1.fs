@@ -124,44 +124,22 @@ type Game1 () as this =
                 then 
                     restart()
 
-            //for i in enemies.Count-1 .. -1 .. 0 do
-            let mutable continueLooping = true
-            let mutable i = 0
-            while continueLooping do
+            for i in enemies.Count-1 .. -1 .. 0 do // need to rewrite this. not 100% working as expected
                enemies.Item(i).update(gameTime)     
                if enemies.Item(i).shoot = true  then
-                 //printf "pew pew!\n"
                 enemyLasers.Add(Bullet(Vector2(enemies.Item(i).position.X + 32.0f / 2.0f - 4.5f, enemies.Item(i).position.Y + 9.0f), true, this.Content));
                 snd_blasterEnemyInstance <- snd_blasterEnemy.CreateInstance()
                 snd_blasterEnemyInstance.Play() |> ignore
 
                for l in lasers.Count-1 .. -1 .. 0 do
-               //let mutable l = lasers.Count - 1
-               //let mutable continueLooping2 = true
-               //while continueLooping2 do
-                //if l >= 0 then  
-                    //l <- lasers.Count - 1
                     if lasers.Item(l).TileBoundingBox.Intersects(enemies.Item(i).TileBoundingBox) && enemies.Item(i).dead = false  && lasers.Item(l).dispose = false then
-                         //printf "BOOM!\n"
                         score <- score + 100
                         let spriteWidth = enemies.Item(i).TileBoundingBox.Width
+                        enemies.Item(i).dead <- true
                         explosions.Add(Explosion(Vector2(lasers.Item(l).position.X - (128.0f / 2.0f) + (float32) spriteWidth * 0.2f / 2.0f, lasers.Item(l).position.Y - 128.0f / 2.0f), this.Content))
                         lasers.Item(l).dispose <- true
-                        enemies.Item(i).dead <- true //enemies.RemoveAt(i) //don't know how to fix this. could not find something like break or workaround
                         snd_exploInstance <- snd_explo.CreateInstance()
                         snd_exploInstance.Play() |> ignore
-                        //continueLooping <- false
-
-                    //else
-                    //continueLooping2 <- false
-                //else
-                //continueLooping2 <- false
-
-                //l <- l + 1
-
-               i <- i + 1  
-               if i > enemies.Count - 1 then
-                continueLooping <- false
             
             for i in enemies.Count-1 .. -1 .. 0 do
                 if enemies.Item(i).dead
@@ -182,7 +160,6 @@ type Game1 () as this =
 
                 if enemyLasers.Item(i).TileBoundingBox.Intersects(player.TileBoundingBox) && player.dead = false
                     then
-                        enemyLasers.RemoveAt(i);
                         explosions.Add(Explosion(Vector2(player.position.X - 128.0f / 2.0f, player.position.Y - 128.0f / 2.0f), this.Content))
                         player.dead <- true;
                         snd_exploInstance <- snd_explo.CreateInstance()
