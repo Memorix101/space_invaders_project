@@ -9,19 +9,16 @@ namespace SpaceInvaders_Desktop
 {
     class Player
     {
-        Vector2 pos;
+        private Vector2 pos;
         private Texture2D tex;
-        const int speed = 250;
-
+        private const int speed = 250;
         public bool shoot;
-
-        float spriteWidth;
-
-        GamePadState keyState;
-        GamePadState lastkeyState;
-        GamePadState gamePadState;
-
         public bool dead;
+
+        GamePadState cbuttonState;
+        GamePadState lastcbuttonState;
+        GamePadState cpadState;
+        KeyboardState keyState;
 
         public Player()
         {
@@ -48,22 +45,22 @@ namespace SpaceInvaders_Desktop
 
         public float SpriteWidth
         {
-            get { return spriteWidth; }
+            get { return tex.Bounds.Width; }
         }
 
         public void LoadResources(ContentManager con)
         {
             tex = con.Load<Texture2D>("player");
             pos = new Vector2(640 / 2 - tex.Bounds.Width / 2, (480 - 60) - tex.Height / 2);
-            spriteWidth = tex.Bounds.Width;
         }
 
         private void Input(GameTime gameTime)
         {
-            gamePadState = GamePad.GetState(PlayerIndex.One);
-            lastkeyState = keyState;
+            cpadState = GamePad.GetState(PlayerIndex.One);
+            lastcbuttonState = cbuttonState;
 
-            if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A) && lastkeyState.IsButtonUp(Buttons.A))
+            if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A) && lastcbuttonState.IsButtonUp(Buttons.A) ||
+                Keyboard.GetState().IsKeyDown(Keys.Space) && keyState.IsKeyDown(Keys.Space) == false)
             {
                 shoot = true;
             }
@@ -72,17 +69,18 @@ namespace SpaceInvaders_Desktop
                 shoot = false;
             }
 
-            keyState = gamePadState;
+            cbuttonState = cpadState;
 
-            if (gamePadState.ThumbSticks.Left.X >= 0.5f)
+            if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right) || cpadState.ThumbSticks.Left.X >= 0.5f || cpadState.DPad.Right == ButtonState.Pressed)
             {
                 pos.X += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (gamePadState.ThumbSticks.Left.X <= -0.5f)
+            else if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left) || cpadState.ThumbSticks.Left.X <= -0.5f || cpadState.DPad.Left == ButtonState.Pressed)
             {
                 pos.X -= speed * (float)gameTime.ElapsedGameTime.TotalSeconds; 
             }
 
+            keyState = Keyboard.GetState();
         }
 
         public void Update(GameTime gameTime)

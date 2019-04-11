@@ -11,16 +11,20 @@ namespace SpaceInvaders_Desktop
     {
         private Vector2 pos = new Vector2(0, 0);
         private Texture2D tex;
-        private float PosX, PosY;
-        const int speed = 250;    
+        private const int speed = 250;
+        public bool isEnemy = false;
+        public bool dispose = false;
 
-        private Rectangle rect;
-
-        public Laser(Vector2 position, ContentManager con)
+        public Laser(Vector2 position, bool isEnemy, ContentManager con)
         {
-            tex = con.Load<Texture2D>("bullet");
-            PosX = position.X;
-            PosY = position.Y;
+            pos.X = position.X;
+            pos.Y = position.Y;
+            this.isEnemy = isEnemy;
+
+            if(isEnemy)
+                tex = con.Load<Texture2D>("enemy-bullet");
+            else
+                tex = con.Load<Texture2D>("bullet");
         }
 
         public virtual Rectangle TileBoundingBox
@@ -30,8 +34,8 @@ namespace SpaceInvaders_Desktop
                 return new Rectangle(
                     (int)pos.X,
                     (int)pos.Y,
-                    rect.Width,
-                    rect.Height);
+                    tex.Width,
+                    tex.Height);
             }
         }
 
@@ -40,18 +44,17 @@ namespace SpaceInvaders_Desktop
             get { return pos; }
         }
 
-
         public void Update(GameTime gameTime)
         {
-            PosY -= speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            pos = new Vector2(PosX, PosY);
-            
+            if (isEnemy)
+                pos = new Vector2(pos.X, pos.Y + speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            else
+                pos = new Vector2(pos.X, pos.Y - speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         public void Draw(SpriteBatch sp)
         {
             sp.Draw(tex, pos, Color.White);
         }
-
     }
 }
