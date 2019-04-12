@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb2D;
     private Vector2 velocity;
 
-    private float speed = 4f;
+    private float speed = 5f;
 
     private float mobilexAxis;
     private float xAxis;
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -6f, 6f), transform.position.y, 0);
         Score_TMP.text = score.ToString("0000");
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
             Fire();
         }
