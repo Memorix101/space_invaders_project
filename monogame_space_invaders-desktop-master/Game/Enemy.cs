@@ -8,7 +8,7 @@ namespace SpaceInvaders_Desktop
 {
     class Enemy
     {
-        private Vector2 pos = new Vector2(0, 0);
+        private Vector2 pos = Vector2.Zero;
         private Texture2D tex;
         private const int moveSpeed = 50;
         private float startPos;
@@ -19,6 +19,7 @@ namespace SpaceInvaders_Desktop
         private int rowPosID;
         private float shootTimer;
         private float shootTimeLimit;
+
         public bool shoot = false;
 
         public Enemy(Vector2 position, int rowid, int maxShootTime)

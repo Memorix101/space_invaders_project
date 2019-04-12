@@ -8,7 +8,7 @@ namespace SpaceInvaders_Desktop
 {
     class Explosion
     {
-        private Vector2 pos = new Vector2(0, 0);
+        private Vector2 pos = Vector2.Zero;
         private Texture2D tex;
         private float PosX, PosY;
         private const int moveSpeed = 50;
@@ -16,6 +16,7 @@ namespace SpaceInvaders_Desktop
         private Rectangle spriteRect = new Rectangle(0, 0, 128, 128);
         private const float animationSpeed = 25;
         private float currentFrame;
+
         public bool animationCompleted = false;
 
         public Explosion(Vector2 position, ContentManager con)

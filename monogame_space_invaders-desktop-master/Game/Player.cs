@@ -12,13 +12,13 @@ namespace SpaceInvaders_Desktop
         private Vector2 pos;
         private Texture2D tex;
         private const int speed = 250;
+        private GamePadState cbuttonState;
+        private GamePadState lastcbuttonState;
+        private GamePadState cpadState;
+        private KeyboardState keyState;
+
         public bool shoot;
         public bool dead;
-
-        GamePadState cbuttonState;
-        GamePadState lastcbuttonState;
-        GamePadState cpadState;
-        KeyboardState keyState;
 
         public Player()
         {

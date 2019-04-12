@@ -12,6 +12,7 @@ namespace SpaceInvaders_Desktop
         private Vector2 pos = new Vector2(0, 0);
         private Texture2D tex;
         private const int speed = 250;
+
         public bool isEnemy = false;
         public bool dispose = false;
 

@@ -9,42 +9,45 @@ using Microsoft.Xna.Framework.Media;
 
 namespace SpaceInvaders_Desktop
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        // MonoGame
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
 
-        Texture2D fmg_logo;
-        Texture2D background;
-        Texture2D arcade;
-        Texture2D gameover_ui;
-        Texture2D win_ui;
+        // Sprites
+        private Texture2D fmg_logo;
+        private Texture2D background;
+        private Texture2D arcade;
+        private Texture2D gameover_ui;
+        private Texture2D win_ui;
 
-        Player player;
-        List<Laser> laser;
-        List<Laser> enemyLaser;
-        List<Explosion> explosion;
+        // Entities
+        private Player player;
+        private List<Laser> laser;
+        private List<Laser> enemyLaser;
+        private List<Explosion> explosion;
+        private List<Enemy> enemy;
+        
+        // Enemy Creation
+        private int rowCount;
+        private int itemCount;
 
-        List<Enemy> enemy;
-        int rowCount;
-        int itemCount;
-
-        bool gamestart = false;
-        float timer = 0f;
+        // GameManager
+        private bool gamestart = false;
+        private float timer = 0f;
         private bool gameover = false;
 
-        SpriteFont verminFont;
+        // Font
+        private SpriteFont verminFont;
+        private string msg = string.Empty;
+        private int score;
 
-        string msg = "";
-        int score;
-
-        Song music;
-        SoundEffect snd_blaster;
-        SoundEffect snd_blasterEnemy;
-        SoundEffect snd_explo;
+        // Audio
+        private Song music;
+        private SoundEffect snd_blaster;
+        private SoundEffect snd_blasterEnemy;
+        private SoundEffect snd_explo;
 
         public Game1()
         {
@@ -52,7 +55,12 @@ namespace SpaceInvaders_Desktop
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 1080;
             graphics.PreferredBackBufferWidth = 1920;
+            Window.Title = "MonoGame Space Invaders"; //Know DesktopGL issue :(
+#if DEBUG
+            graphics.IsFullScreen = false;
+#else
             graphics.IsFullScreen = true;
+#endif
         }
 
         private void Restart()
@@ -76,7 +84,7 @@ namespace SpaceInvaders_Desktop
         {
             Random r = new Random();
 
-            // create enemies
+            //Create enemies
             for (int i = 0; i < 40; i++)
             {
                 if (i % 10 == 0)
@@ -99,13 +107,12 @@ namespace SpaceInvaders_Desktop
         protected override void Initialize()
         {
             player = new Player();
-
             enemy = new List<Enemy>();
             laser = new List<Laser>();
             enemyLaser = new List<Laser>();
             explosion = new List<Explosion>();
 
-            // create enemies
+            // Create enemies
             SpawnEnemies();
 
             base.Initialize();
@@ -117,7 +124,6 @@ namespace SpaceInvaders_Desktop
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             player.LoadResources(Content);
-
             fmg_logo = Content.Load<Texture2D>("fmg_15b");
             background = Content.Load<Texture2D>("space3");
             arcade = Content.Load<Texture2D>("arcade");
@@ -138,7 +144,6 @@ namespace SpaceInvaders_Desktop
         {
             // TODO: Unload any non ContentManager content here
         }
-
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Back) || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -270,8 +275,10 @@ namespace SpaceInvaders_Desktop
                 foreach (Enemy e in enemy)
                     e.Draw(spriteBatch);
 
-                spriteBatch.DrawString(verminFont, "Score: " + score.ToString("0000"), new Vector2(640 - verminFont.MeasureString("Score: 0000").X - 16, 16), Color.White);
-                //spriteBatch.DrawString(verminFont, msg, new Vector2(640 / 2 - verminFont.MeasureString(msg).X / 2, 480 / 2 - verminFont.MeasureString(msg).Y / 2), Color.White);
+                spriteBatch.DrawString(verminFont, "Score: " + score.ToString("0000"), 
+                    new Vector2(640 - verminFont.MeasureString("Score: 0000").X - 16, 16), Color.White);
+                //spriteBatch.DrawString(verminFont, msg, new Vector2(640 / 2 - verminFont.MeasureString(msg).X / 2,
+                //480 / 2 - verminFont.MeasureString(msg).Y / 2), Color.White);
 
                 if (enemy.Count == 0)
                 {
@@ -296,7 +303,8 @@ namespace SpaceInvaders_Desktop
 
             GraphicsDevice.Viewport = new Viewport(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            //spriteBatch.Draw(frameBackground, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), null, new Color(0.25f, 0.25f, 0.25f)); // stretches image to prefered size     
+            //spriteBatch.Draw(frameBackground, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height),
+            //null, new Color(0.25f, 0.25f, 0.25f)); // stretches image to prefered size     
             spriteBatch.Draw(arcade, new Rectangle((int)Window.ClientBounds.Width / 2 - arcade.Width / 2, ((int)Window.ClientBounds.Height / 2 - arcade.Height / 2),
                 arcade.Width, arcade.Height), null, Color.White);
             spriteBatch.End();
