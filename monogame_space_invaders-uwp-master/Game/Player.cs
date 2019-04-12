@@ -9,19 +9,15 @@ namespace UWP_SpaceInvaders
 {
     class Player
     {
-        Vector2 pos;
+        private Vector2 pos;
         private Texture2D tex;
-        private float playerPosX;
-        const int speed = 250;
+        private const int speed = 250;
+        private GamePadState cbuttonState;
+        private GamePadState lastcbuttonState;
+        private GamePadState cpadState;
+        private KeyboardState keyState;
 
         public bool shoot;
-
-        float spriteWidth;
-
-        GamePadState keyState;
-        GamePadState lastkeyState;
-        GamePadState gamePadState;
-
         public bool dead;
 
         public Player()
@@ -44,27 +40,27 @@ namespace UWP_SpaceInvaders
         public Vector2 Position
         {
             get { return pos; }
+            set { pos = value; }
         }
 
         public float SpriteWidth
         {
-            get { return spriteWidth; }
+            get { return tex.Bounds.Width; }
         }
 
         public void LoadResources(ContentManager con)
         {
             tex = con.Load<Texture2D>("player");
-            playerPosX = 640 / 2 - tex.Bounds.Width / 2;
-            spriteWidth = tex.Bounds.Width;
+            pos = new Vector2(640 / 2 - tex.Bounds.Width / 2, (480 - 60) - tex.Height / 2);
         }
 
         private void Input(GameTime gameTime)
         {
-            gamePadState = GamePad.GetState(PlayerIndex.One);
-            
-            lastkeyState = keyState;
+            cpadState = GamePad.GetState(PlayerIndex.One);
+            lastcbuttonState = cbuttonState;
 
-            if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A) && lastkeyState.IsButtonUp(Buttons.A))
+            if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A) && lastcbuttonState.IsButtonUp(Buttons.A) ||
+                Keyboard.GetState().IsKeyDown(Keys.Space) && keyState.IsKeyDown(Keys.Space) == false)
             {
                 shoot = true;
             }
@@ -73,18 +69,18 @@ namespace UWP_SpaceInvaders
                 shoot = false;
             }
 
-            keyState = gamePadState;
+            cbuttonState = cpadState;
 
-
-            if (gamePadState.ThumbSticks.Left.X >= 0.5f)
+            if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right) || cpadState.ThumbSticks.Left.X >= 0.5f || cpadState.DPad.Right == ButtonState.Pressed)
             {
-                playerPosX += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                pos.X += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (gamePadState.ThumbSticks.Left.X <= -0.5f)
+            else if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left) || cpadState.ThumbSticks.Left.X <= -0.5f || cpadState.DPad.Left == ButtonState.Pressed)
             {
-                playerPosX -= speed * (float)gameTime.ElapsedGameTime.TotalSeconds; 
+                pos.X -= speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
+            keyState = Keyboard.GetState();
         }
 
         public void Update(GameTime gameTime)
@@ -92,17 +88,15 @@ namespace UWP_SpaceInvaders
             if (!dead)
             {
                 Input(gameTime);
-
-                playerPosX = MathHelper.Clamp(playerPosX, 0, 640 - tex.Width);
-
-                pos = new Vector2(playerPosX, (480 - 60) - tex.Height / 2);
+                pos = new Vector2(MathHelper.Clamp(pos.X, 0, 640 - tex.Width), pos.Y);
+                pos = new Vector2(pos.X, (480 - 60) - tex.Height / 2);
             }
         }
 
         public void Draw(SpriteBatch sp)
         {
-            if(!dead)
-            sp.Draw(tex, pos, Color.White);
+            if (!dead)
+                sp.Draw(tex, pos, Color.White);
         }
     }
 }

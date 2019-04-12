@@ -8,33 +8,24 @@ namespace UWP_SpaceInvaders
 {
     class Enemy
     {
-        private Vector2 pos = new Vector2(0, 0);
+        private Vector2 pos = Vector2.Zero;
         private Texture2D tex;
-        private float enemyPosX, enemyPosY;
         private const int moveSpeed = 50;
-
         private float startPos;
-
         private Rectangle spriteRect = new Rectangle(0, 0, 32, 32);
-
         private const float animationSpeed = 25;
         private float currentFrame;
-
         private bool goLeft = false;
-
         private int rowPosID;
-
         private float shootTimer;
+        private float shootTimeLimit;
 
         public bool shoot = false;
-
-        private float shootTimeLimit;
 
         public Enemy(Vector2 position, int rowid, int maxShootTime)
         {
             startPos = position.X;
-            enemyPosX = position.X;
-            enemyPosY = position.Y;
+            pos = new Vector2(position.X, position.Y);
             rowPosID = 40 * (11 - rowid);
             shootTimer = 0f;
             shootTimeLimit = maxShootTime;
@@ -59,15 +50,14 @@ namespace UWP_SpaceInvaders
 
         private void Animator(GameTime gameTime)
         {
-            currentFrame += animationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds; 
-
+            currentFrame += animationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             currentFrame = MathHelper.Clamp(currentFrame, 0, 4);
 
-            if(currentFrame >= 4)
+            if (currentFrame >= 4)
             {
                 currentFrame = 0;
             }
-            
+
             spriteRect = new Rectangle((int)currentFrame * 32, 0, 32, 32);
         }
 
@@ -82,26 +72,26 @@ namespace UWP_SpaceInvaders
 
             if (!goLeft)
             {
-                enemyPosX += moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                pos = new Vector2(pos.X + moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds, pos.Y);
             }
 
             if (goLeft)
             {
-                enemyPosX -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                pos = new Vector2(pos.X - moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds, pos.Y);
             }
 
-            if (enemyPosX >= 640 - (spriteRect.Width + rowPosID) && !goLeft)
+            if (pos.X >= 640 - (spriteRect.Width + rowPosID) && !goLeft)
             {
                 goLeft = true;
             }
 
-            if (enemyPosX <= startPos + spriteRect.Width && goLeft)
+            if (pos.X <= startPos + spriteRect.Width && goLeft)
             {
                 goLeft = false;
             }
 
             shootTimer += 1 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            
+
             if (shootTimer >= shootTimeLimit)
             {
                 shootTimer = 0f;
@@ -111,8 +101,6 @@ namespace UWP_SpaceInvaders
             {
                 shoot = false;
             }
-
-            pos = new Vector2(enemyPosX, enemyPosY);
         }
 
         public void Draw(SpriteBatch sp)
@@ -121,3 +109,4 @@ namespace UWP_SpaceInvaders
         }
     }
 }
+

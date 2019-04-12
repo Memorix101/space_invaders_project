@@ -4,7 +4,7 @@
   <mp:PhoneIdentity PhoneProductId="eb27e8f4-f389-40e2-bf0d-5640c96905b2" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>UWP_SpaceInvaders</DisplayName>
-    <PublisherDisplayName>memor</PublisherDisplayName>
+    <PublisherDisplayName>Memorix101</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -25,6 +25,7 @@
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="landscape" />
         </uap:InitialRotationPreference>
+        <uap:LockScreen BadgeLogo="Assets\BadgeLogo.png" Notification="badge"/>
       </uap:VisualElements>
     </Application>
   </Applications>

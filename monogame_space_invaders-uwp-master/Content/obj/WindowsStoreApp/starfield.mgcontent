@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/memor/Documents/SourceTree/MonoGame_SpaceInvaders/Content/starfield.png</SourceFile>
-  <SourceTime>2016-11-15T04:11:40+01:00</SourceTime>
-  <DestFile>C:/Users/memor/Documents/SourceTree/MonoGame_SpaceInvaders/Content/bin/WindowsStoreApp/starfield.xnb</DestFile>
-  <DestTime>2016-11-26T13:43:08.5814923+01:00</DestTime>
+  <SourceFile>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-uwp-master/Content/starfield.png</SourceFile>
+  <SourceTime>2016-11-26T23:13:04+01:00</SourceTime>
+  <DestFile>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-uwp-master/Content/bin/WindowsStoreApp/starfield.xnb</DestFile>
+  <DestTime>2019-04-12T17:45:17.098127+02:00</DestTime>
   <Importer>TextureImporter</Importer>
-  <ImporterTime>2016-03-30T08:36:08+02:00</ImporterTime>
+  <ImporterTime>2018-12-08T17:35:54+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
-  <ProcessorTime>2016-03-30T08:36:08+02:00</ProcessorTime>
+  <ProcessorTime>2018-12-08T17:35:54+01:00</ProcessorTime>
   <Parameters>
     <Key>ColorKeyColor</Key>
     <Value>255,0,255,255</Value>
