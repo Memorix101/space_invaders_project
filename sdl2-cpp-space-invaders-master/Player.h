@@ -16,7 +16,7 @@ public:
 	SDL_Rect TileBoundingBox();
 	SDL_Rect getPosition();
 	void setPosition(SDL_Rect position);
-	void LoadResources();
+	void LoadResources(SDL_Renderer* renderer);
 	void Input(float deltaTime);
 	void Update(float deltaTime);
 	Texture2D tex2d;

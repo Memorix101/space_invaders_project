@@ -5,14 +5,11 @@
 
 Explosion::Explosion()
 {;
-	LoadResources();
-	spriteRect = { 0, 0, 128, 128 };
+
 }
 
 Explosion::Explosion(SDL_Rect position, int rowid, int maxShootTime)
 {;
-	LoadResources();
-	spriteRect = { 0, 0, 128, 128 };
 	pos = position;
 }
 
@@ -28,7 +25,17 @@ Explosion::~Explosion()
 
 SDL_Rect Explosion::TileBoundingBox()
 {
-	return { pos.x, (int)pos.y, 128, 128 };
+	return { pos.x, pos.y,tex2d.bounds.width,tex2d.bounds.height };
+}
+
+SDL_Rect Explosion::getSpriteCut()
+{
+	return { pos.x, pos.y,spriteRect.w,spriteRect.h };
+}
+
+SDL_Rect Explosion::getSpriteRect()
+{
+	return { spriteRect.x, spriteRect.y,spriteRect.w,spriteRect.h };
 }
 
 void Explosion::setPosition(SDL_Rect position)
@@ -42,9 +49,10 @@ SDL_Rect Explosion::getPosition()
 	return pos;
 }
 
-void Explosion::LoadResources()
+void Explosion::LoadResources(SDL_Renderer* renderer)
 {
-	tex2d.Load("rd/explode.png");
+	tex2d.Load("rd/explode.png", renderer);
+	spriteRect = { 0, 0, 128, 128};
 }
 
 void Explosion::Animator(float deltaTime)
@@ -59,7 +67,7 @@ void Explosion::Animator(float deltaTime)
 		animationCompleted = true;
 	}
 
-	spriteRect = { (int)currentFrame * 128, 0, 128, 128 };
+	spriteRect = { int(currentFrame) * 128, 0,128, 128};
 }
 
 void Explosion::Update(float deltaTime)

@@ -4,18 +4,16 @@
 Enemy::Enemy()
 {
 	shootTimer = 0.0f;
-	LoadResources();
-	spriteRect = { 0, 0, 32, 32 };
 }
 
-Enemy::Enemy(SDL_Rect position, int rowid, float maxShootTime)
+Enemy::Enemy(SDL_Rect position, int rowid, float maxShootTime, SDL_Renderer* renderer)
 {
 	startPos = position.x;
 	rowPosID = 40 * (11 - rowid);
 	shootTimer = 0.0f;
 	shootTimeLimit = maxShootTime;
-	LoadResources();
-	spriteRect = { 0, 0, 32, 32 };
+	LoadResources(renderer);
+	spriteRect = { 0, 0, 32, 32};
 	pos = position;
 }
 
@@ -35,7 +33,17 @@ Enemy::~Enemy()
 
 SDL_Rect Enemy::TileBoundingBox()
 {
-	return {pos.x, pos.y, 28, 21};
+	return {pos.x, pos.y,tex2d.bounds.width,tex2d.bounds.height};
+}
+
+SDL_Rect Enemy::getSpriteCut()
+{
+	return { pos.x, pos.y,spriteRect.w,spriteRect.h};
+}
+
+SDL_Rect Enemy::getSpriteRect()
+{
+	return { spriteRect.x, spriteRect.y,spriteRect.w,spriteRect.h};
 }
 
 void Enemy::setPosition(SDL_Rect position)
@@ -48,9 +56,10 @@ SDL_Rect Enemy::getPosition()
 	return pos;
 }
 
-void Enemy::LoadResources()
+void Enemy::LoadResources(SDL_Renderer* renderer)
 {
-	tex2d.Load("rd/invader32x32x4.png");
+	tex2d.Load("rd/invader32x32x4.png", renderer);
+	spriteRect = { 0, 0, 32, 32};
 }
 
 void Enemy::Animator(float deltaTime)
@@ -64,7 +73,7 @@ void Enemy::Animator(float deltaTime)
 		currentFrame = 0;
 	}
 
-	spriteRect = { (int)currentFrame * 32, 0, 32, 32 };
+	spriteRect = {int(currentFrame) * 32, 0, 32, 32};
 }
 
 void Enemy::Update(float deltaTime)

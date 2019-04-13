@@ -178,6 +178,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="Texture2D.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

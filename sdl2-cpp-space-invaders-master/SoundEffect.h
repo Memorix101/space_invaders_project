@@ -7,6 +7,7 @@ class SoundEffect
 public:
 	SoundEffect(std::string file);
 	~SoundEffect();
+	void Dispose();
 
 	Mix_Chunk* sound;
 

@@ -18,23 +18,23 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::LoadResources()
+void Bullet::LoadResources(SDL_Renderer* renderer)
 {
 	if (!reversed)
 	{
-		tex2d.Load("rd/bullet.png");
-		spriteRect = { 0, 0, tex2d.sprite->w, tex2d.sprite->h };
+		tex2d.Load("rd/bullet.png", renderer);
+		spriteRect = {0, 0, tex2d.bounds.width, tex2d.bounds.height};
 	}
 	else
 	{
-		tex2d.Load("rd/enemy-bullet.png");
-		spriteRect = { 0, 0, tex2d.sprite->w, tex2d.sprite->h };
+		tex2d.Load("rd/enemy-bullet.png", renderer);
+		spriteRect = {0, 0, tex2d.bounds.width, tex2d.bounds.height};
 	}
 }
 
 SDL_Rect Bullet::TileBoundingBox()
 {
-	return { pos.x, pos.y, 28, 21};
+	return { pos.x,pos.y,tex2d.bounds.width,tex2d.bounds.height};
 }
 
 void Bullet::setPosition(SDL_Rect position)

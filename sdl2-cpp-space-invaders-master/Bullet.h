@@ -16,7 +16,7 @@ public:
 	void setPosition(SDL_Rect position);
 	void Update(float deltaTime);
 	Texture2D tex2d;
-	void LoadResources();
+	void LoadResources(SDL_Renderer* rendere);
 
 private:	
 	const int speed = 300;

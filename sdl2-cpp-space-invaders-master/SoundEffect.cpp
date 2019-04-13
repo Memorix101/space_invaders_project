@@ -11,6 +11,11 @@ SoundEffect::~SoundEffect()
 {
 }
 
+void SoundEffect::Dispose()
+{
+	Mix_FreeChunk(sound);
+}
+
 void SoundEffect::Play()
 {	
 	Mix_PlayChannel(-1, sound, 0); //-1 for the first free unreserved channel.

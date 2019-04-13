@@ -7,6 +7,7 @@ class Music
 public:
 	Music(std::string file);
 	~Music();
+	void Dispose();
 
 	Mix_Music* music;
 

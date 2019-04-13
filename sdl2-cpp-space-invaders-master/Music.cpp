@@ -9,6 +9,11 @@ Music::~Music()
 {
 }
 
+void Music::Dispose()
+{
+	Mix_FreeMusic(music);
+}
+
 bool Music::Play(bool looping)
 {	
 	int _looping = 0; //0 plays the music zero times...

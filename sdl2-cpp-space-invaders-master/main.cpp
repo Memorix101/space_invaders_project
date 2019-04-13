@@ -17,11 +17,11 @@
 #include "Font.h"
 
 SDL_Event e;
-SDL_Window* window = NULL;
-SDL_Surface* screen = NULL;
+SDL_Window* window = nullptr;
+SDL_Renderer* renderer = nullptr;
 
-SDL_GameController* controller = NULL;
-SDL_Haptic* haptic = NULL;
+SDL_GameController* controller = nullptr;
+SDL_Haptic* haptic = nullptr;
 #define GAMEPAD_DEADZONE  32768.0f
 float LX = 0;
 
@@ -65,6 +65,7 @@ void initEnemies()
 		itemCount++;
 
 		int ran = (rand() % (20 - 3)) + 3; // MAX - MIN + MIN
+		_enemy.LoadResources(renderer);
 		_enemy.setPosition({ itemCount * (int)40.0f, (int)40.0f * rowCount });
 		_enemy.startPos = itemCount * 40;
 		_enemy.rowPosID = 40 * (11 - itemCount);
@@ -87,7 +88,7 @@ void reset()
 	rowCount = 0;
 	itemCount = 0;
 	initEnemies();
-	player.setPosition({ 640 / 2 - player.tex2d.sprite->w / 2 });
+	player.setPosition({ 640 / 2 - player.tex2d.bounds.width / 2 });
 	player.dead = false;
 }
 
@@ -97,8 +98,9 @@ int main()
 
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC);
 	SDL_ShowCursor(SDL_DISABLE);
-	window = SDL_CreateWindow("sdl2_cpp_space_invaders", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
-	screen = SDL_GetWindowSurface(window);
+	window = SDL_CreateWindow("sdl2_cpp_space_invaders", SDL_WINDOWPOS_CENTERED, 
+		SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 	//Initialize SDL_mixer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
@@ -123,7 +125,7 @@ int main()
 
 				// Open the device
 				haptic = SDL_HapticOpen(0);
-				if (haptic == NULL)
+				if (haptic == nullptr)
 					return -1;
 
 				// Initialize simple rumble
@@ -137,18 +139,15 @@ int main()
 		}
 	}
 
-	fmg_logo.Load("rd/fmg_splash.png");
-	win_tex2d.Load("rd/win_ui.png");
-	gameover_tex2D.Load("rd/gameover_ui.png");
-	background.Load("rd/space3.png");
+	fmg_logo.Load("rd/fmg_splash.png", renderer);
+	win_tex2d.Load("rd/win_ui.png", renderer);
+	gameover_tex2D.Load("rd/gameover_ui.png", renderer);
+	background.Load("rd/space3.png", renderer);
 
-	player.LoadResources();
-	_laser.LoadResources();
+	player.LoadResources(renderer);
+	_laser.LoadResources(renderer);
 	_beam.reversed = true;
-	_beam.LoadResources();
-
-	std::list<Explosion> explo_fx;
-	Explosion _explo_fx;
+	_beam.LoadResources(renderer);
 
 	Texture2D scoreText;
 	Font vermin_ttf("rd/vermin_vibes_1989.ttf", 24);
@@ -170,10 +169,11 @@ int main()
 		{
 			switch (e.type) {
 			case SDL_KEYDOWN:
-				if (e.key.keysym.sym == SDLK_SPACE && !player.dead)
+				if (e.key.keysym.sym == SDLK_SPACE && !player.dead && gamestart)
 				{
 					player.shoot = true;
-					_laser.setPosition({ player.getPosition().x + player.tex2d.sprite->w / 2 - 2, player.getPosition().y - 32 });//1.5f is half of laser width ;)
+					_laser.setPosition({ player.getPosition().x + player.tex2d.bounds.width / 2 - 2, 
+						player.getPosition().y - 32 });//1.5f is half of laser width ;)
 					laser.push_back(_laser);
 					snd_blaster.Play();
 				}
@@ -190,10 +190,11 @@ int main()
 				break;
 
 			case SDL_CONTROLLERBUTTONDOWN:
-				if (e.type == SDL_CONTROLLERBUTTONDOWN && e.cbutton.button == SDL_CONTROLLER_BUTTON_A && !player.dead)
+				if (e.type == SDL_CONTROLLERBUTTONDOWN && e.cbutton.button == SDL_CONTROLLER_BUTTON_A && !player.dead && gamestart)
 				{
 					player.shoot = true;
-					_laser.setPosition({ player.getPosition().x + player.tex2d.sprite->w / 2 - 2, player.getPosition().y - 32 });//1.5f is half of laser width ;)
+					_laser.setPosition({ player.getPosition().x + player.tex2d.bounds.width / 2 - 2, 
+						player.getPosition().y - 32 });//1.5f is half of laser width ;)
 					laser.push_back(_laser);
 					snd_blaster.Play();
 				}
@@ -278,17 +279,20 @@ int main()
 				if (it->shoot)
 				{
 					_beam.reversed = true;
-					_beam.setPosition({ it->getPosition().x + it->spriteRect.w * 1 - 4, it->getPosition().y + 9 }); //1.5f is half of laser width ;)
+					_beam.setPosition({ it->getPosition().x + it->getSpriteRect().w * 1 - 4, 
+						it->getPosition().y + 9 }); //1.5f is half of laser width ;)
 					beam.push_back(_beam);
 					snd_blasterEnemy.Play();
 				}
 
 				for (auto itb = laser.begin(); itb != laser.end(); itb++)
 				{
-					if (SDL_HasIntersection(&it->TileBoundingBox(), &itb->TileBoundingBox()))
+					if (SDL_HasIntersection(&it->getSpriteCut(), &itb->TileBoundingBox()))
 					{
 						score += 100;
-						_explo_fx.setPosition({ it->getPosition().x - 128 / 2, it->getPosition().y - 128 / 2 });
+						_explo_fx.LoadResources(renderer);
+						_explo_fx.setPosition({ it->getPosition().x - _explo_fx.getSpriteCut().w / 2 + it->getSpriteCut().w / 2, 
+							it->getPosition().y - _explo_fx.getSpriteCut().h / 2 + it->getSpriteCut().h / 2 });
 						explo_fx.push_back(_explo_fx);
 						laser.erase(itb);
 						enemy.erase(it);
@@ -307,6 +311,7 @@ int main()
 			{
 				if (SDL_HasIntersection(&it->TileBoundingBox(), &player.TileBoundingBox()))
 				{
+					_explo_fx.LoadResources(renderer);
 					_explo_fx.setPosition({ it->getPosition().x - 128 / 2, it->getPosition().y - 128 / 2 });
 					explo_fx.push_back(_explo_fx);
 					player.dead = true;
@@ -350,51 +355,72 @@ int main()
 		}
 
 		//draw loop
+		SDL_RenderClear(renderer);
+
 		if (gamestart) {
 
-			SDL_BlitSurface(background.sprite, NULL, screen, NULL);
+			SDL_RenderCopy(renderer, background.texture, nullptr, nullptr);
 
 			if (!player.dead)
-				SDL_BlitSurface(player.tex2d.sprite, NULL, screen, &player.getPosition());
+				SDL_RenderCopy(renderer, player.tex2d.texture, nullptr, &player.TileBoundingBox());
 
 			for (Bullet l : laser)
-				SDL_BlitSurface(l.tex2d.sprite, NULL, screen, &l.getPosition());
+				SDL_RenderCopy(renderer, l.tex2d.texture, nullptr, &l.TileBoundingBox());
 
 			for (Bullet b : beam)
-				SDL_BlitSurface(b.tex2d.sprite, NULL, screen, &b.getPosition());
+				SDL_RenderCopy(renderer, b.tex2d.texture, nullptr, &b.TileBoundingBox());
 
 			for (Explosion ex : explo_fx)
-				SDL_BlitSurface(ex.tex2d.sprite, &ex.spriteRect, screen, &ex.getPosition());
+				SDL_RenderCopy(renderer, ex.tex2d.texture, &ex.getSpriteRect(), &ex.getSpriteCut());
 
 			for (Enemy e : enemy)
-				SDL_BlitSurface(e.tex2d.sprite, &e.spriteRect, screen, &e.getPosition());
+				SDL_RenderCopy(renderer, e.tex2d.texture, &e.getSpriteRect(), &e.getSpriteCut());
 
 			if (enemy.empty())
 			{
 				gameover = true;
-				SDL_BlitSurface(win_tex2d.sprite, NULL, screen, NULL);
+				SDL_RenderCopy(renderer, win_tex2d.texture, nullptr, nullptr);
 			}
 			else if (player.dead)
 			{
 				gameover = true;
-				SDL_BlitSurface(gameover_tex2D.sprite, NULL, screen, NULL);
+				SDL_RenderCopy(renderer, gameover_tex2D.texture, nullptr, nullptr);
 			}
 
 			buffer << "SCORE:" << std::setw(4) << std::setfill('0') << score;
-			scoreText.sprite = vermin_ttf.toSurface(buffer.str().c_str());
-			vermin_ttf.setPosition(640 - scoreText.sprite->w - 10, 10);
-			SDL_BlitSurface(scoreText.sprite, NULL, screen, &vermin_ttf.getPosition());
-			buffer.str(""); // set contents to that of an empty string
+			scoreText.texture = vermin_ttf.toTexture(buffer.str().c_str(), renderer);
+			vermin_ttf.setPosition(640 - vermin_ttf.bounds.width - 10, 10);
+			SDL_RenderCopy(renderer, scoreText.texture, nullptr, &vermin_ttf.TileBoundingBox());
+			buffer.str(""); // set contents to that of an empty string*/
 		}
 		else
 		{
-			SDL_BlitSurface(fmg_logo.sprite, NULL, screen, NULL);
+			SDL_RenderCopy(renderer, fmg_logo.texture, nullptr, nullptr);
 		}
 
-		SDL_UpdateWindowSurface(window);
+		SDL_RenderPresent(renderer);
 		lastTick = float(SDL_GetTicks()) / 1000.0f;
 		SDL_Delay(15);
 	}
+
+	//cleaning up stuff
+	SDL_GameControllerClose(controller);
+	SDL_HapticClose(haptic);
+	vermin_ttf.Dispose();
+	fmg_logo.Dispose();
+	background.Dispose();
+	player.tex2d.Dispose();
+	music.Dispose();
+	snd_blaster.Dispose();
+	snd_explo.Dispose();
+	snd_blasterEnemy.Dispose();
+	enemy.clear();
+	laser.clear();
+	explo_fx.clear();
+	beam.clear();
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 
 	return 0;
 }
