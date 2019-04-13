@@ -391,7 +391,7 @@ int main()
 			scoreText.texture = vermin_ttf.toTexture(buffer.str().c_str(), renderer);
 			vermin_ttf.setPosition(640 - vermin_ttf.bounds.width - 10, 10);
 			SDL_RenderCopy(renderer, scoreText.texture, nullptr, &vermin_ttf.TileBoundingBox());
-			buffer.str(""); // set contents to that of an empty string*/
+			buffer.str(""); // empty string
 		}
 		else
 		{
