@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -31,6 +33,8 @@ public class libgdx_space_invaders extends ApplicationAdapter {
     float timer;
     boolean game_start = false;
     boolean gameover = false;
+    boolean key_firePressed = false;
+    boolean gpad_firePressed = false;
 
     Music music;
     Sound snd_blaster;
@@ -43,11 +47,13 @@ public class libgdx_space_invaders extends ApplicationAdapter {
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     ArrayList<Explosion> explode_fx = new ArrayList<Explosion>();
 
-    void restart()
-    {
-        player.dead  = false;
-        player.pos = new Vector2(640/2 - player.sprite.getDepth()/2,10);
-        laser.clear();;
+    Controller gpad;
+
+    void restart() {
+        player.dead = false;
+        player.pos = new Vector2(640 / 2 - player.sprite.getDepth() / 2, 10);
+        laser.clear();
+        ;
         enemies.clear();
         pusher.clear();
         explode_fx.clear();
@@ -58,8 +64,7 @@ public class libgdx_space_invaders extends ApplicationAdapter {
         spawnEnemies();
     }
 
-    void spawnEnemies()
-    {
+    void spawnEnemies() {
         // create enemies
         for (int i = 0; i < 40; i++) {
             if (i % 10 == 0) {
@@ -77,6 +82,11 @@ public class libgdx_space_invaders extends ApplicationAdapter {
 
     @Override
     public void create() {
+
+        for (Controller controller : Controllers.getControllers()) {
+            Gdx.app.log("Conntected: ", controller.getName());
+            gpad = Controllers.getControllers().first();
+        }
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("vermin_vibes_1989.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -103,6 +113,28 @@ public class libgdx_space_invaders extends ApplicationAdapter {
         snd_explo = Gdx.audio.newSound(Gdx.files.internal("explode1.ogg"));
     }
 
+    void ControllerInput()
+    {
+        if (gpad.getButton(0) && !player.dead)
+        { //https://github.com/libgdx/libgdx/issues/2200#issuecomment-51062919
+            if (!gpad_firePressed){
+                gpad_firePressed = true;
+                laser.add(new Bullet(player.pos, false));
+                snd_blaster.play();
+            }
+        } else {
+            gpad_firePressed = false;
+        }
+
+        if (gpad.getButton(7) && gameover) {
+            restart();
+        }
+
+        if (gpad.getButton(6)) {
+            Gdx.app.exit();
+        }
+    }
+
     void Update() {
 
         timer += 1 * Gdx.graphics.getDeltaTime();
@@ -112,10 +144,18 @@ public class libgdx_space_invaders extends ApplicationAdapter {
 
         if (game_start) {
             player.Update();
+            player.Input(gpad);
 
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !player.dead) {
-                laser.add(new Bullet(player.pos, false));
-                snd_blaster.play();
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && !player.dead)
+            { //https://github.com/libgdx/libgdx/issues/2200#issuecomment-51062919
+                if (!key_firePressed)
+                {
+                    key_firePressed = true;
+                    laser.add(new Bullet(player.pos, false));
+                    snd_blaster.play();
+                }
+            } else {
+                key_firePressed = false;
             }
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && gameover) {
@@ -125,6 +165,9 @@ public class libgdx_space_invaders extends ApplicationAdapter {
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 Gdx.app.exit();
             }
+
+            if (gpad != null)
+                ControllerInput();
 
             for (int e = enemies.size() - 1; e >= 0; e--) {
                 enemies.get(e).Update();
