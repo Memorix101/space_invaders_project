@@ -16,6 +16,7 @@ public:
 	void InputEvent(bool e);
 	sf::IntRect TileBoundingBox();
 	sf::Vector2f getPosition();
+	void setPosition(sf::Vector2f position);
 	void LoadResources();
 	void Input(float deltaTime);
 	void Update(float deltaTime);
@@ -23,8 +24,6 @@ public:
 protected:	
 
 	sf::Vector2f pos;
-	
-	float playerPosX;
 	const int speed = 250;
 };
 

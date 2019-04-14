@@ -18,9 +18,9 @@ public:
 	void setPosition(sf::Vector2f position);
 	Texture2D tex2d;
 	bool animationCompleted = false;
+	void LoadResources();
 
 protected:
-	void LoadResources();
 	const int moveSpeed = 50;
 	sf::Vector2f pos;
 	sf::IntRect spriteRect;

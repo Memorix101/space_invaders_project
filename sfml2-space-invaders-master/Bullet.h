@@ -18,7 +18,7 @@ public:
 	void LoadResources();
 
 private:	
-	const int speed = 250;
+	const int speed = 350;
 	sf::IntRect spriteRect;	
 };
 

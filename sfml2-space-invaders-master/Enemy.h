@@ -22,9 +22,10 @@ public:
 
 	void setPosition(sf::Vector2f position);
 	Texture2D tex2d;
+	void LoadResources();
 
 protected:
-	void LoadResources();
+
 	const int moveSpeed = 75;
 	sf::Vector2f pos;
 	sf::IntRect spriteRect;

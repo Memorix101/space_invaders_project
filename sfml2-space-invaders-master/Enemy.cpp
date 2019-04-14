@@ -4,9 +4,6 @@
 Enemy::Enemy()
 {
 	shootTimer = 0.0f;
-	LoadResources();
-	spriteRect = sf::IntRect(0, 0, 32, 32);
-	tex2d.sprite.setTextureRect(spriteRect);
 }
 
 Enemy::Enemy(sf::Vector2f position, int rowid, float maxShootTime)
@@ -15,7 +12,6 @@ Enemy::Enemy(sf::Vector2f position, int rowid, float maxShootTime)
 	rowPosID = 40 * (11 - rowid);
 	shootTimer = 0.0f;
 	shootTimeLimit = maxShootTime;
-	LoadResources();
 	spriteRect = sf::IntRect(0, 0, 32, 32);
 	tex2d.sprite.setTextureRect(spriteRect);
 	pos = position;
@@ -56,6 +52,8 @@ sf::Vector2f Enemy::getPosition()
 void Enemy::LoadResources()
 {
 	tex2d.Load("rd/invader32x32x4.png");
+	spriteRect = sf::IntRect(0, 0, 32, 32);
+	tex2d.sprite.setTextureRect(spriteRect);
 }
 
 void Enemy::Animator(float deltaTime)

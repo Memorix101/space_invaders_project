@@ -23,21 +23,27 @@ sf::Vector2f Player::getPosition()
 	return pos;
 }
 
+void Player::setPosition(sf::Vector2f position)
+{
+	pos = position;
+	tex2d.sprite.setPosition(position);
+}
+
 void Player::LoadResources()
 {
 	tex2d.Load("rd/player.png");
-	playerPosX = 640 / 2 - tex2d.sprite.getGlobalBounds().width / 2;
+	pos.x = 640 / 2 - tex2d.sprite.getGlobalBounds().width / 2;
 }
 
 void Player::Input(float deltaTime)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		playerPosX += speed * deltaTime;
+		pos.x += speed * deltaTime;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		playerPosX -= speed * deltaTime;
+		pos.x -= speed * deltaTime;
 	}
 }
 
@@ -51,8 +57,8 @@ void Player::Update(float deltaTime)
 	if (!dead)
 	{
 		Input(deltaTime);
-		playerPosX = boost::algorithm::clamp(playerPosX, 0, 640 - tex2d.sprite.getGlobalBounds().width);
-		pos = sf::Vector2f(playerPosX, (480 - 60) - tex2d.sprite.getGlobalBounds().width / 2);
+		pos.x = boost::algorithm::clamp(pos.x, 0, 640 - tex2d.sprite.getGlobalBounds().width);
+		pos = sf::Vector2f(pos.x, (480 - 30) - tex2d.sprite.getGlobalBounds().width / 2);
 		tex2d.sprite.setPosition(pos);
 	}
 }

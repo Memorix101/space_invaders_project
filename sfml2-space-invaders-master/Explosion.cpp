@@ -5,14 +5,10 @@
 
 Explosion::Explosion()
 {;
-	LoadResources();
-	spriteRect = sf::IntRect(0, 0, 128, 128);
-	tex2d.sprite.setTextureRect(spriteRect);
 }
 
 Explosion::Explosion(sf::Vector2f position, int rowid, int maxShootTime)
 {;
-	LoadResources();
 	spriteRect = sf::IntRect(0, 0, 128, 128);
 	tex2d.sprite.setTextureRect(spriteRect);
 	pos = position;
@@ -49,6 +45,8 @@ sf::Vector2f Explosion::getPosition()
 void Explosion::LoadResources()
 {
 	tex2d.Load("rd/explode.png");
+	spriteRect = sf::IntRect(0, 0, 128, 128);
+	tex2d.sprite.setTextureRect(spriteRect);
 }
 
 void Explosion::Animator(float deltaTime)

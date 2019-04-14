@@ -52,11 +52,11 @@ void Bullet::Update(float deltaTime)
 {
 	if (reversed)
 	{
-		pos.y += 150 * deltaTime;
+		pos.y += speed * deltaTime;
 	}
 	else
 	{
-		pos.y -= 150 * deltaTime;
+		pos.y -= speed * deltaTime;
 	}
 
 	tex2d.sprite.setPosition(pos);

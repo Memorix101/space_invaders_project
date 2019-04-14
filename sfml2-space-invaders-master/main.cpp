@@ -12,18 +12,67 @@
 #include "Explosion.h"
 #include "SoundEffect.h"
 
+float deltaTime;
+bool enemyHit = false;
+int score = 0;
+int rowCount = 0;
+int itemCount = 0;
+
+bool gameover = false;
+bool gamestart = false;
+float timer = 0.0f;
+
+std::list<Bullet> laser;
+std::list<Bullet> beam;
+std::list<Enemy> enemy;
+std::list<Explosion> explo_fx;
+
+void initEnemies(Enemy _enemy)
+{
+	// create enemies
+	for (int i = 0; i < 40; i++)
+	{
+		enemy.push_back(_enemy);
+
+		//std::cout << "row:" << rowCount << std::endl;
+		//std::cout << "item:" << itemCount * 40 << std::endl;
+	}
+
+	for (auto e = enemy.begin(); e != enemy.end(); e++)
+	{
+		if (itemCount % 10 == 0)
+		{
+			itemCount = 0;
+			rowCount++;
+		}
+
+		itemCount++;
+
+		e->LoadResources();
+		e->startPos = itemCount * 40;
+		e->rowPosID = 40 * (11 - itemCount);
+		int ran = (rand() % (20 - 3)) + 3; // MAX - MIN + MIN
+		e->shootTimeLimit = ran;
+		e->setPosition(sf::Vector2f(itemCount * 40.0f, 40.0f * rowCount));
+	}
+}
+
+void reset(Enemy _enemy)
+{
+	gameover = false;
+	score = 0;
+	enemy.clear();
+	beam.clear();
+	laser.clear();
+	explo_fx.clear();
+	rowCount = 0;
+	itemCount = 0;
+	initEnemies(_enemy);
+}
+
 int main()
 {
 	std::cout << "SFML 2.5 Space Invaders Game" << std::endl;
-
-	float deltaTime;
-	bool enemyHit = false;
-	int score = 0;
-	int rowCount = 0;
-	int itemCount = 0;
-
-	bool gamestart = false;
-	float timer = 0.0f;
 
 	std::stringstream buffer; //score buffer
 	sf::RenderWindow window(sf::VideoMode(640, 480), "sfml2-space-invaders");
@@ -34,23 +83,22 @@ int main()
 	Texture2D background;
 	background.Load("rd/space3.png");
 
+	Texture2D gameover_ui;
+	gameover_ui.Load("rd/gameover_ui.png");
+	
+	Texture2D win_ui;
+	win_ui.Load("rd/win_ui.png");
+
 	Player player;
-	player.LoadResources();
-
-	std::list<Bullet> laser;
 	Bullet _laser;
-	_laser.LoadResources();
-
-	std::list<Bullet> beam;
 	Bullet _beam;
+	Enemy _enemy;
+	Explosion _explo_fx;
+
+	player.LoadResources();
+	_laser.LoadResources();
 	_beam.reversed = true;
 	_beam.LoadResources();
-
-	std::list<Enemy> enemy;
-	Enemy _enemy;
-
-	std::list<Explosion> explo_fx;
-	Explosion _explo_fx;
 
 	sf::Font font;
 	if (!font.loadFromFile("rd/vermin_vibes_1989.ttf"))
@@ -82,27 +130,7 @@ int main()
 	music.setLoop(true);
 	music.play();
 
-	// create enemies
-	for (int i = 0; i < 40; i++)
-	{
-		if (i % 10 == 0)
-		{
-			itemCount = 0;
-			rowCount++;
-		}
-
-		itemCount++;
-
-		int ran = (rand() % (20 - 3)) + 3; // MAX - MIN + MIN
-		_enemy.setPosition(sf::Vector2f(itemCount * 40.0f, 40.0f * rowCount));
-		_enemy.startPos = itemCount * 40;
-		_enemy.rowPosID = 40 * (11 - itemCount);
-		_enemy.shootTimeLimit = ran;
-		enemy.push_back(_enemy);
-
-		//std::cout << "row:" << rowCount << std::endl;
-		//std::cout << "item:" << itemCount * 40 << std::endl;
-	}
+	initEnemies(_enemy);
 
 	sf::Clock clock;
 	while (window.isOpen())
@@ -121,6 +149,18 @@ int main()
 					_laser.setPosition(sf::Vector2f(player.getPosition().x + player.tex2d.sprite.getGlobalBounds().width / 2 - 1.5f, player.getPosition().y - 32));//1.5f is half of laser width ;)
 					laser.push_back(_laser);
 					snd_blaster.Play();
+				}		
+				
+				if (event.key.code == sf::Keyboard::Escape)
+				{
+					window.close();
+				}
+
+				if (event.key.code == sf::Keyboard::Enter && gameover)
+				{
+					reset(_enemy);
+					player.setPosition(sf::Vector2f(640 / 2 - player.tex2d.sprite.getLocalBounds().width / 2, player.getPosition().y));
+					player.dead = false;
 				}
 			}
 
@@ -143,7 +183,7 @@ int main()
 
 		//std::cout << timer << std::endl;
 
-		if (gamestart) {			
+		if (gamestart) {
 
 			player.Input(deltaTime);
 			player.Update(deltaTime);
@@ -164,26 +204,27 @@ int main()
 					{
 						// Debug.WriteLine("BOOM!");      
 						score += 100;
+						_explo_fx.LoadResources();
 						_explo_fx.setPosition(sf::Vector2f(it->getPosition().x - 128 / 2, it->getPosition().y - 128 / 2));
 						explo_fx.push_back(_explo_fx);
 						laser.erase(itb);
 						enemy.erase(it);
 						snd_explo.Play();
-						goto escapeFromeHere;
+						goto escapeFromHere;
 					}
 				}
 			}
 
-		escapeFromeHere:
-
+		escapeFromHere:
 
 			for (auto it = enemy.begin(); it != enemy.end(); it++)
 				it->Update(deltaTime);
 
 			for (auto it = beam.begin(); it != beam.end(); it++)
 			{
-				if (it->TileBoundingBox().intersects(player.TileBoundingBox()))
+				if (it->TileBoundingBox().intersects(player.TileBoundingBox()) && !player.dead)
 				{
+					_explo_fx.LoadResources();
 					_explo_fx.setPosition(sf::Vector2f(it->getPosition().x - 128 / 2, it->getPosition().y - 128 / 2));
 					explo_fx.push_back(_explo_fx);
 					player.dead = true;
@@ -222,17 +263,6 @@ int main()
 					break;
 				}
 			}
-
-			if (enemy.empty())
-			{
-				msg_text.setString("You Win!");
-				msg_text.setPosition(640 / 2 - 60, 480 / 2 - 32);
-			}
-			else if (player.dead)
-			{
-				msg_text.setString("Game Over!");
-				msg_text.setPosition(640 / 2 - 80, 480 / 2 - 32);
-			}
 		}
 
 		//draw loop
@@ -260,7 +290,22 @@ int main()
 			buffer << "SCORE:" << std::setw(4) << std::setfill('0') << score << std::endl;
 			score_text.setString(buffer.str());
 			window.draw(score_text);
-			buffer.str(""); // set contents to that of an empty string		
+			buffer.str(""); // set contents to that of an empty string
+
+			if (enemy.empty())
+			{
+				gameover = true;
+				window.draw(win_ui.sprite);
+				//msg_text.setString("You Win!");
+				//msg_text.setPosition(640 / 2 - 60, 480 / 2 - 32);
+			}
+			else if (player.dead)
+			{
+				gameover = true;
+				window.draw(gameover_ui.sprite);
+				//msg_text.setString("Game Over!");
+				//msg_text.setPosition(640 / 2 - 80, 480 / 2 - 32);
+			}
 
 			window.draw(msg_text);
 		}
