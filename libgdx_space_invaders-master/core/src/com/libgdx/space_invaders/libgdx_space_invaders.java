@@ -161,7 +161,7 @@ public class libgdx_space_invaders extends ApplicationAdapter {
                 if (pusher.get(p).pos.y >= 480)
                     pusher.remove(p);
 
-                if (pusher.get(p).TileBoundingBox().overlaps(player.TileBoundingBox())) {
+                if (pusher.get(p).TileBoundingBox().overlaps(player.TileBoundingBox()) && !player.dead) {
                     pusher.remove(p);
                     explode_fx.add(new Explosion(new Vector2(player.pos.x - 128 * 0.4f, player.pos.y - 128 / 2)));
                     player.dead = true;
