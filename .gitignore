@@ -74,8 +74,6 @@ monogame_space_invaders-fsharp-master/Content/bin/
 
 unity3d-space-invaders/Temp/
 
-raylib_space_invaders-master/
-
 psp-space-invaders-master/rd/Thumbs\.db
 
 monogame_space_invaders-desktop-master/Content/bin/
@@ -87,3 +85,9 @@ sdl2-cpp-space-invaders-master/Debug/
 sdl2-cpp-space-invaders-master/\.vs/
 
 dreamcast-space-invaders-master/dc_dev/PVRViewer\.ini
+
+raylib_space_invaders-master/\.vs/
+
+raylib_space_invaders-master/Debug/
+
+raylib_space_invaders-master/space_invaders_raylib/Debug/
