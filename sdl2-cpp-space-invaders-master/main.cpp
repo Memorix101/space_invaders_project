@@ -309,7 +309,7 @@ int main()
 
 			for (auto it = beam.begin(); it != beam.end(); it++)
 			{
-				if (SDL_HasIntersection(&it->TileBoundingBox(), &player.TileBoundingBox()))
+				if (SDL_HasIntersection(&it->TileBoundingBox(), &player.TileBoundingBox()) && !player.dead)
 				{
 					_explo_fx.LoadResources(renderer);
 					_explo_fx.setPosition({ it->getPosition().x - 128 / 2, it->getPosition().y - 128 / 2 });
