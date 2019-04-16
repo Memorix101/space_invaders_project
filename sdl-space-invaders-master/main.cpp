@@ -601,6 +601,7 @@ int main(int argc, char* argv[]) {
 	SDL_BlitSurface(fmg_splash_tex2d, NULL, screen, NULL);
 	SDL_Flip(screen);
 	SDL_Delay(2000);
+	SDL_FreeSurface(fmg_splash_tex2d);
 
 	//Load image
 	space3_tex2d = IMG_Load("rd/space3.png");
@@ -728,7 +729,7 @@ int main(int argc, char* argv[]) {
 				// handle axis motion
 				if (e.jaxis.axis == SDL_JoystickGetAxis(joystick, 5))
 				{
-					LX = (float)e.jaxis.value / 32768.0f;
+					LX = (float)e.jaxis.value / GAMEPAD_DEADZONE;
 					//printf("LX: %f\n", (float)LX);
 				}
 
@@ -813,7 +814,6 @@ int main(int argc, char* argv[]) {
 	SDL_FreeSurface(bullet_tex2d);
 	SDL_FreeSurface(enemy_bullet_tex2d);
 	SDL_FreeSurface(explo_tex2d);
-	SDL_FreeSurface(fmg_splash_tex2d);
 	SDL_FreeSurface(gameover_tex2D);
 	SDL_FreeSurface(win_tex2d);
 	//SDL_FreeSurface(scoreFont);
