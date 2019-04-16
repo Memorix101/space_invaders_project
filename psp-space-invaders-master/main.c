@@ -902,7 +902,7 @@ void reset()
 {
 	gameover = 0;
 	score = 0;
-  enemies_killed = MAX_ENEMIES;
+  	enemies_killed = MAX_ENEMIES;
 	memset(enemy, 0, sizeof(enemy));
 	memset(bullets, 0, sizeof(bullets));
 	memset(enemy_bullets, 0, sizeof(enemy_bullets));
