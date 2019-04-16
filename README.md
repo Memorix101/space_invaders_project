@@ -59,6 +59,9 @@
 - Nintendo Wii
   - [GRRLIB](https://github.com/GRRLIB/GRRLIB)
   <br/> 
+- Nintendo WiiU
+  - SDL2 (devkitPro)
+  <br/> 
 - Nintendo Switch
   - SDL2 (devkitPro)
   <br/> 
