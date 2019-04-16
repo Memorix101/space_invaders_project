@@ -583,8 +583,6 @@ int main(int argc, char* argv[]) {
 		printf("    %s\n", SDL_JoystickName(i));
 	}
 
-	SDL_Joystick* joystick;
-
 	SDL_JoystickEventState(SDL_ENABLE);
 	joystick = SDL_JoystickOpen(0);
 
@@ -603,7 +601,6 @@ int main(int argc, char* argv[]) {
 	SDL_BlitSurface(fmg_splash_tex2d, NULL, screen, NULL);
 	SDL_Flip(screen);
 	SDL_Delay(2000);
-	SDL_FreeSurface(fmg_splash_tex2d);
 
 	//Load image
 	space3_tex2d = IMG_Load("rd/space3.png");
