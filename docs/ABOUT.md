@@ -35,11 +35,9 @@ So, I set up some kind of requirements for the platforms I want to port this.
 Also there are ports for my own [platforms](https://memorix101.wordpress.com/videogame-console-project/).<br/>
 [G-eon a virtual video game console](https://memorix101.itch.io/g-eon)
 I started working on in 2016 and released the first stable version in April 2017
-
 <br/>
 <img src="https://img.itch.zone/aW1hZ2UvMTA5MTg0LzUwNzQ0Ni5wbmc=/347x500/Zx6ev1.png" width="300">
 <img src="https://img.itch.zone/aW1hZ2UvMTA5MTg0LzUwOTg1Mi5wbmc=/347x500/e2Xtui.png" width="300">
-<br/>
 <br/>
 and Xenon a video game console I was working on since my early childhood.
 Reworked it as a Raspberry Pi Linux based operating system in 2018. It's unreleased (and will possibly never be).<br/><br/>
