@@ -87,7 +87,7 @@ compiler was really bitchy and sometimes was not in the mood to do his job.
 *"What file are you talking about? I can't see it", "Well, I already compiled it when you are too stupid to spot the binary not my problem","Not in the mood ask me tomorrow"*. For some reason I was not able to get music playback to work, what I'm really sorry about. ☹
 <br/>
 <br/>
-The **Wii** version has only the issue with sound playback as the audio library has no much examples how to use the DSP (Audio hardware) correctly.
+The **Wii** version has only the issue with sound playback as the audio library has not many examples how to use the DSP (Audio hardware) correctly.
 Also I was too lazy to implement a solid audio channel system. So, when a new sound is played it interrupts the playing one in the current situation.
 Music playback is not possible this way as it will be interrupted when the first laser is shot.
 *I blame the people here who are responsible that SDL (and SDL_mixer) is not working for Wii with the current devkitPro setup. Shame on you.*
