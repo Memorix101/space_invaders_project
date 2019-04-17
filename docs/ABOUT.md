@@ -104,9 +104,9 @@ The orignal is written in C as the Dreamcast toolchain was not that great in C++
 
 <img src="https://i.imgur.com/3QogfRS.gif" width="500"><br/>
 ###### Flickering sprites because of C style for loop (Int i = 0; i < T.size(); i++)
-<img src="https://i.imgur.com/wX8Tjdw.gif" width="500"><br/>
-###### Ranged for loop glitch. Had to add s goto statement (what makes me feel so dirty 😞)
-<img src="https://i.imgur.com/4QfwREA.gif" width="500"><br/>
+<img src="https://i.imgur.com/Xqtt5yA.gif" width="500"><br/>
+###### Ranged for loop glitch. Had to add a goto statement (what makes me feel so dirty 😞)
+<img src="https://i.imgur.com/eKFIfno.gif" width="500"><br/>
 ###### Debugging the ranged for loop glitch. Fucked it up even more 😂😂😂
 <br/>
 
