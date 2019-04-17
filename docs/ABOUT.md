@@ -101,7 +101,7 @@ But some things are way different in F# and I never would have thought I would m
 <img src="https://i.imgur.com/wxdx78W.gif" width="500"><br/>
 ###### My `match` loop is not working as expected. So, I had to turn back to `for` loops
 
-The orignal is written in C as the Dreamcast toolchain was not that great in C++ support. So I wanted to rewrite it into **C++**. I wanted to be at least on C++11 level. So, I made OOP like port. Lists `std::list<T>`, classes and ranged loops `for(Type& v : a) { ... }`. Well, didn't work as expected in the first place 😂
+The orignal is written in C as the Dreamcast toolchain was not that great in C++ support. So I wanted to rewrite it into **C++**. I wanted to be at least on C++11 level. So, I made a OOP like port. Lists `std::list<T>`, classes and ranged loops `for(Type& v : a) { ... }`. Well, didn't work as expected in the first place 😂
 
 <img src="https://i.imgur.com/3QogfRS.gif" width="500"><br/>
 ###### Flickering sprites because of C style for loop (Int i = 0; i < T.size(); i++)
