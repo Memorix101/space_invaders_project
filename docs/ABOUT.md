@@ -54,7 +54,7 @@ For sure there are bad ports and rushed ones (which are actually bad).
 Some ports are bad because I had no idea how to use the platform correctly or was too restricted by the toolchain I was/had to use. Some toolchains are well documented but most are not.
 <br/>
 
-The **Gameboy Advanced** port was really adventurous. I know the GBA was using a colour palette for everything on screen but I thought it would be system internally. Well, things are different as I had to learn. I had to bring it with my game.
+The **Gameboy Advanced** port was really adventurous. I knew the GBA was using a colour palette for everything on screen but I thought it would be system internally. Well, things are different as I had to learn. I had to bring it with my game.
 
 <img src="https://i.imgur.com/6wPHgpz.png" width="500"><br/>
 ###### First attempt
