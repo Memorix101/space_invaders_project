@@ -3,8 +3,8 @@
 
 The journey began in summer of 2016 when I wanted to make a game for the Sega Dreamcast.
 My first and later attempts failed, but I picked it up sometime later in autumn.
-This time I wanted to bring this little game to Dreamcast (instead of the other full game idea).
-First I a made a version in SDL 1.2 (because there was a port of for Dreamcast) on PC to easily see what is going on and later recompiled it using the Dreamcast homebrew toolchain. Well, I had to learn
+This time I wanted to bring this little game to Dreamcast (instead of the other full game idea) because I thought starting with something small would be a better start and less frustrating (Oh well, I was so wrong 😂).
+First I made a version in SDL 1.2 (because there was a port of for Dreamcast) on PC to easily see what is going on and later recompiled it using the Dreamcast homebrew toolchain. Well, I had to learn
 my lesson about GCC C compilers and how bitchy they can be and also that the SDL port for Dreamcast is broken and no longer maintained. But hope was not lost! There was an OpenGL port for Dreamcast too. So, I had to learn how to use OpenGL.
 I read a few tutorials and started to rework the SDL stuff into OpenGL using GLFW3
 <br/>
