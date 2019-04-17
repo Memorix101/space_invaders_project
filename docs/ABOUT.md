@@ -35,10 +35,12 @@ So, I set up some kind of requirements for the platforms I want to port this.
 Also there are ports for my own [platforms](https://memorix101.wordpress.com/videogame-console-project/).<br/>
 [G-eon a virtual video game console](https://memorix101.itch.io/g-eon)
 I started working on in 2016 and released the first stable version in April 2017
+
 <br/>
 <img src="https://img.itch.zone/aW1hZ2UvMTA5MTg0LzUwNzQ0Ni5wbmc=/347x500/Zx6ev1.png" width="300">
 <img src="https://img.itch.zone/aW1hZ2UvMTA5MTg0LzUwOTg1Mi5wbmc=/347x500/e2Xtui.png" width="300">
 <br/>
+
 and Xenon a video game console I was working on since my early childhood.
 Reworked it as a Raspberry Pi Linux based operating system in 2018. It's unreleased (and will possibly never be).<br/><br/>
 <img src="https://memorix101.files.wordpress.com/2016/07/ad_2.png?w=1400&h=" width="300">
@@ -100,7 +102,7 @@ But some things are way different in F# and I never would have thought I would m
 
 The orignal is written in C as the Dreamcast toolchain was not that great in C++ support. So I wanted to rewrite it into **C++**. I wanted to be at least on C++11 level. So, I made OOP like port. Lists `std::list<T>`, classes and ranged loops `for(Type& v : a) { ... }`. Well, didn't work as expected in the first place 😂
 
-<img src="https://i.imgur.com/sHbj5Bw.gif" width="500"><br/>
+<img src="https://i.imgur.com/3QogfRS.gif" width="500"><br/>
 ###### Flickering sprites because of C style for loop (Int i = 0; i < T.size(); i++)
 <img src="https://i.imgur.com/wX8Tjdw.gif" width="500"><br/>
 ###### Ranged for loop glitch. Had to add s goto statement (what makes me feel so dirty 😞)
