@@ -53,7 +53,6 @@ public class libgdx_space_invaders extends ApplicationAdapter {
         player.dead = false;
         player.pos = new Vector2(640 / 2 - player.sprite.getDepth() / 2, 10);
         laser.clear();
-        ;
         enemies.clear();
         pusher.clear();
         explode_fx.clear();
