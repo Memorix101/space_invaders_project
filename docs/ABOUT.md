@@ -11,8 +11,11 @@ I read a few tutorials and started to rework the SDL stuff into OpenGL using GLF
 <br/>
 ![](https://i.imgur.com/CVn5vGA.jpg)
 ###### OpenGL example I made to visualize what is going on here (My drawing code is flipped btw 😂😬)
-(but I was too lazy to port the font over but managed to do this for all other platforms who had no SDL_ttf support using bitmap fonts).
+but I was too lazy to port the font over but managed to do this for all other platforms who had no SDL_ttf support using bitmap fonts.
 <br/>
+
+![screenshot 41](https://cloud.githubusercontent.com/assets/1466920/20844291/5e34e450-b8bf-11e6-9f01-7c829016941d.png)
+###### This only exists for the purpose to learn OpenGL to make the Dreamcast port
 
 <img src="https://i.imgur.com/M5GHwK0.png" width="500"></p>
 ###### Dreamcast OpenGL version
