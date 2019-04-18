@@ -11,7 +11,7 @@ I read a few tutorials and started to rework the SDL stuff into OpenGL using GLF
 <br/>
 ![](https://i.imgur.com/CVn5vGA.jpg)
 ###### OpenGL example I made to visualize what is going on here (My drawing code is flipped btw 😂😬)
-but I was too lazy to port the font over but managed to do this for all other platforms who had no SDL_ttf support using bitmap fonts.
+but I was too lazy to port the font over but managed to do this for all other platforms who had no SDL_ttf support using bitmap fonts. (In the end I finished the OpenGL port 🙃 ... almost 3 years later 😂)
 <br/>
 
 ![screenshot 41](https://cloud.githubusercontent.com/assets/1466920/20844291/5e34e450-b8bf-11e6-9f01-7c829016941d.png)
@@ -22,7 +22,7 @@ but I was too lazy to port the font over but managed to do this for all other pl
 
 <img src="https://i.imgur.com/hE111dv.png" width="500"></p>
 ###### PSP SDL version
-Then at some point this became some race about *"for how many different platforms can I port this thing?"*.
+Then at some point this became some sort of race about *"for how many different platforms can I port this thing?"*.
 
 So, I set up some kind of requirements for the platforms I want to port this.
 <br/>
