@@ -1,5 +1,7 @@
 #include "glfx.h"
 #include <cstdio>
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
 
 void initGL(int screen_w, int screen_h)
 {
@@ -10,21 +12,56 @@ void initGL(int screen_w, int screen_h)
 	glMatrixMode(GL_MODELVIEW);
 }
 
+GLuint load_texture(const char* filename)
+{
+	int width, height, nrChannels;
+	unsigned char* texture_data = stbi_load(filename, &width, &height, &nrChannels, 4);
+
+	unsigned int texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	// set the texture wrapping/filtering options (on the currently bound texture object)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	if (texture_data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture_data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		printf("Failed to load texture\n");
+	}
+
+	stbi_image_free(texture_data);
+	return texture;
+}
+
+unsigned char* load_texture_raw(const char* filename)
+{
+	int width, height, nrChannels;
+	//stbi_image_free(texture_data);
+	return stbi_load(filename, &width, &height, &nrChannels, 4);
+}
 
 void draw(GLuint texture, vector2 vec)
 {
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glEnable(GL_TEXTURE_2D);
 
+	int w, h;
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &w);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &h);
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	int w, h;
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &w);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &h);
 
 	glPushMatrix();
 
@@ -50,6 +87,8 @@ void draw(GLuint texture, vector2 vec)
 
 void draw(GLuint texture, vector2 vec, rect resize)
 {
+	//glClear(GL_COLOR_BUFFER_BIT);
+
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glEnable(GL_TEXTURE_2D);
 
