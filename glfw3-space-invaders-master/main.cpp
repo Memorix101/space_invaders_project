@@ -585,9 +585,10 @@ int main(int argc, char* argv[]) {
 	}
 
 	//set window icon
-	GLFWimage icons[1];
-	icons[0].pixels = load_texture_raw("rd/icon.png");
-	glfwSetWindowIcon(window, 1, icons);
+	GLFWimage images[1]; 
+	images[0] = load_texture_to_GLFWimage("rd/icon.png"); //rgba channels 
+	glfwSetWindowIcon(window, 1, images); 
+	texture_free(images[0].pixels);
 
 	// Get the resolution of the primary monitor
 	mode = glfwGetVideoMode(glfwGetPrimaryMonitor());

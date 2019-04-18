@@ -48,6 +48,19 @@ unsigned char* load_texture_raw(const char* filename)
 	return stbi_load(filename, &width, &height, &nrChannels, 4);
 }
 
+GLFWimage load_texture_to_GLFWimage(const char* filename)
+{
+	int width, height, nrChannels;
+	GLFWimage image;
+	image.pixels = stbi_load("rd/icon.png", &image.width, &image.height, 0, 4); //rgba channels 
+	return image;
+}
+
+void texture_free(unsigned char* texture)
+{
+	stbi_image_free(texture);
+}
+
 void draw(GLuint texture, vector2 vec)
 {
 	glBindTexture(GL_TEXTURE_2D, texture);
