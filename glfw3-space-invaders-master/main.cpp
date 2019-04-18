@@ -117,7 +117,7 @@ void preload_assets()
 	bullet_tex2d = load_texture("rd/bullet.png");
 	enemy_bullet_tex2d = load_texture("rd/enemy-bullet.png");
 	explo_tex2d = load_texture("rd/explode.png");
-	fmg_splash_tex2d = load_texture("rd/fmg_splash.png");;
+	fmg_splash_tex2d = load_texture("rd/fmg_splash.psd");;
 	gameover_tex2D = load_texture("rd/gameover_ui.png");
 	win_tex2d = load_texture("rd/win_ui.png");
 }
