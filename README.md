@@ -27,10 +27,11 @@
   - LibGDX
   <br/>
 - Xbox One ([UWP](https://docs.microsoft.com/en-us/windows/uwp/design/basics/design-and-ui-intro) only; [Xbox Live Creators Program](https://docs.microsoft.com/en-gb/gaming/xbox-live/get-started-with-creators/get-started-with-xbox-live-creators))
-  - MonoGame 
+  - MonoGame
   - Godot
   - Unity
   - Unreal Engine 4
+  - raylib
   <br/>
 - GameBoy Advanced
     - [smgbalib](http://sebastianmihai.com/main.php?t=40&n=Gameboy-Advance-development-smgbalib-library)
