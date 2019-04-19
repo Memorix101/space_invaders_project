@@ -258,7 +258,7 @@ void updateEnemies()
 {
 	animatorEnemies();
 
-	const int moveSpeed = 1;
+	const int moveSpeed = 5;
 
 	int e;
 	for (e = 0; e < MAX_ENEMIES; e++) if (enemy[e]) {
@@ -626,7 +626,7 @@ int main(int argc, char* argv[]) {
 	char textBuffer[64];
 	sprintf_s(textBuffer, "SCORE: % 05d", score);
 	Vector2 score_txtsize = MeasureTextEx(vermin_ttf, textBuffer, 24, 0);
-	Vector2 score_pos = { 640 - score_txtsize.x - 10, 20 };
+	Vector2 score_pos = { 640 - score_txtsize.x - 20, 20 };
 
 	Vector2 youWin_pos;
 	Vector2 youWin_txtsize = MeasureTextEx(vermin_ttf, "Game Over!", 64, 0);
