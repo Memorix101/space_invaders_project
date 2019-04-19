@@ -591,7 +591,7 @@ int main(int argc, char* argv[]) {
 	//Initialize SDL_mixer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
 	{
-		return false;
+		return -1;
 	}
 
 	load_assets();
@@ -610,7 +610,7 @@ int main(int argc, char* argv[]) {
 	initEnemies();
 	initPlayer();
 
-	//
+	//ttf stuff
 	TTF_Font* vermin_ttf = TTF_OpenFont("rd/vermin_vibes_1989.ttf", 24);
 	SDL_Rect score_pos;
 	SDL_Color Color = { 255, 255, 255 };
@@ -638,7 +638,7 @@ int main(int argc, char* argv[]) {
 	//Play the music
 	if (Mix_PlayMusic(music, -1) == -1)
 	{
-		return 1;
+		return -1;
 	}
 
 	while (quit == 0)
