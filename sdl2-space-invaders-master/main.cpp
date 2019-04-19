@@ -252,7 +252,7 @@ void initEnemies()
 		if (found >= 0)
 		{
 			int i = found;
-			enemy[i] = (enemy_t*)malloc(sizeof(enemy)); //visual studio needs that "stupid" cast to operate >_>
+			enemy[i] = (enemy_t*)malloc(sizeof(enemy)); //visual studio needs that cast to operate >_>
 			enemy[i]->tex = enemy_tex;
 			enemy[i]->alive = 1;
 			enemy[i]->rect = { 0, 0, 32, 32 };
