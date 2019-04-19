@@ -574,7 +574,7 @@ int main(int argc, char* argv[]) {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC);
 	SDL_ShowCursor(SDL_DISABLE);
 
-	Uint32          colorkey;
+	Uint32 colorkey;
 	SDL_Surface* icon;
 	icon = IMG_Load("rd/icon.png");
 	colorkey = SDL_MapRGB(icon->format, 255, 0, 255);
@@ -614,12 +614,10 @@ int main(int argc, char* argv[]) {
 	//Initialize SDL_mixer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
 	{
-		return false;
+		return -1;
 	}
 
 	load_assets();
-
-	music = Mix_LoadMUS("rd/bodenstaendig.mp3");
 
 	SDL_BlitSurface(fmg_splash_tex2d, NULL, screen, NULL);
 	SDL_UpdateWindowSurface(gWindow);
@@ -650,6 +648,7 @@ int main(int argc, char* argv[]) {
 	game_over_pos.y = 480 / 2 - gameOver->h / 2;
 
 	//load audio
+	music = Mix_LoadMUS("rd/bodenstaendig.mp3");
 	snd_blaster = Mix_LoadWAV("rd/blaster.mp3");
 	snd_explo = Mix_LoadWAV("rd/explode1.wav");
 	snd_pusher = Mix_LoadWAV("rd/pusher.wav");

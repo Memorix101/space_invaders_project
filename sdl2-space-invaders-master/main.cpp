@@ -61,7 +61,7 @@ struct enemy_t {
 	float shootTimer;
 	int shoot; //bool
 	float shootTimeLimit;
-	int speed = 250;
+	int speed;
 	SDL_Rect size;
 	SDL_Rect vec; //representing pos and size
 	SDL_Rect spritecut;
@@ -259,7 +259,7 @@ void initEnemies()
 			enemy[i]->pos = { itemCount * 40, 40 * rowCount };
 			enemy[i]->startPos = enemy[i]->pos.x;
 			enemy[i]->rowPosID = 40 * (11 - itemCount);
-			enemy[i]->speed = 1; //bug: an weird bug makes the enemies spawn out side of the viewport if speed is initialized here
+			enemy[i]->speed = 1; //bug: weird bug makes the enemies spawn out side of the viewport if speed is initialized here
 			enemy[i]->goLeft = 0;
 			enemy[i]->hitbox = { enemy[i]->pos.x, enemy[i]->pos.y, enemy[i]->rect.w, enemy[i]->rect.h };
 			enemy[i]->shoot = 0;
@@ -421,7 +421,7 @@ void initPlayer()
 	player.pos.x = 640 / 2 - player_surface->w / 2;
 	player.pos.y = (480 - 60) - player_surface->h / 2;
 	player.size = { 0, 0, player_surface->w, player_surface->h };
-	player.size = { player.pos.x, player.pos.y, player.size.w, player.size.h };
+	player.vec = { player.pos.x, player.pos.y, player.size.w, player.size.h };
 	player.alive = 1;
 }
 
@@ -608,13 +608,13 @@ int main(int argc, char* argv[])
 	//Initialize SDL_mixer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
 	{
-		return false;
+		return 1;
 	}
 
 	//Set up TTf stuff
 	if (TTF_Init() == -1)
 	{
-		return false;
+		return 1;
 	}
 
 	//Get the first available controller
@@ -644,12 +644,6 @@ int main(int argc, char* argv[])
 				fprintf(stderr, "Could not open Controller %i: %s\n", i, SDL_GetError());
 			}
 		}
-	}
-
-	//Initialize SDL_mixer
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
-	{
-		return false;
 	}
 
 	//prepare assets
