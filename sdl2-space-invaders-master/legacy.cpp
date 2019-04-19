@@ -656,7 +656,7 @@ int main(int argc, char* argv[]) {
 	//Play the music
 	if (Mix_PlayMusic(music, -1) == -1)
 	{
-		return 1;
+		return -1;
 	}
 
 	while (quit == 0)

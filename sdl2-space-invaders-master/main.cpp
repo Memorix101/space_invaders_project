@@ -608,13 +608,13 @@ int main(int argc, char* argv[])
 	//Initialize SDL_mixer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
 	{
-		return 1;
+		return -1;
 	}
 
 	//Set up TTf stuff
 	if (TTF_Init() == -1)
 	{
-		return 1;
+		return -1;
 	}
 
 	//Get the first available controller
@@ -658,7 +658,7 @@ int main(int argc, char* argv[])
 	//Play the music
 	if (Mix_PlayMusic(music, -1) == -1)
 	{
-		return 1;
+		return -1;
 	}
 
 	//splash screen
