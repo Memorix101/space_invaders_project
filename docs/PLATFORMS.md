@@ -1,10 +1,10 @@
 # Platform ideas and status
 
 - PlayStation 2
-  - ps2sdk has no (useful) documentation. There is a booting build of the game but it's not working, because of misconfigured IOP modules. 😞
+  - ps2sdk has no (useful) documentation. There is a booting build of the game but it's not working and I actually don't know why. Just black screen. IOP modules load correctly, but something is wrong here 😞
     <br/>
 - PlayStation
-  - Not sure.
+  - Not sure. No plans.
     <br/>
     <br/>
 - N64
@@ -36,7 +36,7 @@
     <br/>
     <br/>
 - Xbox 360
-  - Waiting until it's safe to install CFW without the worry about a ban. (XNA is dead on Xbox 360 😢). Can Xenia run homebrew well?! Never tested it.
+  - Waiting until it's safe to install CFW without the worry about a ban. (XNA is dead on Xbox 360 😢). Can Xenia run homebrew well?! Never tested it. Also the homebrew situation is kind of meh over there.
     <br/>
     <br/>
 - Java
@@ -49,3 +49,7 @@
     <br/>
 - HTML5
   - Sure, when I'm in the mood.
+    <br/>
+    <br/>
+- GameCube
+  - Same situation as Wii. Audio would be a mess (Both use the same SDK). Also I don't know if SDL is there and actually I don't want to rework it for GX.
