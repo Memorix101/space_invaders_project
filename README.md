@@ -58,7 +58,7 @@
   - [G-eon SDK](https://github.com/G-eon/g-eon-wiki/wiki)
   <br/> 
 - Nintendo Wii
-  - [GRRLIB](https://github.com/GRRLIB/GRRLIB)
+  - [GRRLIB](https://github.com/GRRLIB/GRRLIB) (devkitPro)
   <br/> 
 - Nintendo WiiU
   - SDL2 (devkitPro)
