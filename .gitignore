@@ -97,3 +97,9 @@ glfw3-space-invaders-master/.vs
 glfw3-space-invaders-master/Debug
 
 glfw3-space-invaders-master/Release/
+
+phaser-space-invaders/\.vscode/
+
+phaser-space-invaders/\.idea/
+
+phaser-space-invaders/phaser-space-invaders\.zip
