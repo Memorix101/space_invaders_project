@@ -1,4 +1,4 @@
-# sfml2-space-invaders-master
+# sfml2-space-invaders
 
 Space Invaders written in C++ using SFML 2.5
 

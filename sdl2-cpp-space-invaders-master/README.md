@@ -1,4 +1,4 @@
-# sdl2-cpp-space-invaders-master
+# sdl2-cpp-space-invaders
 
 Space Invaders written in C++ using SDL2
 
