@@ -596,15 +596,10 @@ int main(int argc, char* argv[]) {
 
 	load_assets();
 
-	music = Mix_LoadMUS("rd/bodenstaendig.ogg");
-
 	SDL_BlitSurface(fmg_splash_tex2d, NULL, screen, NULL);
 	SDL_Flip(screen);
 	SDL_Delay(2000);
 	SDL_FreeSurface(fmg_splash_tex2d);
-
-	//Load image
-	space3_tex2d = IMG_Load("rd/space3.png");
 
 	//init stuff
 	initEnemies();
@@ -631,6 +626,7 @@ int main(int argc, char* argv[]) {
 	game_over_pos.y = 480 / 2 - gameOver->h / 2;
 
 	//load audio
+	music = Mix_LoadMUS("rd/bodenstaendig.ogg");
 	snd_blaster = Mix_LoadWAV("rd/blaster.ogg");
 	snd_explo = Mix_LoadWAV("rd/explode1.ogg");
 	snd_pusher = Mix_LoadWAV("rd/pusher.ogg");
