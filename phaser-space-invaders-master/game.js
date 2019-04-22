@@ -3,6 +3,7 @@ var config = {
     width: 640,
     height: 480,
     useTicker: true,
+    pixelArt: true,
     physics: {
         default: 'arcade',
         arcade: {
