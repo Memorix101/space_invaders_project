@@ -54,3 +54,7 @@
     <br/>
 - GameCube
   - Same situation as Wii. Audio would be a mess (Both use the same SDK). Also I don't know if SDL is there and actually I don't want to rework it for GX.
+    <br/>
+    <br/>
+- MS-DOS
+  - I'm planning to rework the DOS version at some point in the future as it is unstable/broken and not up-to-date.
