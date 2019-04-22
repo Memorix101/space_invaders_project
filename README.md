@@ -25,6 +25,10 @@
   - SFML 2.5
   - Unreal Engine 4
   - LibGDX
+  - XNA 4.0 (Windows only, but you can use MonoGame or relink with [FNA](https://fna-xna.github.io/) instead)
+    <br/>
+- Xbox 360
+    - XNA 4.0 (App Hub is offline 😥)
   <br/>
 - Xbox One ([UWP](https://docs.microsoft.com/en-us/windows/uwp/design/basics/design-and-ui-intro) only; [Xbox Live Creators Program](https://docs.microsoft.com/en-gb/gaming/xbox-live/get-started-with-creators/get-started-with-xbox-live-creators))
   - MonoGame
