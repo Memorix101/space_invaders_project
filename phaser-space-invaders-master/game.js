@@ -45,6 +45,7 @@ var deltaTime = 0;
 var win_ui;
 var gameover_ui;
 var gameTimer = 0;
+var gameStart = false;
 var fmg_splash;
 
 //sound
@@ -194,6 +195,8 @@ function create() {
         color: '#ffffff'
     });
 
+    scoreText.text = scoreLabel.concat(convertPad(score.toString()));
+
     text = this.add.text(32, 32);
     text = this.add.text(32, 32);
 
@@ -246,8 +249,13 @@ function onHitPlayer(p, e) {
     isDead = true;
 }
 
-function update(time, delta) {
-    if(gameTimer >= 3.0) {
+function update(time, delta) {    
+    if(gameTimer >= 3.0 && !gameStart) {      
+        score = 0;
+        gameStart = true;
+    }
+    
+    if(gameStart) {
         fmg_splash.visible = false;
         player.setVelocity(0);
         enemy_update();
@@ -298,12 +306,15 @@ function update(time, delta) {
         } else {
             gameover_ui.visible = false;
         }
-
-        scoreText.text = scoreLabel.concat(convertPad(score.toString()));
-        scoreText.depth = 100;
+    }
+    else
+    {
+        score += 100; //bug with ttf in webkit based browsers
     }
 
     deltaTime = delta / 1000;
     gameTimer += deltaTime;
     //text.setText('Event.progress: ' + gameTimer);
+    scoreText.text = scoreLabel.concat(convertPad(score.toString()));
+    scoreText.depth = 0;
 }
