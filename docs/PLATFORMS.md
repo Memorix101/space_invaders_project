@@ -8,7 +8,7 @@
     <br/>
     <br/>
 - N64
-  - Not sure. Last time I checked their homebrew stuff it was pretty unappealing to me.
+  - Not sure. No plans. Last time I checked their homebrew stuff it was pretty unappealing to me.
     <br/>
     <br/>
 - SNES
@@ -16,15 +16,15 @@
     <br/>
     <br/>
 - Sega Mega Drive / Genesis
-  - There are no tools to convert the colour palette of the sprites and the documentation is outdated. Tricky situation. 😬
+  - There are no tools to convert the colour palette of the sprites and the documentation is outdated. Tricky situation. 😬 There is a prototype build.
     <br/>
     <br/>
 - [Emscripten](https://emscripten.org/index.html) (SDL2)
-  - Well, it's a mess. The build crashes right away. I tried so much, but can't get it working.
+  - Well, it's a mess. The build crashes right away. I tried so much, but can't get it working. 😥😥😥
     <br/>
     <br/>
 - [Rust](https://www.rust-lang.org/)
-  - This will take sometime. I want it to become nice, but there is a prototype project.
+  - This will take sometime. I want it to become nice, but there is a prototype build.
     <br/>
     <br/>
 - PS3
@@ -32,11 +32,11 @@
     <br/>
     <br/>
 - Original Xbox
-  - Is CXBX-Reloaded capable to run homebrew flawlessly?! Homebrew games were much too slow last time I tested it.
+  - I don't own one. Is CXBX-Reloaded capable to run homebrew flawlessly?! Homebrew games were much too slow last time I tested it.
     <br/>
     <br/>
 - Xbox 360
-  - Waiting until it's safe to install CFW without the worry about a ban. (XNA is dead on Xbox 360 😢). Can Xenia run homebrew well?! Never tested it. Also the homebrew situation is kind of meh over there.
+  - Waiting until it's safe to install CFW without the worry about a ban. (XNA is dead on Xbox 360 😢😥😥). Can Xenia run homebrew well?! Never tested it. Also the homebrew situation is kind of meh over there and there is the XNA version ...
     <br/>
     <br/>
 - Java
