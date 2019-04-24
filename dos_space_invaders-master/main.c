@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <allegro.h>
 #include "util.h"
@@ -100,7 +101,7 @@ BITMAP *fmg_splash = NULL;
 BITMAP *space = NULL;
 BITMAP *fontTex = NULL;
 
-BITMAP *buffer; //screen buffer
+BITMAP *buffer;
 
 volatile unsigned int ticks = 0;
 void Ticker()
@@ -247,7 +248,7 @@ void initEnemies()
       itemCount = 0;
       rowCount++;
     }
-    
+
     itemCount++;
     addEnemy();
   }
@@ -441,12 +442,12 @@ void input()
 
     if (key[KEY_LEFT]) {
       //printf("LEFT! \r\n");
-      p_move --;
+      p_move -= 3 * Timestep;
     }
 
     if (key[KEY_RIGHT]) {
       //printf("RIGHT! \r\n");
-      p_move ++;
+      p_move += 3 * Timestep;
     }
 
 //  }
@@ -517,6 +518,7 @@ void animatorExplo()
       explo[e]->animationFinished = 1;
     }
   }
+
 }
 
 void updateExplo()
@@ -580,6 +582,7 @@ void updateLogic()
     }
   }
 
+
   int b;
   for (b = 0; b < MAX_ENEMY_BULLETS; b++) if (enemy_bullets[b])
   {
@@ -617,8 +620,7 @@ int main(int argc, const char **argv) {
 
   /* Get basic stuff initialized */
 	// Initializes the Allegro library.
-	if (allegro_init() != 0) 
-  {
+	if (allegro_init() != 0) {
 			return 1;
 	}
 	// Installs the Allegro interrupt handlers.
@@ -631,18 +633,16 @@ int main(int argc, const char **argv) {
 	//install_int_ex(Ticker, MSEC_TO_TIMER(1));
 
   /* INITIALIZE SOUND */
-  if(install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL)) 
-  {
+  if(install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL)) {
     allegro_message("Sound Error: %s\n", allegro_error);
     return 1;
   }
 
   /* install a MIDI sound driver */
-  if (install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL) != 0) 
-  {
+if (install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL) != 0) {
    allegro_message("Error initialising sound system\n%s\n", allegro_error);
    return 1;
-  }
+}
 
   set_volume(255, 255); //Max volume
 
@@ -733,7 +733,7 @@ int main(int argc, const char **argv) {
 
       if (player.alive == 1) {
         masked_blit(player.tex, buffer, 0, 0, player.pos.x, player.pos.y, player_tex->w, player_tex->h);
-      } 
+      }
       else
       {
         //createFont(fontTex, 32, ctextpos, "GAME OVER!");
@@ -765,11 +765,13 @@ int main(int argc, const char **argv) {
     clear_bitmap(explo_tex);
     */
 	
-	  lastdelta = curTime;
+	lastdelta = curTime;
 	
   }
 
-  return 0;  
+  destroy_bitmap(fmg_splash);
+
+  return 0;
 }
 
 END_OF_MAIN()
