@@ -57,4 +57,4 @@
     <br/>
     <br/>
 - MS-DOS
-  - I'm planning to rework the DOS version at some point in the future as it is unstable/broken and not up-to-date.
+  - I'm planning to rework the DOS version at some point in the future as it is unstable/broken.
