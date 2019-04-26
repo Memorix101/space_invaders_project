@@ -85,8 +85,8 @@
 - JavaScript
 - [GDScript](https://docs.godotengine.org/en/3.1/getting_started/scripting/gdscript/gdscript_basics.html#doc-gdscript)
 - [Blueprints Visual Scripting](https://docs.unrealengine.com/en-us/Engine/Blueprints)
-### Planned platforms and status
-[Planned platforms and status](https://github.com/Memorix101/space_invaders_project/blob/master/docs/PLATFORMS.md)
+### Planned platforms roadmap
+[Planned platforms roadmap](https://github.com/Memorix101/space_invaders_project/blob/master/docs/PLATFORMS.md)
 
 ![screenshot 29](https://cloud.githubusercontent.com/assets/1466920/20732319/754e4344-b68e-11e6-9b74-653128c85ec8.png)
 
