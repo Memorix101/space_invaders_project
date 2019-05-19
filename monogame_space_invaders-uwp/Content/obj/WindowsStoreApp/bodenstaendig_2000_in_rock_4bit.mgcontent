@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/memor/Documents/SourceTree/MonoGame_SpaceInvaders/Content/bodenstaendig_2000_in_rock_4bit.mp3</SourceFile>
+  <SourceTime>2016-11-15T04:11:40+01:00</SourceTime>
+  <DestFile>C:/Users/memor/Documents/SourceTree/MonoGame_SpaceInvaders/Content/bin/WindowsStoreApp/bodenstaendig_2000_in_rock_4bit.xnb</DestFile>
+  <DestTime>2016-11-26T13:43:12.0979543+01:00</DestTime>
+  <Importer>Mp3Importer</Importer>
+  <ImporterTime>2016-03-30T08:36:08+02:00</ImporterTime>
+  <Processor>SongProcessor</Processor>
+  <ProcessorTime>2016-03-30T08:36:08+02:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>C:/Users/memor/Documents/SourceTree/MonoGame_SpaceInvaders/Content/bin/WindowsStoreApp/bodenstaendig_2000_in_rock_4bit.wma</string>
+  </BuildOutput>
+</PipelineBuildEvent>

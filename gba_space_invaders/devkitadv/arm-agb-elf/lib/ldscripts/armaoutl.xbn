@@ -1,0 +1,30 @@
+OUTPUT_FORMAT("a.out-arm-little")
+OUTPUT_ARCH(arm)
+ SEARCH_DIR(/devkitadv/arm-aout/lib);
+SECTIONS
+{
+  .text   0x8000 :
+  {
+    CREATE_OBJECT_SYMBOLS
+    __stext_ = .;
+    *(.text)
+    _etext = .;
+    __etext = .;
+  }
+  .data . :
+  {
+    __sdata_ = .;
+    *(.data)
+    CONSTRUCTORS
+    _edata  =  .;
+    __edata  =  .;
+  }
+  .bss  SIZEOF(.data) + ADDR (.data) :
+  {
+    __bss_start = .;
+   *(.bss)
+   *(COMMON)
+   _end = ALIGN(4) ;
+   __end = ALIGN(4) ;
+  }
+}

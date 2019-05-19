@@ -1,20 +1,20 @@
-space_invaders_raylib-master/.vs/
-raylib_space_invaders-master/.vs/space_invaders_raylib/v15/
+space_invaders_raylib/.vs/
+raylib_space_invaders/.vs/space_invaders_raylib/v15/
 
-monogame_space_invaders-master/Desktop/\.vs/
-monogame_space_invaders-master/Desktop/obj/
-monogame_space_invaders-master/Desktop/bin/
+monogame_space_invaders/Desktop/\.vs/
+monogame_space_invaders/Desktop/obj/
+monogame_space_invaders/Desktop/bin/
 
-monogame_space_invaders-master/UWP/\.vs/
-monogame_space_invaders-master/UWP/obj/
-monogame_space_invaders-master/UWP/bin/
+monogame_space_invaders/UWP/\.vs/
+monogame_space_invaders/UWP/obj/
+monogame_space_invaders/UWP/bin/
 
 unity3d-space-invaders/\.vs/
 
-sfml2-space-invaders-master/Debug/
-sfml2-space-invaders-master/\.vs/
+sfml2-space-invaders/Debug/
+sfml2-space-invaders/\.vs/
 
-lwjgl3-space-invaders-master/
+lwjgl3-space-invaders/
 
 ue4_space_invaders/Saved/
 ue4_space_invaders/Intermediate/
@@ -22,31 +22,31 @@ ue4_space_invaders/Build/
 ue4_space_invaders/Binaries/
 ue4_space_invaders/\.vs/
 ue4_space_invaders/Bin/
-sdl-space-invaders-master/\.vs/
+sdl-space-invaders/\.vs/
 
-sdl-space-invaders-master/Debug/
+sdl-space-invaders/Debug/
 
-monogame_space_invaders-uwp-master/obj/
+monogame_space_invaders-uwp/obj/
 
-monogame_space_invaders-uwp-master/\.vs/
+monogame_space_invaders-uwp/\.vs/
 
-monogame_space_invaders-uwp-master/bin/
+monogame_space_invaders-uwp/bin/
 
-monogame_space_invaders-desktop-master/obj/
+monogame_space_invaders-desktop/obj/
 
-monogame_space_invaders-desktop-master/bin/
+monogame_space_invaders-desktop/bin/
 
-monogame_space_invaders-desktop-master/\.vs/
+monogame_space_invaders-desktop/\.vs/
 
-monogame_space_invaders-master/UWP/Content/
+monogame_space_invaders/UWP/Content/
 
-monogame_space_invaders-master/UWP/Properties/
+monogame_space_invaders/UWP/Properties/
 
-monogame_space_invaders-master/Desktop/Content/
+monogame_space_invaders/Desktop/Content/
 
-wii-space-invaders-master/
+wii-space-invaders/
 
-wii_space_invaders_master/source/\.vscode/
+wii_space_invaders/source/\.vscode/
 
 unity3d-space-invaders/Library/webgl_cache/
 
@@ -58,45 +58,45 @@ unity3d-space-invaders/Win64/
 
 unity3d-space-invaders/Library/
 
-sdl2-space-invaders-master/\.vs/
+sdl2-space-invaders/\.vs/
 
-sdl2-space-invaders-master/Debug/
+sdl2-space-invaders/Debug/
 
-monogame_space_invaders-fsharp-master/obj/
+monogame_space_invaders-fsharp/obj/
 
-monogame_space_invaders-fsharp-master/bin/
+monogame_space_invaders-fsharp/bin/
 
-monogame_space_invaders-fsharp-master/\.vs/
+monogame_space_invaders-fsharp/\.vs/
 
-monogame_space_invaders-fsharp-master/Content/obj/
+monogame_space_invaders-fsharp/Content/obj/
 
-monogame_space_invaders-fsharp-master/Content/bin/
+monogame_space_invaders-fsharp/Content/bin/
 
 unity3d-space-invaders/Temp/
 
-psp-space-invaders-master/rd/Thumbs\.db
+psp-space-invaders/rd/Thumbs\.db
 
-monogame_space_invaders-desktop-master/Content/bin/
+monogame_space_invaders-desktop/Content/bin/
 
-monogame_space_invaders-desktop-master/Content/obj/
+monogame_space_invaders-desktop/Content/obj/
 
-sdl2-cpp-space-invaders-master/Debug/
+sdl2-cpp-space-invaders/Debug/
 
-sdl2-cpp-space-invaders-master/\.vs/
+sdl2-cpp-space-invaders/\.vs/
 
-dreamcast-space-invaders-master/dc_dev/PVRViewer\.ini
+dreamcast-space-invaders/dc_dev/PVRViewer\.ini
 
-raylib_space_invaders-master/\.vs/
+raylib_space_invaders/\.vs/
 
-raylib_space_invaders-master/Debug/
+raylib_space_invaders/Debug/
 
-raylib_space_invaders-master/space_invaders_raylib/Debug/
+raylib_space_invaders/space_invaders_raylib/Debug/
 
-dreamcast-space-invaders-master/\.vscode/
-glfw3-space-invaders-master/.vs
-glfw3-space-invaders-master/Debug
+dreamcast-space-invaders/\.vscode/
+glfw3-space-invaders/.vs
+glfw3-space-invaders/Debug
 
-glfw3-space-invaders-master/Release/
+glfw3-space-invaders/Release/
 
 phaser-space-invaders/\.vscode/
 
@@ -106,8 +106,8 @@ phaser-space-invaders/phaser-space-invaders\.zip
 phaser-space-invaders/phaser-space-invaders\.idea
 phaser-space-invaders/phaser-space-invaders\.vscode
 
-phaser-space-invaders-master/\.idea/
+phaser-space-invaders/\.idea/
 
-phaser-space-invaders-master/\.vscode/
+phaser-space-invaders/\.vscode/
 
-phaser-space-invaders-master/phaser-space-invaders-master\.zip
+phaser-space-invaders/phaser-space-invaders\.zip

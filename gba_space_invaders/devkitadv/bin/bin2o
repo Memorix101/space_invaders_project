@@ -1,0 +1,21 @@
+#!/bin/bash
+# by Jason Wilkins (fenix AT io.com)
+# I place this in the public domain.
+
+if [ $# -ne 3 ]; then echo "usage: $0 section infile outfile"; exit 1; fi
+
+(
+cat << EOF
+SECTIONS
+  {
+	"$1" : { *(.data) }
+  }
+EOF
+) >> .tmp.bin2o.ls
+
+objcopy -I binary -O elf32-little "$2" .tmp.bin2o.o 2> /dev/null
+
+ld -T .tmp.bin2o.ls .tmp.bin2o.o -o "$3"
+
+rm -f .tmp.bin2o.ls
+rm -f .tmp.bin2o.o
