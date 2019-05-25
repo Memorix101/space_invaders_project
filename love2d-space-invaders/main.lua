@@ -192,8 +192,8 @@ function collision_stuff()
   do 
     for e = #enemies, 1, -1 
       do
-        if bullets[i].x > enemies[e].x and bullets[i].x < enemies[e].x + enemies[e].tex:getWidth() and
-          bullets[i].y > enemies[e].y and bullets[i].y < enemies[e].y + enemies[e].tex:getHeight() and
+        if bullets[i].x > enemies[e].x and bullets[i].x < enemies[e].x + 32 and
+          bullets[i].y > enemies[e].y and bullets[i].y < enemies[e].y + 32 and
           enemies[e].alive == true 
           then
           table.insert(explosions, {
