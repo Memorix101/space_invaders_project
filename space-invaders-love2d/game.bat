@@ -1,0 +1,1 @@
+start lovec.exe space-invaders-love2d

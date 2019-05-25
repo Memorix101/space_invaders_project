@@ -7,6 +7,7 @@
   - Unity
   - Unreal Engine 4
   - LibGDX
+  - [LÖVE](https://love2d.org/)
   <br/>
 - iOS
   - Godot
@@ -26,6 +27,7 @@
   - Unreal Engine 4
   - LibGDX
   - XNA 4.0 (Windows only, but you can use MonoGame or relink with [FNA](https://fna-xna.github.io/) instead)
+  - [LÖVE](https://love2d.org/)
   <br/>
 - Xbox 360
     - XNA 4.0 (App Hub is offline 😥)
@@ -83,6 +85,7 @@
 - Java
 - [F#](https://en.wikipedia.org/wiki/F_Sharp_(programming_language))
 - JavaScript
+- Lua
 - [GDScript](https://docs.godotengine.org/en/3.1/getting_started/scripting/gdscript/gdscript_basics.html#doc-gdscript)
 - [Blueprints Visual Scripting](https://docs.unrealengine.com/en-us/Engine/Blueprints)
 ### Planned platforms roadmap

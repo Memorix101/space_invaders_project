@@ -1,0 +1,1 @@
+copy /b love.exe+space-invaders-love2d.love space-invaders-love2d.exe
