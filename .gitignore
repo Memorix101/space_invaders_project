@@ -54,7 +54,7 @@ unity3d-space-invaders/HTML5/
 
 unity3d-space-invaders/obj/
 
-unity3d-space-invaders/Android/
+unity3d-space-invaders/\Android/
 
 unity3d-space-invaders/Win64/
 
@@ -113,3 +113,5 @@ phaser-space-invaders/\.idea/
 phaser-space-invaders/\.vscode/
 
 phaser-space-invaders/phaser-space-invaders\.zip
+
+unity3d-space-invaders/Android/
