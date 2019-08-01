@@ -1,8 +1,4 @@
-extends Node
-
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+extends KinematicBody2D
 
 var SPEED = 350
 var BUTTON_ACTIVE = false
@@ -26,7 +22,7 @@ func _process(delta):
 		BUTTON_ACTIVE = true
 		var bullet = preload("res://bullet.tscn").instance() #bullet prefab
 		bullet.set_position(Vector2(player_pos.x + 85, player_pos.y - 5))
-		get_node("../..").add_child(bullet)
+		get_tree().get_root().add_child(bullet)
 	elif !Input.is_action_pressed("fire") && BUTTON_ACTIVE:
 		BUTTON_ACTIVE = false
 
@@ -38,6 +34,3 @@ func _process(delta):
 
 	#update pos
 	self.set_position(player_pos)
-
-func _set_physics_process(delta):
-	#moo

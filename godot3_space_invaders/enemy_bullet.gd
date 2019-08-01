@@ -14,10 +14,8 @@ func _ready():
 	set_physics_process(true)
 	#get_node("Area2D").connect("area_enter",self,"_on_Area2D_area_enter")
 
-func _process(delta):
-	
-	TIME += 1 * delta
-	
+func _process(delta):	
+	TIME += 1 * delta	
 	translate(Vector2(0, SPEED * delta))
   
 func _set_physics_process(delta):
@@ -30,17 +28,14 @@ func _set_physics_process(delta):
 	#	other.queue_free()
 	#	self.queue_free() #destroys instance
 
-
 func _on_Area2D_body_enter( other ):
 	#print(other.get_name())
-	if(other.get_name() == "Player"):
-	
+	if(other.get_name() == "Player"):	
 		var explo = preload("res://explo.tscn").instance() #bullet prefab
 		explo.set_position(other.get_position())
 		explo.get_node("AnimationPlayer").play("anim");
-		get_node("../.").add_child(explo)
-		
-		other.queue_free()
-	
+		get_node("../.").add_child(explo)		
+		other.queue_free()	
 		self.queue_free() #destroys instance
-		#call_deferred("queue_free()")
+		#call_deferred("queue_free()")		
+		get_tree().get_root().get_node("global").gameover = true

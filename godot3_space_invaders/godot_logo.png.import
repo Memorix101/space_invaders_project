@@ -2,21 +2,22 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/2000px-Godot_(game_engine)_logo.pnpg.png-6b4d8b13725bd5573a68588c9cfab1e9.stex"
+path="res://.import/godot_logo.png-347fa425b06fb19b352144df091c8fe7.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://2000px-Godot_(game_engine)_logo.pnpg.png"
-source_md5="9bcf42ad2588638cb6c245bb2ce32fca"
-
-dest_files=[ "res://.import/2000px-Godot_(game_engine)_logo.pnpg.png-6b4d8b13725bd5573a68588c9cfab1e9.stex" ]
-dest_md5="21cd3520fa19347c6d3de9eab2f66e22"
+source_file="res://godot_logo.png"
+dest_files=[ "res://.import/godot_logo.png-347fa425b06fb19b352144df091c8fe7.stex" ]
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
+compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
@@ -26,6 +27,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=true
