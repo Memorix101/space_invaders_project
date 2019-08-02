@@ -12,6 +12,7 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_physics_process(true)
+	add_to_group("entities")
 	#get_node("Area2D").connect("area_enter",self,"_on_Area2D_area_enter")	
 
 func _process(delta):	

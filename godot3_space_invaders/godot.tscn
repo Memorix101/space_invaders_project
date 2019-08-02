@@ -3,7 +3,6 @@
 [ext_resource path="res://godot_logo.png" type="Texture" id=1]
 [ext_resource path="res://godot.gd" type="Script" id=2]
 
-
 [node name="Control" type="Node2D"]
 
 [node name="TextureFrame" type="Sprite" parent="."]

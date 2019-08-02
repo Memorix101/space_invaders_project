@@ -22,7 +22,7 @@ func _start():
 			rowCount = 1
 			row += 1
 		
-		var enemy = preload("res://enemy.tscn").instance() #bullet prefab
+		var enemy = preload("res://enemy.tscn").instance() #prefab
 		enemy.set_position(Vector2(64 * rowCount, 100 + (50 * row)))
 		self.add_child(enemy)	
 	get_tree().get_root().get_node("global").done = true
@@ -48,6 +48,7 @@ func _process(delta):
 		get_tree().get_root().get_node("global").killed_enemies = 0
 		get_tree().get_root().get_node("global").gameover = false
 		#remove all active nodes
-		for i in get_children():
-    		i.queue_free()
-		get_tree().change_scene("test.tscn")
+		get_tree().get_root().get_node("global").restart()
+		#for i in get_children():
+    	#	i.queue_free()
+		#get_tree().change_scene("test.tscn")

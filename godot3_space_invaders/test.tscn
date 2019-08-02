@@ -37,7 +37,9 @@ font_data = ExtResource( 7 )
 [sub_resource type="Theme" id=8]
 default_font = SubResource( 7 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" groups=[
+"entities",
+]]
 position = Vector2( 88.5197, 63.4669 )
 script = ExtResource( 1 )
 

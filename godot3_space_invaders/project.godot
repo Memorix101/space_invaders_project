@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Space Invaders"
-run/main_scene="res://godot.tscn"
+run/main_scene="res://fmg.tscn"
 config/icon="res://icon.png"
 boot_splash="res://black.png"
 boot_splash_fullsize=true

@@ -16,6 +16,7 @@ func _ready():
 	# Initialization here
 	set_process(true)
 	START_POS = self.get_position().x
+	add_to_group("entities")
 
 func _process(delta):
 	
@@ -31,7 +32,7 @@ func _process(delta):
 	
 	if(fire_timer >= fire_rate):		
 		#spawn bulltet
-		var enemy_bullet = preload("res://enemy_bullet.tscn").instance() #bullet prefab
+		var enemy_bullet = preload("res://enemy_bullet.tscn").instance() #prefab
 		enemy_bullet.set_position(Vector2(enemy_pos.x, enemy_pos.y + 50))
 		get_node("../.").add_child(enemy_bullet)
 		#reset
