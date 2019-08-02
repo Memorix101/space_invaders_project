@@ -1,9 +1,5 @@
 extends Node2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
 var row = 0
 var rowCount = 0
 
@@ -16,19 +12,17 @@ func _ready():
 func _start():
 	for i in range(40):
 		#print("Hi ", i)
-		rowCount += 1
-		
+		rowCount += 1		
 		if(rowCount == 9):
 			rowCount = 1
-			row += 1
-		
+			row += 1		
 		var enemy = preload("res://enemy.tscn").instance() #prefab
 		enemy.set_position(Vector2(64 * rowCount, 100 + (50 * row)))
 		self.add_child(enemy)	
 	get_tree().get_root().get_node("global").done = true
 
 func _process(delta):	
-	print(get_tree().get_root().get_node("global").killed_enemies)		
+	#print(get_tree().get_root().get_node("global").killed_enemies)		
 	if get_tree().get_root().get_node("global").killed_enemies >= 40:
 		get_tree().get_root().get_node("global").gameover = true
 	

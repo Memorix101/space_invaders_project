@@ -13,10 +13,8 @@ func _ready():
 func _process(delta):
  # or actions: Input.is_action_just_pressed("ui_up")
 	var player_pos = self.get_position()
-
 	#limit movement axis
 	player_pos.x = clamp(player_pos.x, 30, 995)
-
 	#shooting lasers
 	if Input.is_action_pressed("fire") && BUTTON_ACTIVE == false:
 		BUTTON_ACTIVE = true
@@ -25,12 +23,10 @@ func _process(delta):
 		get_tree().get_root().add_child(bullet)
 	elif !Input.is_action_pressed("fire") && BUTTON_ACTIVE:
 		BUTTON_ACTIVE = false
-
 	#moving player
 	if Input.is_action_pressed("ui_left"):
 		player_pos.x -= delta*SPEED
 	elif Input.is_action_pressed("ui_right"):
 		player_pos.x += delta*SPEED
-
 	#update pos
 	self.set_position(player_pos)

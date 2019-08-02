@@ -1,9 +1,5 @@
 extends Area2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
 var SPEED = -350
 var TIME = 0
 var HIT = false
@@ -20,10 +16,8 @@ func _process(delta):
 	translate(Vector2(0, SPEED * delta))
   
 func _set_physics_process(delta):
-		
 	if(self.get_position().y <= 0):
 		self.queue_free() #destroys instance
-
 	#if is_colliding():	# colliding with Static, Kinematic, Rigid after using MOVE
 	#	print ("Collision with ", get_collider() )
 	#	other.queue_free()
@@ -38,7 +32,7 @@ func _on_Area2D_body_enter(other):
 		var explo = preload("res://explo.tscn").instance() #bullet prefab
 		explo.set_position(Vector2(enemy_pos.x + 75, enemy_pos.y + 75))
 		explo.get_node("AnimationPlayer").play("anim");
-		get_node("../.").add_child(explo)
+		get_tree().get_root().add_child(explo)
 		get_tree().get_root().get_node("global").score += 100
 		get_tree().get_root().get_node("global").killed_enemies += 1
 		self.queue_free() #destroys instance
