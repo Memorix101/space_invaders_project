@@ -1,0 +1,105 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://scripts/test.gd" type="Script" id=1]
+[ext_resource path="res://sprites/space3.png" type="Texture" id=2]
+[ext_resource path="res://sprites/win_ui.png" type="Texture" id=3]
+[ext_resource path="res://sprites/gameover_ui.png" type="Texture" id=4]
+[ext_resource path="res://scripts/player.gd" type="Script" id=5]
+[ext_resource path="res://sprites/player.png" type="Texture" id=6]
+[ext_resource path="res://fonts/vermin_vibes_1989.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://scripts/score.gd" type="Script" id=8]
+[ext_resource path="res://audio/bodenstaendig.ogg" type="AudioStream" id=9]
+
+[sub_resource type="ShaderMaterial" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
+
+[sub_resource type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=4]
+size = 50
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 7 )
+fallback/0 = ExtResource( 7 )
+fallback/1 = SubResource( 3 )
+
+[sub_resource type="Theme" id=5]
+default_font = SubResource( 4 )
+
+[sub_resource type="ShaderMaterial" id=6]
+
+[sub_resource type="DynamicFont" id=7]
+size = 50
+use_mipmaps = true
+font_data = ExtResource( 7 )
+
+[sub_resource type="Theme" id=8]
+default_font = SubResource( 7 )
+
+[node name="Node2D" type="Node2D" groups=[
+"entities",
+]]
+position = Vector2( 88.5197, 63.4669 )
+script = ExtResource( 1 )
+
+[node name="space3" type="Sprite" parent="."]
+position = Vector2( 550.656, 356.311 )
+scale = Vector2( 1.6, 1.18699 )
+texture = ExtResource( 2 )
+
+[node name="win_ui" type="Sprite" parent="."]
+visible = false
+position = Vector2( 541.549, 311.683 )
+z_index = 500
+texture = ExtResource( 3 )
+
+[node name="gameover_ui" type="Sprite" parent="."]
+visible = false
+position = Vector2( 541.549, 303.538 )
+z_index = 500
+texture = ExtResource( 4 )
+
+[node name="Player" type="KinematicBody2D" parent="."]
+editor/display_folded = true
+position = Vector2( 557, 525 )
+input_pickable = true
+script = ExtResource( 5 )
+
+[node name="sprite" type="Sprite" parent="Player"]
+material = SubResource( 1 )
+position = Vector2( 0.571045, 0.620728 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 0.0447888, -0.188461 )
+scale = Vector2( 2.15858, 1.70583 )
+shape = SubResource( 2 )
+
+[node name="Score Label" type="Label" parent="."]
+editor/display_folded = true
+margin_left = 881.0
+margin_top = -37.0
+margin_right = 1021.0
+margin_bottom = 8.0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+theme = SubResource( 5 )
+text = "Score"
+
+[node name="Score" type="Label" parent="Score Label"]
+material = SubResource( 6 )
+margin_left = 148.0
+margin_top = 1.0
+margin_right = 288.0
+margin_bottom = 46.0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+theme = SubResource( 8 )
+text = "0000"
+script = ExtResource( 8 )
+
+[node name="StreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+autoplay = true

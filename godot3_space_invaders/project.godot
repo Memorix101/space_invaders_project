@@ -16,9 +16,9 @@ _global_script_class_icons={
 [application]
 
 config/name="Space Invaders"
-run/main_scene="res://fmg.tscn"
+run/main_scene="res://scenes/fmg.tscn"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
-config/icon="res://icon.png"
+config/icon="res://sprites/icon.png"
 boot_splash="res://black.png"
 boot_splash_fullsize=true
 icon="res://icon.png"
@@ -27,7 +27,7 @@ name="Space Invaders"
 
 [autoload]
 
-global="*res://global.gd"
+global="*res://scripts/global.gd"
 
 [display]
 
