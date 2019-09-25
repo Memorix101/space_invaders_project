@@ -22,7 +22,7 @@ config/icon="res://sprites/icon.png"
 boot_splash="res://black.png"
 boot_splash_fullsize=true
 icon="res://icon.png"
-main_scene="res://godot.tscn"
+main_scene="res://scenes/fmg.tscn"
 name="Space Invaders"
 
 [autoload]
