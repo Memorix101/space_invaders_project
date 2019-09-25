@@ -1,7 +1,7 @@
 extends Area2D
 
 var SPEED = 350
-var TIME = 0;
+var TIME = 0
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -28,7 +28,7 @@ func _on_Area2D_body_enter( other ):
 	if(other.get_name() == "Player"):
 		var explo = preload("res://prefabs/explo.tscn").instance() #prefab
 		explo.set_position(Vector2(other.get_position().x + 100, other.get_position().y + 24))
-		explo.get_node("AnimationPlayer").play("anim");
+		explo.get_node("AnimationPlayer").play("anim")
 		get_tree().get_root().add_child(explo)		
 		other.queue_free()	
 		self.queue_free() #destroys instance

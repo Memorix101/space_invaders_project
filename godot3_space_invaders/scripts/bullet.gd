@@ -31,7 +31,7 @@ func _on_Area2D_body_enter(other):
 		var enemy_pos = other.get_position()
 		var explo = preload("res://prefabs/explo.tscn").instance() #bullet prefab
 		explo.set_position(Vector2(enemy_pos.x + 75, enemy_pos.y + 75))
-		explo.get_node("AnimationPlayer").play("anim");
+		explo.get_node("AnimationPlayer").play("anim")
 		get_tree().get_root().add_child(explo)
 		get_tree().get_root().get_node("global").score += 100
 		get_tree().get_root().get_node("global").killed_enemies += 1
