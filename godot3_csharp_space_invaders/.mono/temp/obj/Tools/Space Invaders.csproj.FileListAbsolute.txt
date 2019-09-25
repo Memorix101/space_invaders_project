@@ -1,0 +1,5 @@
+C:\Users\memor\Downloads\Godot_v3.1.1-stable_mono_win64\godot3_csharp_space_invaders\.mono\temp\bin\Tools\Space Invaders.dll
+C:\Users\memor\Downloads\Godot_v3.1.1-stable_mono_win64\godot3_csharp_space_invaders\.mono\temp\bin\Tools\Space Invaders.pdb
+C:\Users\memor\Downloads\Godot_v3.1.1-stable_mono_win64\godot3_csharp_space_invaders\.mono\temp\obj\Tools\Space Invaders.csprojAssemblyReference.cache
+C:\Users\memor\Downloads\Godot_v3.1.1-stable_mono_win64\godot3_csharp_space_invaders\.mono\temp\obj\Tools\Space Invaders.dll
+C:\Users\memor\Downloads\Godot_v3.1.1-stable_mono_win64\godot3_csharp_space_invaders\.mono\temp\obj\Tools\Space Invaders.pdb

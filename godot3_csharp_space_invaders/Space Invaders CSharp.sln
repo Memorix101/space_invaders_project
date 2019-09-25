@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space Invaders CSharp", "Space Invaders CSharp.csproj", "{D836E898-7E39-4C2F-B972-8BE2565BDD0F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	Release|Any CPU = Release|Any CPU
+	Tools|Any CPU = Tools|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D836E898-7E39-4C2F-B972-8BE2565BDD0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D836E898-7E39-4C2F-B972-8BE2565BDD0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D836E898-7E39-4C2F-B972-8BE2565BDD0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D836E898-7E39-4C2F-B972-8BE2565BDD0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D836E898-7E39-4C2F-B972-8BE2565BDD0F}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
+		{D836E898-7E39-4C2F-B972-8BE2565BDD0F}.Tools|Any CPU.Build.0 = Tools|Any CPU
+	EndGlobalSection
+EndGlobal
