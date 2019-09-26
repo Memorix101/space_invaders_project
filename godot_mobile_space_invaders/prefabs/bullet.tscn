@@ -1,8 +1,11 @@
 [gd_scene load_steps=5 format=1]
 
-[ext_resource path="res://enemy_bullet.gd" type="Script" id=1]
-[ext_resource path="res://enemy-bullet.png" type="Texture" id=2]
-[ext_resource path="res://pusher.ogg" type="AudioStream" id=3]
+[ext_resource path="res://scripts/bullet.gd" type="Script" id=1]
+[ext_resource path="res://sprites/bullet.png" type="Texture" id=2]
+[ext_resource path="res://audio/blaster.ogg" type="AudioStream" id=3]
+
+
+
 
 [sub_resource type="CapsuleShape2D" id=1]
 
@@ -14,9 +17,8 @@ height = 20.0
 
 input/pickable = true
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 0.517756, 0, 0, 0.302, -0.19411, -0.70755 )
+shapes/0/transform = Matrix32( 0.421474, 0, 0, 1, -0.116218, 0 )
 shapes/0/trigger = false
-space_override = 3
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
@@ -29,8 +31,8 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-transform/pos = Vector2( -0.19411, -0.70755 )
-transform/scale = Vector2( 0.517756, 0.302 )
+transform/pos = Vector2( -0.116218, 0 )
+transform/scale = Vector2( 0.421474, 1 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0

@@ -28,4 +28,4 @@ func _process(delta):
 	self.set_opacity(time)
 	
 	if(reverse && time <= 0):
-		get_tree().change_scene("fmg.tscn")
+		get_tree().change_scene("res://scenes/test.tscn")

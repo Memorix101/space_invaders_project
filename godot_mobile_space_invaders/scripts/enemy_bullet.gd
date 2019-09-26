@@ -33,7 +33,7 @@ func _on_Area2D_body_enter( other ):
 	#print(other.get_name())
 	if(other.get_name() == "Player"):
 	
-		var explo = preload("res://explo.tscn").instance() #bullet prefab
+		var explo = preload("res://prefabs/explo.tscn").instance() #bullet prefab
 		explo.set_pos(other.get_pos())
 		explo.get_node("AnimationPlayer").play("anim");
 		get_node("../.").add_child(explo)

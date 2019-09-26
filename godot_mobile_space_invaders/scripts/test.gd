@@ -1,9 +1,10 @@
 extends Node2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+# global vars
+var done = false
+var score = 0
 
+# scene vars
 var row = 0
 var rowCount = 0
 
@@ -24,11 +25,11 @@ func _start():
 			rowCount = 1
 			row += 1
 		
-		var enemy = preload("res://enemy.tscn").instance() #bullet prefab
+		var enemy = preload("res://prefabs/enemy.tscn").instance() #bullet prefab
 		enemy.set_pos(Vector2(64 * rowCount, 100 + (50 * row)))
 		self.add_child(enemy)
 	
-	get_tree().get_root().get_node("global").done = true
+	done = true
 
 func _process(delta):
 	#moo

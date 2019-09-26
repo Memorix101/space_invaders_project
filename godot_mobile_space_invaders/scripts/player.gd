@@ -24,7 +24,7 @@ func _fixed_process(delta):
 		#shooting lasers
 		if(get_parent().get_node("Node/Button_Shoot").is_pressed() && BUTTON_ACTIVE == false):
 			BUTTON_ACTIVE = true
-			var bullet = preload("res://bullet.tscn").instance() #bullet prefab
+			var bullet = preload("res://prefabs/bullet.tscn").instance() #bullet prefab
 			bullet.set_pos(Vector2(player_pos.x, player_pos.y - 50))
 			get_node("../..").add_child(bullet)
 		elif(get_parent().get_node("Node/Button_Shoot").is_pressed() == false && BUTTON_ACTIVE):
