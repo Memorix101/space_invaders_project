@@ -11,4 +11,4 @@ func _ready():
 
 func _process(delta):
 	
-	self.set_text("%04d" % get_tree().get_root().get_node("global").score)
+	self.set_text("%04d" % get_tree().get_root().get_node("Root").score)

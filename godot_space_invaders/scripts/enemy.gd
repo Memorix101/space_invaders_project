@@ -31,7 +31,7 @@ func _process(delta):
 	
 	if(fire_timer >= fire_rate):		
 		#spawn bulltet
-		var enemy_bullet = preload("res://enemy_bullet.tscn").instance() #bullet prefab
+		var enemy_bullet = preload("res://prefabs/enemy_bullet.tscn").instance() #bullet prefab
 		enemy_bullet.set_pos(Vector2(enemy_pos.x, enemy_pos.y + 50))
 		get_node("../.").add_child(enemy_bullet)
 		#reset
@@ -48,5 +48,5 @@ func _process(delta):
 		move_left = true
 		SPEED = SPEED * -1
 
-	if(get_tree().get_root().get_node("global").done):
+	if(get_tree().get_root().get_node("Root").done):
 		translate(Vector2(SPEED * delta, 0))

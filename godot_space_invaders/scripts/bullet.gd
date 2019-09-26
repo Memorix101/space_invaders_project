@@ -32,11 +32,11 @@ func _on_Area2D_body_enter( other ):
 	    #print(other.get_name())
 	other.queue_free()
 	
-	var explo = preload("res://explo.tscn").instance() #bullet prefab
+	var explo = preload("res://prefabs/explo.tscn").instance() #bullet prefab
 	explo.set_pos(other.get_pos())
 	explo.get_node("AnimationPlayer").play("anim");
 	get_node("../.").add_child(explo)
 	
-	get_tree().get_root().get_node("global").score += 100
+	get_tree().get_root().get_node("Root").score += 100
 	
 	self.queue_free() #destroys instance
