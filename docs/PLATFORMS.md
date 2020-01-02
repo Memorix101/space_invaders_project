@@ -16,7 +16,7 @@
     <br/>
     <br/>
 - Sega Mega Drive / Genesis
-  - There are no tools to convert the colour palette of the sprites and the documentation is outdated. Tricky situation. 😬 There is a prototype build.
+  - There are no tools to convert the colour palette of the sprites and the documentation is outdated. Tricky situation. 😬 There is a unfinished build.
     <br/>
     <br/>
 - [Emscripten](https://emscripten.org/index.html) (SDL2)
@@ -24,7 +24,11 @@
     <br/>
     <br/>
 - [Rust](https://www.rust-lang.org/)
-  - This will take sometime. I want it to become nice, but there is a prototype build.
+  - This will take sometime. I want it to become nice, but there is a unfinished build.
+    <br/>
+    <br/>
+- Python
+  - Maybe, but there is an unfinished build in Python 3.
     <br/>
     <br/>
 - PS3
@@ -36,11 +40,11 @@
     <br/>
     <br/>
 - Xbox 360
-  - Waiting until it's safe to install CFW without the worry about a ban. (XNA is dead on Xbox 360 😢😥😥). Can Xenia run homebrew well?! Never tested it. Also the homebrew situation is kind of meh over there and there is the XNA version ...
+  - Probably never because I don't want to do it (JTAG/Jailbreak) on my own Xbox 360. Maybe if I can get a JTAG one on eBay. (XNA is dead on Xbox 360 😢😥😥). Can Xenia run homebrew well?! Never tested it. Also the homebrew situation is kind of meh over there and there is the XNA version ...
     <br/>
     <br/>
 - Java
-  - Besides the libGDX version there is also an unfinshed LWJGL3 version. I'm not sure if I should finish it. Because it would be similar to the GLFW3 version in C, but in Java classes.
+  - Besides the libGDX version there is also an unfinished LWJGL3 version. I'm not sure if I should finish it. Because it would be similar to the GLFW3 version in C, but in Java classes.
     <br/>
     <br/>
 - PS Vita
@@ -53,7 +57,7 @@
     <br/>
     <br/>
 - GameCube
-  - Same situation as Wii. Audio would be a mess (Both use the same SDK). Also I don't know if SDL is there and actually I don't want to rework it for GX.
+  - Same situation as Wii. Audio would be a mess (Both use the same [SDK](https://devkitpro.org/wiki/Getting_Started)). Also I don't know if SDL is there and actually I don't want to rework it for [GX](https://devkitpro.org/wiki/libogc/GX).
     <br/>
     <br/>
 - MS-DOS
