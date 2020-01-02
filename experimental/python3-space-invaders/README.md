@@ -4,4 +4,4 @@ Space Invaders written in Python 3
 
 ##### Note: This is experimental and not optimised!
 
-![screenshot 29](https://cloud.githubusercontent.com/assets/1466920/20732319/754e4344-b68e-11e6-9b74-653128c85ec8.png)
+![image](https://user-images.githubusercontent.com/1466920/71691426-adfc4180-2da7-11ea-9f48-06ae093eb3bf.png)

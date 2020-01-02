@@ -102,7 +102,7 @@ while not quit:
         e.draw(screen)
 
     score_text = font.render('SCORE: %04d' % score, True, (255, 255, 255))
-    screen.blit(score_text, (425,  25))    
+    screen.blit(score_text, (425,  25))
 
     # pygame.display.flip()
     pygame.display.update()
