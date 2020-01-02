@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/blaster.ogg</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/bodenstaendig.ogg</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/bullet.png</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/enemy-bullet.png</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/explode.png</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/explode1.ogg</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/fmg_splash.png</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/font.spritefont</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/gameover_ui.psd</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/invader32x32x4.png</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/player.png</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/pusher.ogg</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/space3.png</File>
+    <File>D:/SourceTree/space_invaders_project_nunu/monogame_space_invaders-fsharp-master/Content/win_ui.psd</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>
