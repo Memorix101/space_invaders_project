@@ -4,7 +4,7 @@ Space Invaders written in Python 3
 
 ### Setup
 - Install [Python 3](https://www.python.org/downloads/) and pygame
-<br/>
+
 ``
 pip install pygame
 ``
