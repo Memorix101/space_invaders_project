@@ -72,6 +72,7 @@ while not quit:
             if b.hitbox.colliderect(e.hitbox):
                 enemies.remove(e)
                 bullets.remove(b)
+                score += 100
                 break
     
     for e in enemies: 
