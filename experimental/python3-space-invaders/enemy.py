@@ -11,12 +11,14 @@ class Enemy:
         self.tex2d = tex2d
         self.rowid = rowid
         self.maxShootTime = maxShootTime
+        self.shootTimer = 0
         self.startPos = rowid * 40
         self.goLeft = False
         self.hitbox = pygame.Rect(0, 0, 32, 32)
         self.animationSpeed = 0.2
         self.moveSpeed = 3
         self.currentFrame = 0
+        self.shoot = False
 
     def animator(self):
         self.currentFrame = self.currentFrame + self.animationSpeed
@@ -27,20 +29,28 @@ class Enemy:
             self.currentFrame = 0
 
     def update(self):
+        if self.alive == True:
+            self.animator()
+            self.hitbox = pygame.Rect(self.pos_x, self.pos_y, self.hitbox.w, self.hitbox.h)
 
-        self.animator()
-        self.hitbox = pygame.Rect(self.pos_x, self.pos_y, 32, 32)
+            if self.pos_x >= self.startPos + 200:
+                self.goLeft = True         
 
-        if self.pos_x >= self.startPos + 200:
-            self.goLeft = True         
+            if self.pos_x <= self.startPos - 40:
+                self.goLeft = False
 
-        if self.pos_x <= self.startPos - 40:
-            self.goLeft = False
+            if self.goLeft == False:
+                self.pos_x= self.pos_x + self.moveSpeed
+            else:
+                self.pos_x = self.pos_x - self.moveSpeed
+        
+            self.shootTimer = self.shootTimer + 0.01
 
-        if self.goLeft == False:
-            self.pos_x= self.pos_x + self.moveSpeed
-        else:
-            self.pos_x = self.pos_x - self.moveSpeed
+            if self.shootTimer >= self.maxShootTime:
+                self.shootTimer = 0
+                self.shoot = True
+            else: 
+                self.shoot = False
 
     def draw(self, screen):
         if self.alive == True:

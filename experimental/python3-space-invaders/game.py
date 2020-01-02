@@ -30,7 +30,8 @@ font = pygame.font.Font("rd/vermin_vibes_1989.ttf", 32)
 player = Player((320, 450), pygame.image.load("rd/player.png"))
 space_img = pygame.image.load("rd/space3.png")
 
-bullets = list()
+lasers = list()
+enemyLasers  = list()
 enemies = list()
 
 def spawn_enemies():
@@ -57,33 +58,44 @@ while not quit:
         if event.type == pygame.QUIT:
             quit = True
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_SPACE and player.alive == True:
                 # shoot
-                bullets.append(Bullet((player.pos_x, 400), pygame.image.load("rd/bullet.png")))
+                lasers.append(Bullet((player.pos_x, 400), pygame.image.load("rd/bullet.png"), False))
  
     # --- game logic
     player.update()
 
-    for b in bullets: 
+    for b in lasers: 
         b.update()                
         if b.pos_y <= 0:
-            bullets.remove(b)
+            lasers.remove(b)
         for e in enemies: 
             if b.hitbox.colliderect(e.hitbox):
                 enemies.remove(e)
-                bullets.remove(b)
+                lasers.remove(b)
                 score += 100
                 break
     
     for e in enemies: 
         e.update()
+        if e.shoot == True:
+            enemyLasers.append(Bullet((e.pos_x, e.pos_y), pygame.image.load("rd/enemy-bullet.png"), True))
+    
+    for b in enemyLasers:
+        b.update()
+        if b.hitbox.colliderect(player.hitbox):
+                player.alive = False
+                enemyLasers.remove(b)
   
     # --- drawing
-    # screen.fill((0, 0, 0)) 
+    # screen.fill((0, 0, 0))
     screen.blit(space_img, (0, 0))
     player.draw(screen)
 
-    for b in bullets: 
+    for b in lasers:
+        b.draw(screen)    
+        
+    for b in enemyLasers:
         b.draw(screen)
 
     for e in enemies: 
