@@ -68,21 +68,22 @@ while not quit:
         b.update()                
         if b.pos_y <= 0:
             bullets.remove(b)
+        for e in enemies: 
+            if b.hitbox.colliderect(e.hitbox):
+                enemies.remove(e)
+                bullets.remove(b)
+                break
     
     for e in enemies: 
         e.update()
   
     # --- drawing
-    # screen.fill((0, 0, 0))
+    # screen.fill((0, 0, 0)) 
     screen.blit(space_img, (0, 0))
     player.draw(screen)
 
     for b in bullets: 
         b.draw(screen)
-        for e in enemies: 
-            if e.hitbox.colliderect(b.hitbox):
-                bullets.remove(b)
-                enemies.remove(e)
 
     for e in enemies: 
         e.draw(screen)
