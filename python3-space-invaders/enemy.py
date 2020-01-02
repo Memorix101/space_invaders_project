@@ -54,4 +54,4 @@ class Enemy:
 
     def draw(self, screen):
         if self.alive == True:
-            screen.blit(self.tex2d, pygame.Rect(self.pos_x, self.pos_y, 32, 32), pygame.Rect(int(self.currentFrame) * 32, 0, 32, 32))
+            screen.blit(self.tex2d, pygame.Rect(self.pos_x, self.pos_y,self.hitbox.w, self.hitbox.h), pygame.Rect(int(self.currentFrame) * 32, 0, self.hitbox.w, self.hitbox.h))

@@ -8,6 +8,7 @@ import random
 from player import Player
 from bullet import Bullet
 from enemy import Enemy
+from explosion import Explosion
 
 # define some colours
 BLACK = (0, 0, 0)
@@ -69,6 +70,13 @@ def restart ():
     gameOver = False
     spawnEnemies()
 
+# play music and sound setup
+pygame.mixer.music.load("rd/bodenstaendig.ogg")
+pygame.mixer.music.play(-1)
+snd_laser = pygame.mixer.Sound("rd/blaster.ogg")
+snd_laserEnemy = pygame.mixer.Sound("rd/pusher.ogg")
+snd_explo = pygame.mixer.Sound("rd/explode1.ogg")
+
 # create enemies
 spawnEnemies()
 
@@ -84,58 +92,80 @@ while not quit:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and gameOver == False:
                 lasers.append(Bullet((player.pos_x, 400), pygame.image.load("rd/bullet.png"), False))
+                snd_laser.play()
             if event.key == pygame.K_RETURN and gameOver == True:
                 restart()
  
     # --- game logic
-    player.update()
+    gameTimer = gameTimer + 0.025
 
-    for l in lasers: 
-        l.update()                
-        if l.pos_y <= 0:
-            lasers.remove(l)
-        for e in enemies: 
-            if l.hitbox.colliderect(e.hitbox):
-                enemies.remove(e)
+    if gameTimer > 3:
+        gameStart = True
+
+    if gameStart == True:
+        player.update()
+
+        for e in explosions:
+            e.update()
+            if e.animationCompleted == True:
+                explosions.remove(e)
+
+        for l in lasers: 
+            l.update()                
+            if l.pos_y <= 0:
                 lasers.remove(l)
-                score += 100
-                break
+            for e in enemies: 
+                if l.hitbox.colliderect(e.hitbox):
+                    explosions.append(Explosion((e.pos_x - 128 / 2, e.pos_y - 128 / 2), pygame.image.load("rd/explode.png")))
+                    snd_explo.play()
+                    enemies.remove(e)
+                    lasers.remove(l)
+                    score += 100
+                    break
     
-    for e in enemies: 
-        e.update()
-        if e.shoot == True:
-            enemyLasers.append(Bullet((e.pos_x, e.pos_y), pygame.image.load("rd/enemy-bullet.png"), True))
+        for e in enemies: 
+            e.update()
+            if e.shoot == True:
+                enemyLasers.append(Bullet((e.pos_x, e.pos_y), pygame.image.load("rd/enemy-bullet.png"), True))
+                snd_laserEnemy.play()
     
-    for l in enemyLasers:
-        l.update()
-        if l.hitbox.colliderect(player.hitbox):
-                player.alive = False
-                enemyLasers.remove(l)
+        for l in enemyLasers:
+            l.update()
+            if l.hitbox.colliderect(player.hitbox):
+                    player.alive = False
+                    explosions.append(Explosion((player.pos_x - 128 / 2, player.pos_y - 128 / 2), pygame.image.load("rd/explode.png")))
+                    snd_explo.play()
+                    enemyLasers.remove(l)
   
-    # --- drawing
-    # screen.fill((0, 0, 0))
-    screen.blit(space_img, (0, 0))
-    player.draw(screen)
+        # --- drawing
+        # screen.fill((0, 0, 0))
+        screen.blit(space_img, (0, 0))
+        player.draw(screen)
 
-    for l in lasers:
-        l.draw(screen)    
+        for l in lasers:
+            l.draw(screen)    
         
-    for l in enemyLasers:
-        l.draw(screen)
+        for l in enemyLasers:
+            l.draw(screen)
 
-    for e in enemies: 
-        e.draw(screen)
-
-    score_text = font.render('SCORE: %04d' % score, True, (255, 255, 255))
-    screen.blit(score_text, (425,  25))
-
-    if player.alive == False:
-        screen.blit(gameover_img, (0, 0))
-        gameOver = True
+        for e in explosions: 
+            e.draw(screen)    
     
-    if len(enemies) == 0:
-        screen.blit(win_img, (0, 0))
-        gameOver = True
+        for e in enemies: 
+            e.draw(screen)
+
+        score_text = font.render('SCORE: %04d' % score, True, (255, 255, 255))
+        screen.blit(score_text, (425,  25))
+
+        if player.alive == False:
+            screen.blit(gameover_img, (0, 0))
+            gameOver = True
+    
+        if len(enemies) == 0:
+            screen.blit(win_img, (0, 0))
+            gameOver = True
+    else:
+        screen.blit(fmg_img, (0, 0))
 
     # pygame.display.flip()
     pygame.display.update()

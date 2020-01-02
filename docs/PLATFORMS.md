@@ -29,7 +29,8 @@
     <br/>
     <br/>
 - Python
-  - Maybe, but there is an unfinished build in Python 3.
+  - ~~Maybe, but there is an unfinished build in Python 3.~~<br/>
+  Done on 03/01/2020 &#x2611;
     <br/>
     <br/>
 - PS3

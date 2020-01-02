@@ -26,6 +26,7 @@
   - SFML 2.5
   - Unreal Engine 4
   - LibGDX
+  - [Pygame](https://www.pygame.org/)
   - XNA 4.0 (Windows only, but you can use MonoGame or relink with [FNA](https://fna-xna.github.io/) instead)
   - [LÖVE](https://love2d.org/)
   <br/>
@@ -86,6 +87,7 @@
 - [F#](https://en.wikipedia.org/wiki/F_Sharp_(programming_language))
 - JavaScript
 - Lua
+- Python
 - [GDScript](https://docs.godotengine.org/en/3.1/getting_started/scripting/gdscript/gdscript_basics.html#doc-gdscript)
 - [Blueprints Visual Scripting](https://docs.unrealengine.com/en-us/Engine/Blueprints)
 ### Planned platforms roadmap

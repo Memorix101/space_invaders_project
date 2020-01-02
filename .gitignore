@@ -125,3 +125,7 @@ experimental/monogame_space_invaders-fsharp/bin/
 experimental/python3-space-invaders/.vscode/
 
 experimental/python3-space-invaders/__pycache__/
+
+python3-space-invaders/__pycache__/
+
+python3-space-invaders/.vscode/
