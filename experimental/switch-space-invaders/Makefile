@@ -43,6 +43,10 @@ SOURCES		:=	source
 DATA		:=	data
 INCLUDES	:=	include
 #ROMFS	:=	romfs
+ICON = ./icon.jpg
+APP_TITLE = Space Invaders
+APP_AUTHOR = Memorix101
+APP_VERSION = 1.00
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -54,7 +58,7 @@ CFLAGS	:=	-g -Wall -O2 -ffunction-sections \
 
 CFLAGS	+=	-D__SWITCH__ $(INCLUDE) `sdl2-config --cflags`
 
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions
+CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -fpermissive
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
@@ -69,8 +73,6 @@ LIBS	:=	-lSDL2_image -lSDL2_mixer -lSDL2_ttf -lSDL2 \
 # include and lib
 #---------------------------------------------------------------------------------
 LIBDIRS	:= $(PORTLIBS) $(LIBNX)
-
-
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
 # rules for different file extensions
@@ -85,6 +87,18 @@ export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
 			$(foreach dir,$(DATA),$(CURDIR)/$(dir))
 
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
+
+# I'm bad with makefiles sorry :(
+#CPPFILES := \
+	Texture2D.cpp \
+	SoundEffect.cpp \
+	Font.cpp \
+	Music.cpp \
+	Player.cpp \
+	Bullet.cpp \
+	Explosion.cpp \
+	Enemy.cpp \
+	main.cpp \
 
 CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
