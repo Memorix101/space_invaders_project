@@ -1,11 +1,14 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <string>
+#include <errno.h>
+
+#include <switch.h>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
-
 
 
 struct player_t {
@@ -135,34 +138,34 @@ SDL_Rect score_tex_pos;
 
 void load_assets()
 {
-	space3_surface = IMG_Load("rd/space3.png");
+	space3_surface = IMG_Load("romfs:/rd/space3.png");
 	space3_tex = SDL_CreateTextureFromSurface(renderer, space3_surface);
 	SDL_FreeSurface(space3_surface);
 
-	enemy_surface = IMG_Load("rd/invader32x32x4.png"); //invader32x32x4
+	enemy_surface = IMG_Load("romfs:/rd/invader32x32x4.png"); //invader32x32x4
 	enemy_tex = SDL_CreateTextureFromSurface(renderer, enemy_surface);
 
-	player_surface = IMG_Load("rd/player.png");
+	player_surface = IMG_Load("romfs:/rd/player.png");
 	player_tex = SDL_CreateTextureFromSurface(renderer, player_surface);
 
-	bullet_surface = IMG_Load("rd/bullet.png");
+	bullet_surface = IMG_Load("romfs:/rd/bullet.png");
 	bullet_tex = SDL_CreateTextureFromSurface(renderer, bullet_surface);
 
-	enemy_bullet_surface = IMG_Load("rd/enemy-bullet.png");
+	enemy_bullet_surface = IMG_Load("romfs:/rd/enemy-bullet.png");
 	enemy_bullet_tex = SDL_CreateTextureFromSurface(renderer, enemy_bullet_surface);
 
-	explo_surface = IMG_Load("rd/explode.png");
+	explo_surface = IMG_Load("romfs:/rd/explode.png");
 	explo_tex = SDL_CreateTextureFromSurface(renderer, explo_surface);
 
-	fmg_splash_surface = IMG_Load("rd/fmg_splash.png");
+	fmg_splash_surface = IMG_Load("romfs:/rd/fmg_splash.png");
 	fmg_splash_tex = SDL_CreateTextureFromSurface(renderer, fmg_splash_surface);
 	SDL_FreeSurface(fmg_splash_surface);
 
-	gameover_surface = IMG_Load("rd/gameover_ui.png");
+	gameover_surface = IMG_Load("romfs:/rd/gameover_ui.png");
 	gameover_tex = SDL_CreateTextureFromSurface(renderer, gameover_surface);
 	SDL_FreeSurface(gameover_surface);
 
-	win_surface = IMG_Load("rd/win_ui.png");
+	win_surface = IMG_Load("romfs:/rd/win_ui.png");
 	win_tex = SDL_CreateTextureFromSurface(renderer, win_surface);
 	SDL_FreeSurface(win_surface);
 }
@@ -594,9 +597,11 @@ void reset()
 
 int main(int argc, char* argv[]) {
 
+	romfsInit();
+
 	SDL_Init(SDL_INIT_EVERYTHING);
 
-	window = SDL_CreateWindow("sdl2_gles2", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 1080, SDL_WINDOW_FULLSCREEN); //SDL_WINDOW_FULLSCREEN
+	window = SDL_CreateWindow(nullptr, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 1080, SDL_WINDOW_FULLSCREEN_DESKTOP); //SDL_WINDOW_FULLSCREEN
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_RenderSetLogicalSize(renderer, 640, 480);
 
@@ -613,17 +618,17 @@ int main(int argc, char* argv[]) {
 	}
 
 	//printf("%i joysticks were found.\n\n", SDL_NumJoysticks());
-	printf("The names of the joysticks are:\n");
+	/*printf("The names of the joysticks are:\n");
 	for (int i = 0; i < SDL_NumJoysticks(); i++)
 	{
 		printf("    %s\n", SDL_JoystickNameForIndex(i)); //SDL_NumJoysticks
-	}
+	}*/
 
 	SDL_JoystickEventState(SDL_ENABLE);
 	joystick = SDL_JoystickOpen(0);
 
 	load_assets();
-	music = Mix_LoadMUS("rd/bodenstaendig.ogg");
+	music = Mix_LoadMUS("romfs:/rd/bodenstaendig.ogg");
 
 	SDL_RenderCopy(renderer, fmg_splash_tex, NULL, NULL);
 	SDL_RenderPresent(renderer);
@@ -633,7 +638,7 @@ int main(int argc, char* argv[]) {
 	initEnemies();
 	initPlayer();
 
-	vermin_ttf = TTF_OpenFont("rd/vermin_vibes_1989.ttf", 24);
+	vermin_ttf = TTF_OpenFont("romfs:/rd/vermin_vibes_1989.ttf", 24);
 	char textBuffer[64];
 	sprintf(textBuffer, "SCORE: % 05d", score);
 	scoreText = TTF_RenderText_Solid(vermin_ttf, textBuffer, { 255, 255, 255 });
@@ -643,9 +648,9 @@ int main(int argc, char* argv[]) {
 	SDL_FreeSurface(scoreText);
 
 	//load audio
-	snd_blaster = Mix_LoadWAV("rd/blaster.ogg");
-	snd_explo = Mix_LoadWAV("rd/explode1.ogg");
-	snd_pusher = Mix_LoadWAV("rd/pusher.ogg");
+	snd_blaster = Mix_LoadWAV("romfs:/rd/blaster.ogg");
+	snd_explo = Mix_LoadWAV("romfs:/rd/explode1.ogg");
+	snd_pusher = Mix_LoadWAV("romfs:/rd/pusher.ogg");
 
 	//Play the music
 	if (Mix_PlayMusic(music, -1) == -1)
@@ -831,6 +836,7 @@ int main(int argc, char* argv[]) {
 
 	//Quit SDL
 	SDL_Quit();
+	romfsExit();
 
 	return 0;
 }
