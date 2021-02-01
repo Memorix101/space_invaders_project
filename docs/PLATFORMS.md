@@ -1,7 +1,7 @@
 # Platform ideas and status
 
 - PlayStation 2
-  - ps2sdk has no (useful) documentation. There is a booting build of the game but it's not working and I actually don't know why. Just black screen. IOP modules load correctly, but something is wrong here 😞
+  - ps2sdk has no (useful) documentation. There is a booting build of the game but it's not working and I actually don't know why. Just black screen. IOP modules load correctly but something is wrong here 😞
     <br/>
     <br/>
 - PlayStation
@@ -25,12 +25,12 @@
     <br/>
     <br/>
 - [Rust](https://www.rust-lang.org/)
-  - This will take sometime. I want it to become nice, but there is a unfinished build.
+  - This will take sometime. I want it to become nice but there is a unfinished build.
     <br/>
     <br/>
 - Python
   - ~~Maybe, but there is an unfinished build in Python 3.~~<br/>
-  Done on 03/01/2020 &#x2611;
+  - Done on 03/01/2020 &#x2611;
     <br/>
     <br/>
 - PS3
@@ -55,7 +55,7 @@
     <br/>
 - HTML5
   - ~~Sure, when I'm in the mood.~~<br/>
-  Done using Phaser 3 on 22/04/2019 &#x2611;
+  - Done using Phaser 3 on 22/04/2019 &#x2611;
     <br/>
     <br/>
 - GameCube
@@ -64,3 +64,7 @@
     <br/>
 - MS-DOS
   - I'm planning to rework the DOS version at some point in the future as it is unstable/broken.
+    <br/>
+    <br/>
+- 3DS
+  - I am considering it but I am not sure how I can use the second screen usefully.
