@@ -2,7 +2,7 @@
 ### Porting a space invaders game to different platforms, frameworks and game engines
 
 The journey began in summer of 2016 when I wanted to make a game for the Sega Dreamcast.
-My first and later attempts failed, but I picked it up sometime later in autumn.
+My first and later attempts failed but I picked it up sometime later in autumn.
 This time I wanted to bring this little game to Dreamcast (instead of the other full game idea) because I thought starting with something small would be a better start and less frustrating (Oh well, I was so wrong 😂).
 First I made a version in SDL 1.2 (because there was a port for Dreamcast) on PC to easily see what is going on and later recompiled it using the Dreamcast homebrew toolchain. Well, I had to learn
 my lesson about GCC C compilers and how bitchy they can be and also that the SDL port for Dreamcast is broken and no longer maintained. But hope was not lost! There was an OpenGL port for Dreamcast too. So, I had to learn how to use OpenGL.
@@ -11,7 +11,7 @@ I read a few tutorials and started to rework the SDL stuff into OpenGL using GLF
 <br/>
 ![](https://i.imgur.com/CVn5vGA.jpg)
 ###### OpenGL example I made to visualize what is going on here (My drawing code is flipped btw 😂😬)
-but I was too lazy to port the font over but managed to do this for all other platforms who had no SDL_ttf support using bitmap fonts. (In the end I finished the OpenGL port 🙃 ... almost 3 years later 😂)
+but I was too lazy to port the font over but managed to do this for all other platforms who had no SDL_ttf support using bitmap fonts. (In the end I finished the OpenGL port 🙃 ... almost 3 years later 😂).
 <br/>
 
 ![screenshot 41](https://cloud.githubusercontent.com/assets/1466920/20844291/5e34e450-b8bf-11e6-9f01-7c829016941d.png)
@@ -78,7 +78,7 @@ The port for **MS-DOS** was way more chill, but finding a working toolchain, lib
 <img src="https://i.imgur.com/M8MGojw.png" width="500"><br/>
 ###### First run in MS-DOS in wrong RGB mode
 <img src="https://i.imgur.com/1w5BFR1.png" width="500"><br/>
-###### Sometime later run in MS-DOS in correct RGB mode. Yeay! 🙃
+###### Sometime later run in MS-DOS incorrect RGB mode. Yay! 🙃
 <img src="https://i.imgur.com/qO4YZVz.jpg" width="500"><br/>
 ###### "How can I use transparency?!"
 <img src="https://i.imgur.com/CXuaJHC.png" width="500"><br/>
@@ -104,7 +104,7 @@ But some things are way different in F# and I never would have thought I would m
 <img src="https://i.imgur.com/wxdx78W.gif" width="500"><br/>
 ###### My `match` loop is not working as expected. So, I had to turn back to `for` loops
 
-The orignal is written in C as the Dreamcast toolchain was not that great in C++ support. So I wanted to rewrite it into **C++**. I wanted to be at least on C++11 level. So, I made a OOP like port. Lists `std::list<T>`, classes and ranged loops `for(Type& v : a) { ... }`. Well, didn't work as expected in the first place 😂
+The original is written in C as the Dreamcast toolchain was not that great in C++ support. So I wanted to rewrite it into **C++**. I wanted to be at least on C++11 level. So, I made an OOP like port. Lists `std::list<T>`, classes and ranged loops `for(Type& v : a) { ... }`. Well, didn't work as expected in the first place 😂
 
 <img src="https://i.imgur.com/3QogfRS.gif" width="500"><br/>
 ###### Flickering sprites because of C style for loop (Int i = 0; i < T.size(); i++)
@@ -122,7 +122,7 @@ But mostly you will find a fix or workaround somewhere in the wiki or their Answ
 <br/>
 
 ### Final words
-However, this way you learn pretty much (especially how to write performant and good (C) code 😂) and by all the stress and frustration it makes a ton of fun. Who could imagine this little game would be so enriching in the process of developing. In German we have the phrase "Der Weg ist das Ziel" what would be translated to "The way is the goal". I hope you understand the idea behind the meaning. Sometimes the way to the destination is more enchriching than the place you want to reach. Musicians and artist should know what I'm speaking about. The experience of creation can be something so emotionally powerful and wonderful.
+However, this way you learn pretty much (especially how to write performant and good (C) code 😂) and by all the stress and frustration it makes a ton of fun. Who could imagine this little game would be so enriching in the process of developing. In German we have the phrase "Der Weg ist das Ziel" what would be translated to "The way is the goal". I hope you understand the idea behind the meaning. Sometimes the way to the destination is more enriching than the place you want to reach. Musicians and artist should know what I'm speaking about. The experience of creation can be something so emotionally powerful and wonderful.
 You may be disappointed with your end results but the way to it was worth it.
 <br/>
 
