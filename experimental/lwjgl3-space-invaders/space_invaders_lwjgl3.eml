@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/out/test/space_invaders_lwjgl3"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<levels>
+		<level name="lwjgl" value="project"/>
+		<level name="lwjgl-glfw" value="project"/>
+		<level name="lwjgl-opengl" value="project"/>
+		<level name="lwjgl-stb" value="project"/>
+	</levels>
+</component>

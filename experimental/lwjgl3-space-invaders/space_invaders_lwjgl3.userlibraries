@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="lwjgl">
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl/lwjgl-natives-linux.jar" />
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl/lwjgl-natives-macos.jar" />
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl/lwjgl-natives-windows.jar" />
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl/lwjgl.jar" />
+  </library>
+  <library name="lwjgl-glfw">
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl-glfw/lwjgl-glfw-natives-linux.jar" />
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl-glfw/lwjgl-glfw-natives-macos.jar" />
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl-glfw/lwjgl-glfw-natives-windows.jar" />
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl-glfw/lwjgl-glfw.jar" />
+  </library>
+  <library name="lwjgl-opengl">
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl-opengl/lwjgl-opengl-natives-linux.jar" />
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl-opengl/lwjgl-opengl-natives-macos.jar" />
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl-opengl/lwjgl-opengl-natives-windows.jar" />
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl-opengl/lwjgl-opengl.jar" />
+  </library>
+  <library name="lwjgl-stb">
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl-stb/lwjgl-stb-natives-linux.jar" />
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl-stb/lwjgl-stb-natives-macos.jar" />
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl-stb/lwjgl-stb-natives-windows.jar" />
+    <archive path="C:/Users/memor/Desktop/space_invaders_lwjgl3/libs/lwjgl-stb/lwjgl-stb.jar" />
+  </library>
+</eclipse-userlibraries>
+

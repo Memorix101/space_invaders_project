@@ -621,12 +621,6 @@ int main(int argc, char* argv[]) {
 	SDL_JoystickEventState(SDL_ENABLE);
 	joystick = SDL_JoystickOpen(0);
 
-	//Initialize SDL_mixer
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
-	{
-		return false;
-	}
-
 	load_assets();
 	music = Mix_LoadMUS("wiiu/apps/space-invaders-wiiu/rd/bodenstaendig.mp3");
 

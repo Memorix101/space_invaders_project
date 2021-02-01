@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="res"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/lwjgl"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/lwjgl-glfw"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/lwjgl-opengl"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/lwjgl-stb"/>
+	<classpathentry kind="output" path="out/production/space_invaders_lwjgl3"/>
+</classpath>

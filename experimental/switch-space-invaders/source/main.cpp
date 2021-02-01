@@ -6,6 +6,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 
+
+
 struct player_t {
 	SDL_Rect hitbox;
 	SDL_Rect pos;
@@ -209,7 +211,8 @@ void updateEnemyBullet()
 		if (enemy_bullets[i]->pos.y >= 480 - 9)
 		{
 			removeEnemyBullet(i);
-		}		
+		}
+		
 	}
 }
 
@@ -330,7 +333,7 @@ void updateEnemies()
 		if (enemy[e]->shoot == 1 && enemy[e]->alive == 1)
 		{
 			addEnemyBullet(enemy[e]->pos.x + enemy[e]->rect.w / 2 - 4, enemy[e]->pos.y - 4);
-			//Mix_PlayChannel(-1, snd_pusher, 0);
+			Mix_PlayChannel(-1, snd_pusher, 0);
 		}
 		enemy[e]->hitbox.x = enemy[e]->pos.x;
 		enemy[e]->hitbox.y = enemy[e]->pos.y;
@@ -547,7 +550,7 @@ void updateLogic()
 				enemy[e]->alive = 0;
 				addExplo(bullets[i]->pos.x - 128 / 2, bullets[i]->pos.y - 128 / 2);
 				removeBullet(i);
-				//Mix_PlayChannel(0, snd_explo, 0);
+				Mix_PlayChannel(0, snd_explo, 0);
 				score += 100;
 				dead_enemies++;
 				//printf("BOOM!\n");
@@ -565,7 +568,7 @@ void updateLogic()
 			player.alive = 0;
 			addExplo(player.pos.x - 128 / 2, player.pos.y - 128 / 2);
 			removeEnemyBullet(b);
-			//Mix_PlayChannel(0, snd_explo, 0);
+			Mix_PlayChannel(0, snd_explo, 0);
 			//printf("BOOM!\n");
 			break;
 		}
@@ -593,9 +596,15 @@ int main(int argc, char* argv[]) {
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 
-	window = SDL_CreateWindow("sdl2_game", 0, 0, 1920, 1080, 0); //SDL_WINDOW_FULLSCREEN
-	renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	window = SDL_CreateWindow("sdl2_gles2", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 1080, SDL_WINDOW_FULLSCREEN); //SDL_WINDOW_FULLSCREEN
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_RenderSetLogicalSize(renderer, 640, 480);
+
+	//Initialize SDL_mixer
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096) == -1)
+	{
+		return false;
+	}
 
 	//Set up TTf stuff
 	if (TTF_Init() == -1)
@@ -613,14 +622,8 @@ int main(int argc, char* argv[]) {
 	SDL_JoystickEventState(SDL_ENABLE);
 	joystick = SDL_JoystickOpen(0);
 
-	//Initialize SDL_mixer
-	/*if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
-	{
-		return false;
-	}*/
-
 	load_assets();
-	//music = Mix_LoadMUS("rd/bodenstaendig.mp3");
+	music = Mix_LoadMUS("rd/bodenstaendig.ogg");
 
 	SDL_RenderCopy(renderer, fmg_splash_tex, NULL, NULL);
 	SDL_RenderPresent(renderer);
@@ -640,15 +643,15 @@ int main(int argc, char* argv[]) {
 	SDL_FreeSurface(scoreText);
 
 	//load audio
-	/*snd_blaster = Mix_LoadWAV("rd/blaster.mp3");
-	snd_explo = Mix_LoadWAV("rd/explode1.wav");
-	snd_pusher = Mix_LoadWAV("rd/pusher.wav");*/
+	snd_blaster = Mix_LoadWAV("rd/blaster.ogg");
+	snd_explo = Mix_LoadWAV("rd/explode1.ogg");
+	snd_pusher = Mix_LoadWAV("rd/pusher.ogg");
 
 	//Play the music
-	/*if (Mix_PlayMusic(music, -1) == -1)
+	if (Mix_PlayMusic(music, -1) == -1)
 	{
 		return 1;
-	}*/
+	}
 
 	while (quit == 0)
 	{
@@ -663,7 +666,7 @@ int main(int argc, char* argv[]) {
 				if (e.key.keysym.sym == SDLK_SPACE && player.alive == 1)
 				{
 					addBullet(player.pos.x + player.size.w / 2 - 3, player.pos.y);
-					//Mix_PlayChannel(-1, snd_blaster, 0);
+					Mix_PlayChannel(-1, snd_blaster, 0);
 				}
 
 				if (e.key.keysym.sym == SDLK_ESCAPE)
@@ -683,7 +686,7 @@ int main(int argc, char* argv[]) {
 					e.jbutton.button == 9 && player.alive)
 				{
 					addBullet(player.pos.x + player.size.w / 2 - 3, player.size.y);
-					//Mix_PlayChannel(-1, snd_blaster, 0);
+					Mix_PlayChannel(-1, snd_blaster, 0);
 				}
 
 				if (e.jbutton.button == 10 && gameover == 1)
@@ -815,10 +818,10 @@ int main(int argc, char* argv[]) {
 	SDL_DestroyTexture(win_tex);
 	SDL_DestroyTexture(font_tex);
 	TTF_CloseFont(vermin_ttf);
-	/*Mix_FreeMusic(music);
+	Mix_FreeMusic(music);
 	Mix_FreeChunk(snd_blaster);
 	Mix_FreeChunk(snd_explo);
-	Mix_FreeChunk(snd_pusher);*/
+	Mix_FreeChunk(snd_pusher);
 	memset(enemy, 0, sizeof(enemy));
 	memset(bullets, 0, sizeof(bullets));
 	memset(enemy_bullets, 0, sizeof(enemy_bullets));
