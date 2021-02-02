@@ -20,8 +20,9 @@
   - There are no tools to convert the colour palette of the sprites and the documentation is outdated. Tricky situation. 😬 There is a unfinished build.
     <br/>
     <br/>
-- [Emscripten](https://emscripten.org/index.html) (SDL2)
-  - Well, it's a mess. The build crashes right away. I tried so much, but can't get it working. 😥😥😥
+- [Emscripten](https://emscripten.org/index.html)
+  - ~~Well, it's a mess. The build crashes right away. I tried so much, but can't get it working. (SDL2) 😥😥😥~~<br/>
+  - Done on 02/02/2021 using raylib &#x2611;
     <br/>
     <br/>
 - [Rust](https://www.rust-lang.org/)
