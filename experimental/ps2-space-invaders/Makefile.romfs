@@ -41,5 +41,4 @@ romdisk.img:
 	@$(GENROMFS) -f $@ -d romdisk
 
 romdisk.c: romdisk.img
-	@$(PS2SDK)/bin/bin2c romdisk.img romdisk.c romdisk
-
+	$(PS2SDK)/bin/bin2c romdisk.img romdisk.c romdisk

@@ -1,15 +1,12 @@
+#include <stdio.h> 
+#include <string.h> 
+#include <stdlib.h> 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
 #include <SDL/SDL_image.h>
-#include <stdio.h> 
-#include <string.h> 
-#include <stdlib.h> 
-#include "romfs_io.h"
-//#include "romfs.h"
-#ifdef _EE
-	#include <sifrpc.h>
-#endif
+#include <SDL/SDL_endian.h>
+#include <romfs_io.h> 
 
 struct player_t {
 	SDL_Rect hitbox;
@@ -108,20 +105,48 @@ SDL_Surface* explo_tex2d;
 SDL_Surface* fmg_splash_tex2d;
 SDL_Surface* gameover_tex2D;
 SDL_Surface* win_tex2d;
-//SDL_Surface* scoreFont;
+
+// workaround http://lukasz.dk/mirror/forums.ps2dev.org/viewtopicb2f6.html?t=11437
+SDL_RWops *rwop;
+char filename[50];
 
 void load_assets()
 {
-	space3_tex2d = IMG_Load("romdisk/rd/space3.png");
-	enemy_tex2d = IMG_Load("romdisk/rd/invader32x32x4.png"); //invader32x32x4
-	player_tex2d = IMG_Load("romdisk/rd/player.png");
-	bullet_tex2d = IMG_Load("romdisk/rd/bullet.png");
-	enemy_bullet_tex2d = IMG_Load("romdisk/rd/enemy-bullet.png");
-	explo_tex2d = IMG_Load("romdisk/rd/explode.png");
-	fmg_splash_tex2d = IMG_Load("romdisk/rd/fmg_splash.png");
-	gameover_tex2D = IMG_Load("romdisk/rd/gameover_ui.png");
-	win_tex2d = IMG_Load("romdisk/rd/win_ui.png");
-	//scoreFont = IMG_Load();
+	sprintf(filename, "romdisk/rd/space3.png");
+	rwop = SDL_RWFromFile(filename, "rb");
+	space3_tex2d = IMG_LoadPNG_RW(rwop);
+
+	sprintf(filename, "romdisk/rd/invader32x32x4.png");
+	rwop = SDL_RWFromFile(filename, "rb");
+	enemy_tex2d = IMG_LoadPNG_RW(rwop); //invader32x32x4
+	
+	sprintf(filename, "romdisk/rd/player.png");
+	rwop = SDL_RWFromFile(filename, "rb");
+	player_tex2d = IMG_LoadPNG_RW(rwop);
+
+	sprintf(filename, "romdisk/rd/bullet.png");
+	rwop = SDL_RWFromFile(filename, "rb");
+	bullet_tex2d = IMG_LoadPNG_RW(rwop);
+
+	sprintf(filename, "romdisk/rd/enemy-bullet.png");
+	rwop = SDL_RWFromFile(filename, "rb");
+	enemy_bullet_tex2d = IMG_LoadPNG_RW(rwop);
+
+	sprintf(filename, "romdisk/rd/explode.png");
+	rwop = SDL_RWFromFile(filename, "rb");
+	explo_tex2d = IMG_LoadPNG_RW(rwop);
+
+	sprintf(filename, "romdisk/rd/fmg_splash.png");
+	rwop = SDL_RWFromFile(filename, "rb");
+	fmg_splash_tex2d = IMG_LoadPNG_RW(rwop);
+
+	sprintf(filename, "romdisk/rd/gameover_ui.png");
+	rwop = SDL_RWFromFile(filename, "rb");
+	gameover_tex2D = IMG_LoadPNG_RW(rwop);
+
+	sprintf(filename, "romdisk/rd/win_ui.png");
+	rwop = SDL_RWFromFile(filename, "rb");
+	win_tex2d = IMG_LoadPNG_RW(rwop);
 }
 
 /*
@@ -564,14 +589,12 @@ void reset()
 
 int main(int argc, char *argv[]) {
 
+	printf("Mounting ROMFS\n"); 
 	rioInit();
 
-	#ifdef _EE
-	SifInitRpc(0); 
-	#endif
-
 	//Start SDL
-	if(SDL_Init(SDL_INIT_VIDEO) == -1) //
+	printf("Set up SDL\n"); 
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) //
 	{
 		printf("Couldn't initialize SDL: %s\n", SDL_GetError());
 		return -1;
@@ -583,7 +606,7 @@ int main(int argc, char *argv[]) {
 	printf("Set up screen\n"); 
 	Uint32 flags = SDL_HWSURFACE | SDL_DOUBLEBUF;
 	//screen = SDL_SetVideoMode(640, 480, 16, flags);
-	screen = SDL_SetVideoMode(640, 480, 16, flags);
+	screen = SDL_SetVideoMode(640, 480, 16, 0);
 	if ( screen == NULL ) {
 		fprintf(stderr, "Couldn't set video mode: %s\n",SDL_GetError());
 		printf("Couldn't set video mode: %s\n",SDL_GetError()); 
@@ -591,26 +614,25 @@ int main(int argc, char *argv[]) {
 	}
 
 	//printf("%i joysticks were found.\n\n", SDL_NumJoysticks());
-	/*printf("The names of the joysticks are: \n");
+	printf("The names of the joysticks are: \n");
 	for (int i = 0; i < SDL_NumJoysticks(); i++)
 	{
 		printf("    %s\n", SDL_JoystickName(i));
 	}
 
 	SDL_JoystickEventState(SDL_ENABLE);
-	joystick = SDL_JoystickOpen(0);*/
+	joystick = SDL_JoystickOpen(0);
 
 	printf("TTF Init\n"); 
-	if (TTF_Init() == -1)
+	if (TTF_Init() < 0)
 	{
 		printf("SDL_ttf error\n"); 
 		return -1;
 	}
 
-
 	//Initialize SDL_mixer
-	//printf("Initialize SDL_mixer\n"); 
-	/*if (Mix_OpenAudio(44100, AUDIO_S16, 2, 512) == -1)
+	/*printf("Initialize SDL_mixer\n"); 
+	if (Mix_OpenAudio(44100, AUDIO_S16, 2, 512) < 0)
 	{
 		printf("SDL_mixer error\n"); 
 		return -1;
@@ -630,7 +652,10 @@ int main(int argc, char *argv[]) {
 	initPlayer();
 
 	//ttf stuff
-	TTF_Font* vermin_ttf = TTF_OpenFont("romdisk/rd/vermin_vibes_1989.ttf", 24);
+	sprintf(filename, "romdisk/rd/vermin_vibes_1989.ttf");
+	rwop = SDL_RWFromFile(filename, "rb");
+	TTF_Font* vermin_ttf = TTF_OpenFontRW(rwop, 1, 24);
+
 	SDL_Rect score_pos;
 	SDL_Color Color = { 255, 255, 255 };
 	char textBuffer[64];
@@ -650,10 +675,21 @@ int main(int argc, char *argv[]) {
 	game_over_pos.y = 480 / 2 - gameOver->h / 2;
 
 	//load audio
-	//music = Mix_LoadMUS("romdisk/rd/bodenstaendig.ogg");
-	//snd_blaster = Mix_LoadWAV("romdisk/rd/blaster.ogg");
-	//snd_explo = Mix_LoadWAV("romdisk/rd/explode1.ogg");
-	//snd_pusher = Mix_LoadWAV("romdisk/rd/pusher.ogg");
+	sprintf(filename, "romdisk/rd/bodenstaendig.ogg");
+	rwop = SDL_RWFromFile(filename, "rb");
+	music = Mix_LoadMUS(filename);
+
+	sprintf(filename, "romdisk/rd/blaster.ogg");
+	rwop = SDL_RWFromFile(filename, "rb");
+	snd_blaster = Mix_LoadWAV_RW(rwop, 1);
+
+	sprintf(filename, "romdisk/rd/explode1.ogg");
+	rwop = SDL_RWFromFile(filename, "rb");
+	snd_explo = Mix_LoadWAV_RW(rwop, 1);
+
+	sprintf(filename, "romdisk/rd/pusher.ogg");
+	rwop = SDL_RWFromFile(filename, "rb");
+	snd_pusher = Mix_LoadWAV_RW(rwop, 1);
 
 	//Play the music
 	if (Mix_PlayMusic(music, -1) == -1)
@@ -838,12 +874,12 @@ int main(int argc, char *argv[]) {
 	SDL_FreeSurface(explo_tex2d);
 	SDL_FreeSurface(gameover_tex2D);
 	SDL_FreeSurface(win_tex2d);
-	//SDL_FreeSurface(scoreFont);
 	TTF_CloseFont(vermin_ttf);
 	Mix_FreeMusic(music);
 	Mix_FreeChunk(snd_blaster);
 	Mix_FreeChunk(snd_explo);
 	Mix_FreeChunk(snd_pusher);
+	SDL_RWclose(rwop);
 	memset(enemy, 0, sizeof(enemy));
 	memset(bullets, 0, sizeof(bullets));
 	memset(enemy_bullets, 0, sizeof(enemy_bullets));

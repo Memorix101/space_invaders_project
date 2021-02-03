@@ -15,8 +15,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "sys.h"
-#include "romfs.h"
-#include "romfs_io.h"
 
 typedef struct 
 {

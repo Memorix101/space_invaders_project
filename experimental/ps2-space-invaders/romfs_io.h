@@ -10,9 +10,14 @@
 # ROMFS.
 */
 
-#pragma once
+#ifndef _ROMFS_IO_
+#define _ROMFS_IO_
 
 #include <stdio.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 void 	rioInit();
 
@@ -46,5 +51,13 @@ char    *rgets(char *buf, int n, FILE *stream);
 
  
 void *rmmap(void *addr, size_t len, int prot, int flags, int fildes, off_t off); 
+  
 
+
+#ifdef __cplusplus
+}
+#endif
+
+
+#endif
 
