@@ -2,6 +2,7 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_endian.h>
+#include <SDL/SDL_mixer.h>
 
 #include <tamtypes.h>
 #include <kernel.h>
@@ -13,6 +14,7 @@
 #include <string.h>
 #include <cstdlib>
 #include <audsrv.h>
+
 
 struct player_t {
 	SDL_Rect hitbox;
@@ -112,15 +114,10 @@ static char actAlign[6];
 static int actuators;
 
 // audio
-FILE *music;
-FILE *snd_pusher;
-FILE *snd_blaster;
-FILE *snd_explo;
-int err;
-int played;
-char chunk[2048*4];
-struct audsrv_fmt_t format;
-int audsrv;
+Mix_Music *music = NULL;
+Mix_Chunk *snd_pusher = NULL;
+Mix_Chunk *snd_blaster = NULL;
+Mix_Chunk *snd_explo = NULL;
 
 //time
 float Timestep = 0;
@@ -347,7 +344,7 @@ void updateEnemies()
 		if (enemy[e]->shoot == 1 && enemy[e]->alive == 1)
 		{
 			addEnemyBullet(enemy[e]->pos.x + enemy[e]->rect.w / 2 - 4, enemy[e]->pos.y - 4);
-			//Mix_PlayChannel(-1, snd_pusher, 0);
+			Mix_PlayChannel(-1, snd_pusher, 0);
 		}
 		enemy[e]->hitbox.x = enemy[e]->pos.x;
 		enemy[e]->hitbox.y = enemy[e]->pos.y;
@@ -568,7 +565,7 @@ void updateLogic()
 				enemy[e]->alive = 0;
 				addExplo(bullets[i]->pos.x - 128 / 2, bullets[i]->pos.y - 128 / 2);
 				removeBullet(i);
-				//Mix_PlayChannel(0, snd_explo, 0);
+				Mix_PlayChannel(0, snd_explo, 0);
 				score += 100;
 				dead_enemies++;
 				//printf("BOOM!\n");
@@ -586,7 +583,7 @@ void updateLogic()
 			player.alive = 0;
 			addExplo(player.pos.x - 128 / 2, player.pos.y - 128 / 2);
 			removeEnemyBullet(b);
-			//Mix_PlayChannel(0, snd_explo, 0);
+			Mix_PlayChannel(0, snd_explo, 0);
 			//printf("BOOM!\n");
 			break;
 		}
@@ -631,6 +628,36 @@ static void loadModules(void)
         printf("sifLoadModule libsd failed: %d\n", ret);
         SleepThread();
     }	
+
+	ret = SifLoadModule("rom0:MCMAN", 0, NULL);
+    if (ret < 0) {
+        printf("sifLoadModule MCMAN failed: %d\n", ret);
+        SleepThread();
+    }		
+
+	/*ret = SifLoadModule("rom0:ADDDRV", 0, NULL);
+    if (ret < 0) {
+        printf("sifLoadModule ADDDRV failed: %d\n", ret);
+        SleepThread();
+    }			
+
+	ret = SifLoadModule("rom0:ROMDRV", 0, NULL);
+    if (ret < 0) {
+        printf("sifLoadModule ROMDRV failed: %d\n", ret);
+        SleepThread();
+    }
+
+	ret = SifLoadModule("rom0:CDVDFSV", 0, NULL);
+    if (ret < 0) {
+        printf("sifLoadModule CDVDFSV failed: %d\n", ret);
+        SleepThread();
+    }	
+
+	ret = SifLoadModule("rom0:CDVDMAN", 0, NULL);
+    if (ret < 0) {
+        printf("sifLoadModule CDVDMAN failed: %d\n", ret);
+        SleepThread();
+    }	*/
 
 	ret = SifLoadModule("host:audsrv.irx", 0, NULL);
     if (ret < 0) {
@@ -761,6 +788,8 @@ static int initializePad(int port, int slot)
 
     return 1;
 }
+
+
 int main(int argc, char *argv[]) {
 
     int ret;
@@ -792,7 +821,7 @@ int main(int argc, char *argv[]) {
 
 	//Start SDL
 	printf("Set up SDL\n"); 
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) //
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0) //
 	{
 		printf("Couldn't initialize SDL: %s\n", SDL_GetError());
 		return -1;
@@ -819,23 +848,13 @@ int main(int argc, char *argv[]) {
 	}
 
 	//Initialize audio
-	printf("Initialize audio\n"); 
-	ret = audsrv_init();
-	if (ret != 0)
+	printf("Initialize SDL_mixer\n"); 
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512) < 0) 
 	{
-		printf("sample: failed to initialize audsrv\n");
-		printf("audsrv returned error string: %s\n", audsrv_get_error_string());
-		return 1;
+		printf("Couldn't open audio: %s\n", SDL_GetError());
+		return 0;
 	}
 
-	format.bits = 32;
-	format.freq = 44100;
-	format.channels = 2;
-	err = audsrv_set_format(&format);
-	printf("set format returned %d\n", err);
-	printf("audsrv returned error string: %s\n", audsrv_get_error_string());
-	audsrv_set_volume(MAX_VOLUME);
-	
 	printf("Loading assets ... \n"); 
 	load_assets();
 
@@ -873,18 +892,17 @@ int main(int argc, char *argv[]) {
 	game_over_pos.y = 480 / 2 - gameOver->h / 2;
 
 	//load audio
-	//music = fopen("host:rd/bodenstaendig.wav", "rb");
-	//fseek(music, 0, SEEK_SET);
+	music = Mix_LoadMUS("host:rd/bodenstaendig.wav");
 
-	/*sprintf(filename, "host:rd/blaster.ogg");
+	sprintf(filename, "host:rd/blaster.wav");
 	rwop = SDL_RWFromFile(filename, "rb");
 	snd_blaster = Mix_LoadWAV_RW(rwop, 1);
 
-	sprintf(filename, "host:rd/explode1.ogg");
+	sprintf(filename, "host:rd/explode1.wav");
 	rwop = SDL_RWFromFile(filename, "rb");
 	snd_explo = Mix_LoadWAV_RW(rwop, 1);
 
-	sprintf(filename, "host:rd/pusher.ogg");
+	sprintf(filename, "host:rd/pusher.wav");
 	rwop = SDL_RWFromFile(filename, "rb");
 	snd_pusher = Mix_LoadWAV_RW(rwop, 1);
 
@@ -892,9 +910,8 @@ int main(int argc, char *argv[]) {
 	if (Mix_PlayMusic(music, -1) == -1)
 	{
 		return -1;
-	}*/
+	}
 
-	played = 0;
 	while (quit == 0)
 	{
 		curTime = (float)SDL_GetTicks()/1000.0f;
@@ -902,29 +919,7 @@ int main(int argc, char *argv[]) {
 
 		/*printf("shootTimer %d\n", enemy[0]->shootTimer);
 		printf("shootTimeLimit %d\n", enemy[0]->shootTimeLimit);*/
-
-		//loop music
-		/*ret = fread(chunk, 1, sizeof(chunk), music);
-		if (ret > 0)
-		{
-			//audsrv_wait_audio(ret);
-			audsrv_play_audio(chunk, ret);
-		}
-
-		if (ret < sizeof(chunk))
-		{
-			// no more data 
-			break;
-		}
-
-		played++;
-		if (played % 8 == 0)
-		{
-			printf(".");
-		}
-
-		if (played == 512) break;*/
-
+		
 		//Handle controller input
         ctr = 0;
         ret = padGetState(port, slot);
@@ -1116,11 +1111,10 @@ int main(int argc, char *argv[]) {
 	SDL_FreeSurface(gameover_tex2D);
 	SDL_FreeSurface(win_tex2d);
 	TTF_CloseFont(vermin_ttf);
-	/*Mix_FreeMusic(music);
+	Mix_FreeMusic(music);
 	Mix_FreeChunk(snd_blaster);
 	Mix_FreeChunk(snd_explo);
-	Mix_FreeChunk(snd_pusher);*/
-	fclose(music);
+	Mix_FreeChunk(snd_pusher);
 	audsrv_quit();
 	SDL_RWclose(rwop);
 	memset(enemy, 0, sizeof(enemy));
