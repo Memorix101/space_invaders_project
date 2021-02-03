@@ -344,7 +344,7 @@ void updateEnemies()
 		if (enemy[e]->shoot == 1 && enemy[e]->alive == 1)
 		{
 			addEnemyBullet(enemy[e]->pos.x + enemy[e]->rect.w / 2 - 4, enemy[e]->pos.y - 4);
-			Mix_PlayChannel(-1, snd_pusher, 0);
+			//Mix_PlayChannel(-1, snd_pusher, 0);
 		}
 		enemy[e]->hitbox.x = enemy[e]->pos.x;
 		enemy[e]->hitbox.y = enemy[e]->pos.y;
@@ -565,7 +565,7 @@ void updateLogic()
 				enemy[e]->alive = 0;
 				addExplo(bullets[i]->pos.x - 128 / 2, bullets[i]->pos.y - 128 / 2);
 				removeBullet(i);
-				Mix_PlayChannel(0, snd_explo, 0);
+				//Mix_PlayChannel(0, snd_explo, 0);
 				score += 100;
 				dead_enemies++;
 				//printf("BOOM!\n");
@@ -583,7 +583,7 @@ void updateLogic()
 			player.alive = 0;
 			addExplo(player.pos.x - 128 / 2, player.pos.y - 128 / 2);
 			removeEnemyBullet(b);
-			Mix_PlayChannel(0, snd_explo, 0);
+			//Mix_PlayChannel(0, snd_explo, 0);
 			//printf("BOOM!\n");
 			break;
 		}
@@ -849,7 +849,7 @@ int main(int argc, char *argv[]) {
 
 	//Initialize audio
 	printf("Initialize SDL_mixer\n"); 
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512) < 0) 
+	if (Mix_OpenAudio(22050, AUDIO_S16, 2, 512) < 0) 
 	{
 		printf("Couldn't open audio: %s\n", SDL_GetError());
 		return 0;
@@ -894,7 +894,7 @@ int main(int argc, char *argv[]) {
 	//load audio
 	music = Mix_LoadMUS("host:rd/bodenstaendig.wav");
 
-	sprintf(filename, "host:rd/blaster.wav");
+	/*sprintf(filename, "host:rd/blaster.wav");
 	rwop = SDL_RWFromFile(filename, "rb");
 	snd_blaster = Mix_LoadWAV_RW(rwop, 1);
 
@@ -904,7 +904,7 @@ int main(int argc, char *argv[]) {
 
 	sprintf(filename, "host:rd/pusher.wav");
 	rwop = SDL_RWFromFile(filename, "rb");
-	snd_pusher = Mix_LoadWAV_RW(rwop, 1);
+	snd_pusher = Mix_LoadWAV_RW(rwop, 1);*/
 
 	//Play the music
 	if (Mix_PlayMusic(music, -1) == -1)
