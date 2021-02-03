@@ -4,4 +4,4 @@ Space Invaders written in C++ for PS2
 
 ##### Note: This is experimental and broken !!!
 
-![screenshot 29](https://cloud.githubusercontent.com/assets/1466920/20732319/754e4344-b68e-11e6-9b74-653128c85ec8.png)
+![](https://user-images.githubusercontent.com/1466920/106803964-11b90400-6665-11eb-9f41-9aba810eb7c2.png)
