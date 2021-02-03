@@ -2,18 +2,14 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
 #include <SDL/SDL_image.h>
-//PS2SDK
 #include <stdio.h> 
-#include <tamtypes.h> 
-#include <sifrpc.h> 
-#include <kernel.h> 
-#include <loadfile.h> 
-#include <fileio.h> 
 #include <string.h> 
-#include <errno.h> 
 #include <stdlib.h> 
-#include <debug.h> 
-#include <iopcontrol.h> 
+#include "romfs_io.h"
+//#include "romfs.h"
+#ifdef _EE
+	#include <sifrpc.h>
+#endif
 
 struct player_t {
 	SDL_Rect hitbox;
@@ -116,15 +112,15 @@ SDL_Surface* win_tex2d;
 
 void load_assets()
 {
-	space3_tex2d = IMG_Load("mass:/PS2_SPACE_INVADERS/rd/space3.png");
-	enemy_tex2d = IMG_Load("mass:/PS2_SPACE_INVADERS/rd/invader32x32x4.png"); //invader32x32x4
-	player_tex2d = IMG_Load("mass:/PS2_SPACE_INVADERS/rd/player.png");
-	bullet_tex2d = IMG_Load("mass:/PS2_SPACE_INVADERS/rd/bullet.png");
-	enemy_bullet_tex2d = IMG_Load("mass:/PS2_SPACE_INVADERS/rd/enemy-bullet.png");
-	explo_tex2d = IMG_Load("mass:/PS2_SPACE_INVADERS/rd/explode.png");
-	fmg_splash_tex2d = IMG_Load("mass:/PS2_SPACE_INVADERS/rd/fmg_splash.png");
-	gameover_tex2D = IMG_Load("mass:/PS2_SPACE_INVADERS/rd/gameover_ui.png");
-	win_tex2d = IMG_Load("mass:/PS2_SPACE_INVADERS/rd/win_ui.png");
+	space3_tex2d = IMG_Load("romdisk/rd/space3.png");
+	enemy_tex2d = IMG_Load("romdisk/rd/invader32x32x4.png"); //invader32x32x4
+	player_tex2d = IMG_Load("romdisk/rd/player.png");
+	bullet_tex2d = IMG_Load("romdisk/rd/bullet.png");
+	enemy_bullet_tex2d = IMG_Load("romdisk/rd/enemy-bullet.png");
+	explo_tex2d = IMG_Load("romdisk/rd/explode.png");
+	fmg_splash_tex2d = IMG_Load("romdisk/rd/fmg_splash.png");
+	gameover_tex2D = IMG_Load("romdisk/rd/gameover_ui.png");
+	win_tex2d = IMG_Load("romdisk/rd/win_ui.png");
 	//scoreFont = IMG_Load();
 }
 
@@ -566,118 +562,13 @@ void reset()
 	player.alive = 1;
 }
 
-void GsDmaInit(void)
-{
-	/*Reset/init dma(gif channel only)*/
-	__asm__(
-	"li	$2,0x1000A000	\n"
-	"nop				\n"
-	"sw	$0,0x80($2)		\n"
-	"sw	$0,0($2)		\n"
-	"sw	$0,0x30($2)		\n"
-	"sw	$0,0x10($2)		\n"
-	"sw	$0,0x50($2)		\n"
-	"sw	$0,0x40($2)		\n"
-	"li	$2,0xFF1F		\n"//	0xFF1F
-	"sw	$2,0x1000E010	\n"
-	"lw	$2,0x1000E010	\n"
-	"li	$3,0xFF1F		\n"//0xFF1F
-	"and	$2,$3		\n"
-	"sw	$2,0x1000E010	\n"
-	"sync.p				\n"
-	"sw	$0,0x1000E000	\n"
-	"sw	$0,0x1000E020	\n"
-	"sw	$0,0x1000E030	\n"
-	"sw	$0,0x1000E050	\n"
-	"sw	$0,0x1000E040	\n"
-	"li	$3,1			\n"
-	"lw	$2,0x1000E000	\n"
-	"ori	$3,$2,1		\n"
-	"nop				\n"
-	"sw	$3,0x1000E000	\n"
-	"nop				\n"
-	);
-}
+int main(int argc, char *argv[]) {
 
-void PS2_LoadModules(void)
-{
-	static char *ModulesList[6] = {
-   "rom0:SIO2MAN",
-   "rom0:MCMAN",
-   "rom0:MCSERV",
-   "rom0:PADMAN",
-   "rom0:LIBSD",
-   "rom0:IOMAN"
-	};
+	rioInit();
 
-	int ret = 0;
-	int i;
-	for ( i = 0; i < 5; i++ )
-	{
-		ret = SifLoadModule(ModulesList[i], 0, NULL);
-		if ( ret < 0 )
-			printf("Failed to load module: %s\n", ModulesList[i]);
-	}
-}
-
-int main(int argc, char* argv[]) {
-
-	SifInitRpc(0);
-    // Reset IOP borrowed from uLaunchelf
-    while (!SifIopReset(NULL, 0)){};
-    while (!SifIopSync()){};
-    SifInitRpc(0);
-
-	GsDmaInit();
-	PS2_LoadModules();
-
-	//	Init IOP modules
-	//	USB mass support via  IOP modules
-	//	The only devices which are loaded by default are 
-	//	"mass:" (CD/DVD drive access) and "rom0:" (access to BIOS files). Which are both read only.
-	//	http://lukasz.dk/mirror/forums.ps2dev.org/viewtopicb2f6.html?t=11437
-	//	So for instance, to access a file in "models/player.obj" 
-	//	that is saved into a USB mass storage device you would need to pass the path: "mass:/models/player.obj". 
-	//	Some of the prefixes are
-	//	"mass:" For the USB mass storage device.
-	//	"mc0:" or "mc1:" Memory Cards slot 0 or 1.
-	//	"cdfs:" The CD/DVD file system.
-	//	"hdd:" The PlayStation 2 compatible external Hard Drive.
-	int ret;
-	//char freesio2_irx; 
-	//int size_freesio2_irx;
-	//ret = SifExecModuleBuffer(&freesio2_irx, size_freesio2_irx, 0, NULL, &ret);
-	//ret = SifLoadModule("rom0:SIO2MAN", 0, NULL);	
-	//if (ret < 0) { 
-    //  printf("Error '%d' loading module freesio2\n", ret); 
-   	//} else { 
-    //  printf("Module freesio2 loaded\n"); 
-   	//} 
-   	//mcInit(MC_TYPE_MC);*/     
-	unsigned char usbd_irx; 
-	int size_usbd_irx = 0;
-	ret = SifExecModuleBuffer(&usbd_irx, size_usbd_irx, 0, NULL, &ret);
-	if (ret < 0) { 
-      	printf("Error '%d' loading module usbd.irx\n", ret); 
-   	} else { 
-    	printf("Module usbd.irx loaded\n"); 
-   	}
-	unsigned char usbhdfsd_irx; 
-	int size_usbhdfsd_irx = 0;
-	ret = SifExecModuleBuffer(&usbhdfsd_irx, size_usbhdfsd_irx, 0, NULL, &ret);
-	if (ret < 0) { 
-    	printf("Error '%d' loading module usbhdfsd.irx\n", ret); 
-   	} else { 
-    	printf("Module usbhdfsd.irx loaded\n"); 
-   	}
-	unsigned char usbmass_bd_irx; 
-	int size_usbmass_bd_irx = 0;
-	ret = SifExecModuleBuffer(&usbmass_bd_irx, size_usbmass_bd_irx, 0, NULL, &ret);
-   	if (ret < 0) { 
-      printf("Error '%d' loading module usbmass_bd.irx\n", ret); 
-   	} else { 
-      printf("Module usbmass_bd.irx loaded\n"); 
-   	}
+	#ifdef _EE
+	SifInitRpc(0); 
+	#endif
 
 	//Start SDL
 	if(SDL_Init(SDL_INIT_VIDEO) == -1) //
@@ -739,7 +630,7 @@ int main(int argc, char* argv[]) {
 	initPlayer();
 
 	//ttf stuff
-	TTF_Font* vermin_ttf = TTF_OpenFont("mass:/PS2_SPACE_INVADERS/rd/vermin_vibes_1989.ttf", 24);
+	TTF_Font* vermin_ttf = TTF_OpenFont("romdisk/rd/vermin_vibes_1989.ttf", 24);
 	SDL_Rect score_pos;
 	SDL_Color Color = { 255, 255, 255 };
 	char textBuffer[64];
@@ -759,10 +650,10 @@ int main(int argc, char* argv[]) {
 	game_over_pos.y = 480 / 2 - gameOver->h / 2;
 
 	//load audio
-	//music = Mix_LoadMUS("mass:/PS2_SPACE_INVADERS/rd/bodenstaendig.ogg");
-	//snd_blaster = Mix_LoadWAV("mass:/PS2_SPACE_INVADERS/rd/blaster.ogg");
-	//snd_explo = Mix_LoadWAV("mass:/PS2_SPACE_INVADERS/rd/explode1.ogg");
-	//snd_pusher = Mix_LoadWAV("mass:/PS2_SPACE_INVADERS/rd/pusher.ogg");
+	//music = Mix_LoadMUS("romdisk/rd/bodenstaendig.ogg");
+	//snd_blaster = Mix_LoadWAV("romdisk/rd/blaster.ogg");
+	//snd_explo = Mix_LoadWAV("romdisk/rd/explode1.ogg");
+	//snd_pusher = Mix_LoadWAV("romdisk/rd/pusher.ogg");
 
 	//Play the music
 	if (Mix_PlayMusic(music, -1) == -1)
