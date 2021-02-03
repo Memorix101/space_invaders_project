@@ -122,6 +122,12 @@ char chunk[2048*4];
 struct audsrv_fmt_t format;
 int audsrv;
 
+//time
+float Timestep = 0;
+float lastdelta = 0;
+float curTime = 0;
+float prewarm = 0;
+
 // workaround http://lukasz.dk/mirror/forums.ps2dev.org/viewtopicb2f6.html?t=11437
 SDL_RWops *rwop;
 char filename[50];
@@ -263,6 +269,7 @@ void addEnemy()
 		enemy[i]->shoot = 0;
 		enemy[i]->shootTimer = 0;
 		enemy[i]->shootTimeLimit = (rand() % (20 - 3)) + 3; // MAX - MIN + MIN
+		printf("shootTimeLimit %d\n", enemy[i]->shootTimeLimit);
 	}
 }
 
@@ -890,7 +897,11 @@ int main(int argc, char *argv[]) {
 	played = 0;
 	while (quit == 0)
 	{
-		DeltaTime = (SDL_GetTicks() / 1000) - lastTick;
+		curTime = (float)SDL_GetTicks()/1000.0f;
+    	DeltaTime = curTime - lastdelta;
+
+		/*printf("shootTimer %d\n", enemy[0]->shootTimer);
+		printf("shootTimeLimit %d\n", enemy[0]->shootTimeLimit);*/
 
 		//loop music
 		/*ret = fread(chunk, 1, sizeof(chunk), music);
@@ -937,11 +948,11 @@ int main(int argc, char *argv[]) {
 
             // Directions
             if(new_pad & PAD_LEFT) {
-                printf("LEFT\n");
+                //printf("LEFT\n");
             }
 
 			if(old_pad & PAD_LEFT) {
-                printf("old_pad LEFT\n");
+                //printf("old_pad LEFT\n");
 				move_left = 1;
             }
 			else
@@ -950,18 +961,18 @@ int main(int argc, char *argv[]) {
 			}
 
             if(new_pad & PAD_DOWN) {
-                printf("DOWN\n");
+                //printf("DOWN\n");
             }
 
             if(new_pad & PAD_RIGHT) {
-                printf("RIGHT\n");
+                //printf("RIGHT\n");
                 /*
                        padSetMainMode(port, slot,PAD_MMODE_DIGITAL, PAD_MMODE_LOCK));
                 */
             }
 
 			if(old_pad & PAD_RIGHT) {
-                printf("old_pad RIGHT\n");
+                //printf("old_pad RIGHT\n");
 				move_right = 1;
                 /*
                        padSetMainMode(port, slot,PAD_MMODE_DIGITAL, PAD_MMODE_LOCK));
@@ -972,37 +983,56 @@ int main(int argc, char *argv[]) {
 				move_right = 0;
 			}
 
+			if(buttons.ljoy_h > 240)
+            {
+				move_right = 1;
+            }
+			else if(old_pad & !PAD_RIGHT)
+			{
+				move_right = 0;
+			}
+
+			//printf("%d\n", (int)buttons.ljoy_h);
+			if(buttons.ljoy_h < 64)
+            {
+				move_left = 1;
+            }
+			else if(old_pad & !PAD_LEFT)
+			{
+				move_left = 0;
+			}
+
             if(new_pad & PAD_UP) {
-                printf("UP\n");
+                //printf("UP\n");
             }
             if(new_pad & PAD_START && gameover == 1) {
-                printf("START\n");
+                //printf("START\n");
 				reset();
             }
             if(new_pad & PAD_R3) {
-                printf("R3\n");
+                //printf("R3\n");
             }
             if(new_pad & PAD_L3) {
-                printf("L3\n");
+                //printf("L3\n");
             }
             if(new_pad & PAD_SELECT) {
-                printf("SELECT\n");
+                //printf("SELECT\n");
             }
             if(new_pad & PAD_SQUARE) {
-                printf("SQUARE\n");
+                //printf("SQUARE\n");
             }
             if(new_pad & PAD_CROSS && player.alive == 1) {
                 //padEnterPressMode(port, slot);
-                printf("CROSS - Enter press mode\n");
+                //printf("CROSS - Enter press mode\n");
 				addBullet(player.pos.x + player.tex->w / 2 - 3, player.pos.y);
             }
             if(new_pad & PAD_CIRCLE) {
                 //padExitPressMode(port, slot);
-                printf("CIRCLE - Exit press mode\n");
+                //printf("CIRCLE - Exit press mode\n");
             }
             if(new_pad & PAD_TRIANGLE) {
                 // Check for the reason below..
-                printf("TRIANGLE (press mode disabled, see code)\n");
+                //printf("TRIANGLE (press mode disabled, see code)\n");
             }
             if(new_pad & PAD_R1 && player.alive == 1) {
                 /*actAlign[0] = 1; // Start small engine
@@ -1016,10 +1046,10 @@ int main(int argc, char *argv[]) {
                 printf("L1 - Stop little engine\n");*/
             }
             if(new_pad & PAD_R2) {
-                printf("R2\n");
+                //printf("R2\n");
             }
             if(new_pad & PAD_L2) {
-                printf("L2\n");
+                //printf("L2\n");
             }
         }
 
@@ -1072,7 +1102,7 @@ int main(int argc, char *argv[]) {
 		//Update Screen
 		SDL_Flip(screen);
 
-		lastTick = (SDL_GetTicks() / 1000);
+		lastdelta = curTime;
 		//SDL_Delay(30);
 	}
 
