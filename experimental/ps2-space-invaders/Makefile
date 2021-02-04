@@ -6,7 +6,7 @@ EE_CXXFLAGS += -D_EE -O1 -G0 -Wall -fno-exceptions -fpermissive
 #EE_LIBS	+= -L$(PS2SDK)/ports/lib
 EE_LIBS += -L$(PS2SDK)/ports/lib -lpad -lSDL_image -lsdlmixer -lSDL_ttf -lsdl -Lsdlmain -lm -lmad -lmikmod -lz -lfreetype -lpng -ljpeg -lstdc++ -lps2snd -lc -lmc
 
-all: $(EE_BIN) sio2man.irx padman.irx usbd.irx usbmass_bd.irx audsrv.irx
+all: $(EE_BIN) sio2man.irx padman.irx usbd.irx usbhdfsd.irx audsrv.irx
 
 sio2man.irx:
 	cp $(PS2SDK)/iop/irx/sio2man.irx $@
