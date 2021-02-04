@@ -1,7 +1,7 @@
 # Platform ideas and status
 
 - PlayStation 2
-  - ~~ps2sdk has no (useful) documentation. There is a booting build of the game but it's not working and I actually don't know why. Just black screen. IOP modules load correctly but something is wrong here 😞~~<br/>
+  - ps2sdk has no (useful) documentation. ~~There is a booting build of the game but it's not working and I actually don't know why. Just black screen. IOP modules load correctly but something is wrong here~~ 😞<br/>
   - Seems like ps2sdk is partly broken here and there. 🤔😮
     <br/>
     <br/>
