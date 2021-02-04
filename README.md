@@ -52,6 +52,9 @@
 - Sega Saturn
     - [Jo Engine](https://jo-engine.org/)
   <br/>
+- PlayStation 2
+    - SDL 1.2 ([PS2SDK](https://github.com/ps2dev/ps2dev))
+  <br/>
 - PlayStation Portable
     - SDL 1.2 ([Minimalist PSPSDK](https://sourceforge.net/projects/minpspw/))
   <br/>
