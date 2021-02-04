@@ -40,7 +40,7 @@
   - Unreal Engine 4
   - raylib
   <br/>
-- GameBoy Advanced
+- GameBoy Advance
     - [smgbalib](http://sebastianmihai.com/main.php?t=40&n=Gameboy-Advance-development-smgbalib-library)
   <br/>
 - MS-DOS
