@@ -66,9 +66,6 @@
   - [Phaser](http://phaser.io/)
   - Emscripten (raylib, SDL2, GLFW3)
   <br/> 
-- G-eon
-  - [G-eon SDK](https://github.com/G-eon/g-eon-wiki/wiki)
-  <br/> 
 - Nintendo Wii
   - [GRRLIB](https://github.com/GRRLIB/GRRLIB) (devkitPro)
   <br/> 
