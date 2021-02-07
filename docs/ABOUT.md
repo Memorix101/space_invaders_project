@@ -35,23 +35,6 @@ So, I set up some kind of requirements for the platforms I want to port this.
 
 <br/>
 
-Also there are ports for my own [platforms](https://memorix101.wordpress.com/videogame-console-project/).<br/>
-[G-eon a virtual video game console](https://memorix101.itch.io/g-eon)
-I started working on in 2016 and released the first stable version in April 2017
-
-<br/>
-<img src="https://img.itch.zone/aW1hZ2UvMTA5MTg0LzUwNzQ0Ni5wbmc=/347x500/Zx6ev1.png" width="300">
-<img src="https://img.itch.zone/aW1hZ2UvMTA5MTg0LzUwOTg1Mi5wbmc=/347x500/e2Xtui.png" width="300">
-<br/>
-
-and Xenon a video game console I was working on since my early childhood.
-Reworked it as a Raspberry Pi Linux based operating system in 2018. It's unreleased (and will possibly never be).<br/><br/>
-<img src="https://memorix101.files.wordpress.com/2016/07/ad_2.png?w=1400&h=" width="300">
-<br/>
-
-###### 2016 artwork
-[Xenon Prototype 2018 #1 (German)](https://youtu.be/GlDQQUI2lLc?t=60)<br/>
-
 ### The bad port saga
 For sure there are bad ports and rushed ones (which are actually bad).
 Some ports are bad because I had no idea how to use the platform correctly or was too restricted by the toolchain I was/had to use. Some toolchains are well documented but most are not.
