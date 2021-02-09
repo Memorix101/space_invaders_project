@@ -58,6 +58,9 @@
 - PlayStation Portable
     - SDL 1.2 ([Minimalist PSPSDK](https://sourceforge.net/projects/minpspw/))
   <br/>
+- Nintendo 3DS
+    - SDL 1.2 ([devkitPro](https://devkitpro.org/))
+  <br/>
 - HTML5
   - Godot
   - Unity

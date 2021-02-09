@@ -69,5 +69,5 @@
     <br/>
     <br/>
 - 3DS
-  - I am considering it but I am not sure how I can use the second screen usefully.
-  - Can't do the port as I need a dspfirm.cdc file and as I do not own a 3DS I can't dump it myself.
+  - ~~I am considering it but I am not sure how I can use the second screen usefully.~~
+  - Done on 09/02/2021 &#x2611;
