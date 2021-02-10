@@ -107,7 +107,8 @@ SDL_Surface* explo_tex2d;
 SDL_Surface* fmg_splash_tex2d;
 SDL_Surface* gameover_tex2D;
 SDL_Surface* win_tex2d;
-SDL_Surface*  fontTex = NULL;
+SDL_Surface*  fontTex;
+SDL_Surface*  thumbnail_tex2d;
 
 void load_assets()
 {
@@ -121,6 +122,7 @@ void load_assets()
 	gameover_tex2D = IMG_Load("romfs:/rd/gameover_ui.png");
 	win_tex2d = IMG_Load("romfs:/rd/win_ui.png");
 	fontTex = IMG_Load("romfs:/rd/font.png");
+	thumbnail_tex2d = IMG_Load("romfs:/rd/thumbnail.png");
 }
 
 //fast and dirty bitmap font
@@ -882,8 +884,8 @@ int main(int argc, char* argv[]) {
 
 	//Set up screen
 	//Uint32 flags = SDL_CONSOLEBOTTOM | SDL_TOPSCR;
-	Uint32 flags = SDL_FULLSCREEN;
-	screen = SDL_SetVideoMode(400, 240, 16, flags);
+	Uint32 flags = SDL_DUALSCR;
+	screen = SDL_SetVideoMode(400, 480, 16, flags);
 
 	//printf("%i joysticks were found.\n\n", SDL_NumJoysticks());
 	printf("The names of the joysticks are:\n");
@@ -919,6 +921,11 @@ int main(int argc, char* argv[]) {
   	textpos.y = 10;
   	textpos.w = 0;
  	textpos.h = 0;
+
+	//bottom screen
+	SDL_Rect bottom_pos;
+	bottom_pos.x = 40;
+	bottom_pos.y = 240;
 
 	//load audio
 	printf("load audio\n");
@@ -1078,6 +1085,7 @@ int main(int argc, char* argv[]) {
 		}
 
 		SDL_BlitSurface(space3_tex2d, NULL, screen, NULL);
+		SDL_BlitSurface(thumbnail_tex2d, NULL, screen, &bottom_pos); // bottom screen thumbnail
 
 		drawExplo();
 		drawEnemies();
