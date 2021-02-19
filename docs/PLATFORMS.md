@@ -40,7 +40,7 @@
     <br/>
     <br/>
 - Original Xbox
-  - I don't own one. Is CXBX-Reloaded capable to run homebrew flawlessly?! Homebrew games were much too slow last time I tested it.
+  - I don't own one (yet). Is CXBX-Reloaded capable to run homebrew flawlessly?! Homebrew games were much too slow last time I tested it.
     <br/>
     <br/>
 - Xbox 360
@@ -52,7 +52,8 @@
     <br/>
     <br/>
 - PS Vita
-  - I don't own one and not sure if Vita3k is "good" enough.
+  - ~~I don't own one and not sure if Vita3k is "good" enough.~~
+  - Done on 19/02/2021 &#x2611;
     <br/>
     <br/>
 - HTML5
