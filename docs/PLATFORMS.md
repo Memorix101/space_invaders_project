@@ -3,6 +3,7 @@
 - PlayStation 2
   - ps2sdk has no (useful) documentation. ~~There is a booting build of the game but it's not working and I actually don't know why. Just black screen. IOP modules load correctly but something is wrong here~~ 😞<br/>
   - Seems like ps2sdk is partly broken here and there. 🤔😮
+  - Done on 02/02/2021 &#x2611;
     <br/>
     <br/>
 - PlayStation
@@ -36,11 +37,13 @@
     <br/>
     <br/>
 - PS3
+  - Not sure. I looked a bit into it and development seems not very appealing.
   - Waiting until it's safe to install CFW without the worry about a ban. Homebrew on RPCS3 is not good yet (It's slow and unstable).
     <br/>
     <br/>
 - Original Xbox
   - I don't own one (yet). Is CXBX-Reloaded capable to run homebrew flawlessly?! Homebrew games were much too slow last time I tested it.
+  - Tricky situation. Developing with the XDK nees quite some work to setup (A virtual machine with Windows XP is recommended). The [nxdk](https://github.com/XboxDev/nxdk) does not work with CXBX-Reloaded. 🙁
     <br/>
     <br/>
 - Xbox 360
@@ -48,11 +51,11 @@
     <br/>
     <br/>
 - Java
-  - Besides the libGDX version there is also an unfinished LWJGL3 version. I'm not sure if I should finish it. Because it would be similar to the GLFW3 version in C, but in Java classes.
+  - Besides the libGDX version there is also an unfinished LWJGL3 version. I'm not sure if I should finish it. Because it would be similar to the GLFW3 version in C but in Java classes.
     <br/>
     <br/>
 - PS Vita
-  - ~~I don't own one and not sure if Vita3k is "good" enough.~~
+  - I don't own one and not sure if Vita3k is "good" enough.
   - Done on 19/02/2021 &#x2611;
     <br/>
     <br/>
@@ -63,6 +66,7 @@
     <br/>
 - GameCube
   - Same situation as Wii. Audio would be a mess (Both use the same [SDK](https://devkitpro.org/wiki/Getting_Started)). Also I don't know if SDL is there and actually I don't want to rework it for [GX](https://devkitpro.org/wiki/libogc/GX).
+  - The issue with the audio is that SDL is throwing errors while linking which I can't resolve. The other is that I am too lazy to write something on my own using the SDK tools (which are quite good so far).
     <br/>
     <br/>
 - MS-DOS
