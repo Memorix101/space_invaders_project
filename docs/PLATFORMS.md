@@ -43,7 +43,7 @@
     <br/>
 - Original Xbox
   - I don't own one (yet). Is CXBX-Reloaded capable to run homebrew flawlessly?! Homebrew games were much too slow last time I tested it.
-  - Tricky situation. Developing with the XDK nees quite some work to setup (A virtual machine with Windows XP is recommended). The [nxdk](https://github.com/XboxDev/nxdk) does not work with CXBX-Reloaded. 🙁
+  - Tricky situation. Developing with the XDK needs quite some work to setup (A virtual machine with Windows XP is recommended). The [nxdk](https://github.com/XboxDev/nxdk) does not work with CXBX-Reloaded. 🙁
     <br/>
     <br/>
 - Xbox 360
