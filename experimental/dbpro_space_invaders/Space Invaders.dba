@@ -56,7 +56,7 @@ do
          if sprite collision (enemy(e).sprite_id, laser(l).sprite_id) and enemy(e).alive = 1 and laser(l).kill_me = 0
             laser(l).kill_me = 1
             enemy(e).alive = 0
-            hide sprite laser(l).sprite_id
+            laser(l).x = -10 rem we hide the sprites off screen until they get reused
             hide sprite enemy(e).sprite_id
             score = score + 100
             play sound 2
@@ -72,7 +72,7 @@ do
    rem enemy draw stuff
    for t=0 to array count(enemy())-1 rem enemy is sprite id 3 to 42
       play sprite enemy(t).sprite_id,1,4,60
-      sprite t+3, enemy(t).x, enemy(t).y, 3
+      sprite enemy(t).sprite_id, enemy(t).x, enemy(t).y, 3
    next
 
    rem explo draw stuff
