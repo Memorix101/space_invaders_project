@@ -56,32 +56,36 @@ do
          if sprite collision (enemy(e).sprite_id, laser(l).sprite_id) and enemy(e).alive = 1 and laser(l).kill_me = 0
             laser(l).kill_me = 1
             enemy(e).alive = 0
-            laser(l).x = -10 rem we hide the sprites off screen until they get reused
+            rem we hide the sprites off screen until they get reused
+            laser(l).x = -10
             hide sprite enemy(e).sprite_id
             score = score + 100
             play sound 2
             explo_spawn(enemy(e).x - 64+16, enemy(e).y - 64+16)
          endif
-      next
-   next
+      next l
+   next e
 
    rem draw stuff here
-   paste image 1,0,0 rem drawing background as image because sprites are drawn over text
-   sprite 2, player.x, player.y, 2 rem draw and set position of player
+   rem drawing background as image because sprites are drawn over text
+   paste image 1,0,0
+   rem draw and set position of player
+   sprite 2, player.x, player.y, 2
 
    rem enemy draw stuff
    for t=0 to array count(enemy())-1 rem enemy is sprite id 3 to 42
       play sprite enemy(t).sprite_id,1,4,60
       sprite enemy(t).sprite_id, enemy(t).x, enemy(t).y, 3
-   next
+   next t
 
    rem explo draw stuff
-   for t=0 to array count(explo())-1 rem explo is sprite id 70 to something
+   rem explo is sprite id 70 to something
+   for t=0 to array count(explo())-1
       play sprite explo(t).sprite_id,1,16,60
       if sprite frame(explo(t).sprite_id) = 16
          hide sprite explo(t).sprite_id
       endif
-   next
+   next t
 
    rem score text formatting
    score_numbers$ = "";
@@ -104,5 +108,5 @@ do
    rem print "Enemy Pos: "+str$(enemy(0).x)
    print "Laser Array: "+str$(array count(laser()))
 
-   sync rem upddate screen
-loop rem end of loop
+   sync : rem update screen
+loop : rem end of loop

@@ -1,37 +1,37 @@
 Rem ***** Included Source File *****
 
 type player_type
-	x
-	y
+   x
+   y
 endtype
 
 function player_init()
-	load image "rd/player.png",2
-	player.x = screen width()/2 - image width (2)/2
-	player.y = screen height() - image height (2)*2
-	set sprite 2,0,1
+   load image "rd/player.png",2
+   set sprite 2,0,1
+   player.x = screen width()/2 - 28/2
+   player.y = screen height() - 21*2
 endfunction
 
 function player_input()
-	if spacekey()=1 and spacekey_down=0
-    	spacekey_down = 1
+   if spacekey()=1 and spacekey_down=0
+       spacekey_down = 1
     else
-    	if spacekey_down=1
-    		play sound 1
-    		laser_spawn() rem SHOOT HERE
-    		spacekey_down = -1
-    	endif
+       if spacekey_down=1
+          play sound 1
+          laser_spawn() : rem SHOOT HERE
+          spacekey_down = -1
+       endif
     endif
     if spacekey()=0
-    	spacekey_down = 0
+       spacekey_down = 0
     endif
 
     if leftkey()=1
-    	player.x = player.x - 10
+       player.x = player.x - 10
     endif
 
     if rightkey()=1
-    	player.x = player.x + 10
+       player.x = player.x + 10
     endif
-    player.x = clampn(player.x, 0, screen width() - image width (2))
+    player.x = clampn(player.x, 0, screen width() - sprite width (2))
 endfunction
