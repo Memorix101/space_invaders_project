@@ -129,3 +129,7 @@ python3-space-invaders/__pycache__/
 python3-space-invaders/.vscode/
 
 experimental/wii_space_invaders/source/.vscode/
+
+*.BAK
+
+experimental/dbpro_space_invaders/Space Invaders.exe

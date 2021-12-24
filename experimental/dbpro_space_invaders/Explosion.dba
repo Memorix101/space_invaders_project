@@ -1,0 +1,20 @@
+Rem ***** Included Source File *****
+
+type explo_type
+	x
+	y
+	sprite_id
+	alive
+endtype
+
+function explo_spawn(x, y)
+	i = array count(explo())
+	s_id = array count(explo()) + 700 // if other ids reach here things will get ugly
+	create animated sprite s_id,"rd/explode.png",16,1,5 //https://forum.thegamecreators.com/thread/181773
+	sprite s_id, x, y, 5
+	explo(i).x = sprite x(s_id)
+	explo(i).y = sprite y(s_id)
+	explo(i).alive = 1
+	explo(i).sprite_id = s_id
+	array insert at bottom explo()
+endfunction

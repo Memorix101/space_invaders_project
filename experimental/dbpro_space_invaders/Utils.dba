@@ -1,0 +1,12 @@
+Rem ***** Included Source File *****
+
+function clampn(v, mn, mx)
+if v < mn
+	v = mn
+endif
+//else // elseif or else if does not exist
+	if v > mx
+		v = mx
+	endif
+//endif
+endfunction v

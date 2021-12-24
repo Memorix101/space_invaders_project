@@ -1,0 +1,107 @@
+// Project: Space Invaders
+// Created: Thursday, December 23, 2021
+// Created by Memorix101
+// Written using version 12.02.16 - Dark Basic Pro Binary 120216
+// Open Source release https://github.com/TheGameCreators/Dark-Basic-Pro/releases/tag/12.02.16
+
+// ***** Main Source File *****
+
+rem #include "./Utils.dba"
+rem #include "./Player.dba"
+rem #include "./Enemy.dba"
+rem #include "./Laser.dba"
+rem #include "./Explosion.dba"
+
+sync on : sync rate 60 : backdrop off
+set display mode 800,600,32
+set window on
+
+// setup global game variables
+score = 0
+global spacekey_down = 0
+
+// setup gloabl game assets
+// set text font "rd/vermin_vibes_1989.ttf" // does not work but should? https://forum.thegamecreators.com/thread/63687
+load image "rd/space3.png",1 // background
+//set sprite 1,0,1
+
+// create player
+dim laser(0) as laser_type
+player as player_type
+player_init()
+load image "rd/bullet.png", 4
+
+// create enemy
+dim enemy(0) as enemy_type
+enemy_init() // sprite id 3 to 42
+dim explo(0) as explo_type
+
+//load audio
+load music "rd/bodenstaendig.mp3",1
+//loop music 1
+
+load sound "rd/blaster.wav",1
+load sound "rd/explode1.wav",2
+
+do // main loop
+
+	// player input
+	player_input()	
+	enemy_update()
+	laser_update()
+	
+	for e=0 to array count(enemy())-1 // enemy is sprite id 3 to 42
+		for l=0 to array count(laser())-1
+			if sprite collision (enemy(e).sprite_id, laser(l).sprite_id) and enemy(e).alive = 1 and laser(l).kill_me = 0
+				laser(l).kill_me = 1
+				enemy(e).alive = 0
+				hide sprite laser(l).sprite_id 
+				hide sprite enemy(e).sprite_id
+				score = score + 100
+				play sound 2
+				explo_spawn(enemy(e).x - 64+16, enemy(e).y - 64+16)
+			endif
+		next
+	next
+
+	// draw stuff here
+	paste image 1,0,0 // drawing background as image because sprites are drawn over text
+	sprite 2, player.x, player.y, 2 // draw and set position of player
+		
+	//enemy draw stuff
+	for t=0 to array count(enemy())-1 // enemy is sprite id 3 to 42
+		play sprite enemy(t).sprite_id,1,4,60
+		sprite t+3, enemy(t).x, enemy(t).y, 3
+	next
+	
+	//explo draw stuff
+	for t=0 to array count(explo())-1 // explo is sprite id 70 to something
+		play sprite explo(t).sprite_id,1,16,60
+		if sprite frame(explo(t).sprite_id) = 16
+			hide sprite explo(t).sprite_id
+		endif
+	next
+	
+	// score text formatting
+	score_numbers$ = "";
+	pad = len(str$(score))
+	for t=1 to 4-pad
+		score_numbers$ = score_numbers$ + "0"
+	next t
+	score_numbers$ = score_numbers$ + str$(score)	
+	// score text
+	text screen width()-text width("SCORE: 0000")-20, 20, "SCORE: "+score_numbers$
+
+	// show framerate
+	//text 20,screen height()-40,desc$
+	//fps$="FPS: "+str$(screen fps())
+	//text screen width()-5-text width(fps$),screen height()-20,fps$
+	
+	//debug text stuff
+	set cursor 0,0
+	//print "Player_X: "+str$(player.x) 
+	//print "Enemy Pos: "+str$(enemy(0).x)
+	print "Laser Array: "+str$(array count(laser()))
+	
+	sync // upddate screen
+loop // end of loop

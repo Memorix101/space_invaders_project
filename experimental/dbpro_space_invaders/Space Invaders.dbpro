@@ -1,0 +1,79 @@
+; **** Dark BASIC Professional Project File ****
+; **** Written by Synergy Editor ****
+version=DBP1.00
+project name=Space Invaders
+
+; **** source file information ****
+main=Space Invaders.dba
+LineMain=12
+include1=Utils.dba
+LineInclude1=0
+include2=Player.dba
+LineInclude2=33
+include3=Enemy.dba
+LineInclude3=15
+include4=Laser.dba
+LineInclude4=38
+include5=Explosion.dba
+LineInclude5=17
+
+; **** Executable Information  ***
+; build types: exe, media, installer, alone
+executable=Space Invaders.exe
+build type=exe
+; ** Media file compression **
+compression=YES
+
+; ** Media file encryption **
+encryption=YES
+; ** Display the card options screen window? **
+card options window=NO
+
+; **** debugger information ****
+; If the editor sets this to yes, it is running in debug mode
+CLI=NO
+CommandLineArguments=
+
+; **** display mode information ****
+app title=Space Invaders
+
+; graphics mode options: fullscreen, window, desktop, fulldesktop, hidden
+graphics mode=window
+fullscreen resolution=640x480x32
+
+; arbitrary sizes are valid for windowed mode
+window resolution=800x600
+
+; **** External Files Information ****
+
+; **** Media ****
+; Example entries: media1=graphics\*.jpg
+media root path=C:\Users\memor\Desktop\dbpro_space_invaders\
+
+; **** Icons ****
+icon1=C:\Users\memor\Desktop\dbpro_space_invaders\rd\icon.ico
+
+; **** Cursors ****
+
+; **** Version Info ****
+VerComments=
+VerCompany=Memorix101
+VerFileDesc=
+VerFileNumber=v1.0
+VerInternal=v1.0
+VerCopyright=Memorix101
+VerTrademark=
+VerFilename=
+VerProduct=
+VerProductNumber=v1.0
+
+; **** To Do ****
+
+; **** Comments ****
+comments1=
+
+; **** Advanced (setup.ini) configuration ****
+RemoveSafetyCode=NO
+SafeArrays=YES
+LocalTempFolder=NO
+ExternaliseDLLS=NO

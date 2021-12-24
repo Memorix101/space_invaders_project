@@ -1,0 +1,44 @@
+Rem ***** Included Source File *****
+
+type laser_type
+	x
+	y
+	sprite_id
+	kill_me
+endtype
+
+function laser_spawn()
+	s_id = array count(laser()) + 50
+	i = array count(laser())
+	laser(i).x = player.x + 10
+	laser(i).y = player.y - 32
+	laser(i).sprite_id = s_id
+	laser(i).kill_me = 0
+	set sprite s_id,0,1 // sprite id 50 to 70
+	sprite s_id, laser(i).x, laser(i).y, 4
+	//show sprite laser(i).sprite_id
+	array insert at bottom laser()
+endfunction
+
+function laser_update()	
+	if array count(laser()) > 0
+		for t=0 to array count(laser())-1
+			laser(t).y = laser(t).y - 10
+			//if sprite visible(laser(t).sprite_id) = 1 // workaround for that sprite array stuff 
+				//if sprite exist(laser(t).sprite_id)
+					 sprite laser(t).sprite_id, laser(t).x, laser(t).y, 4 // enemy is sprite id 50 to 70			
+				//endif
+			//else
+				//delete sprite laser(t).sprite_id
+				//array delete element laser()						 
+			//endif
+			if laser(t).y < 0 // buggy as hell but I can't see why?
+				hide sprite laser(t).sprite_id // we hide the sprite first and later delete all hidden sprites from array
+				laser(t).kill_me = 1
+				//delete sprite laser(t).sprite_id // crashes the whole thing ... if the debugger would just be working
+				//array delete element laser(), t // deletes stuff too early if spamming
+			endif
+			
+		next
+	endif
+endfunction
