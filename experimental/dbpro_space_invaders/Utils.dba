@@ -4,9 +4,9 @@ function clampn(v, mn, mx)
 if v < mn
 	v = mn
 endif
-//else // elseif or else if does not exist
+rem else rem elseif or else if does not exist
 	if v > mx
 		v = mx
 	endif
-//endif
+rem endif
 endfunction v

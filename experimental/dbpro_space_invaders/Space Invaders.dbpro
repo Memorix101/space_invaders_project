@@ -5,27 +5,27 @@ project name=Space Invaders
 
 ; **** source file information ****
 main=Space Invaders.dba
-LineMain=12
+LineMain=46
 include1=Utils.dba
 LineInclude1=0
 include2=Player.dba
-LineInclude2=33
+LineInclude2=0
 include3=Enemy.dba
-LineInclude3=15
+LineInclude3=0
 include4=Laser.dba
-LineInclude4=38
+LineInclude4=26
 include5=Explosion.dba
-LineInclude5=17
+LineInclude5=0
 
 ; **** Executable Information  ***
 ; build types: exe, media, installer, alone
 executable=Space Invaders.exe
 build type=exe
 ; ** Media file compression **
-compression=YES
+compression=NO
 
 ; ** Media file encryption **
-encryption=YES
+encryption=NO
 ; ** Display the card options screen window? **
 card options window=NO
 
@@ -48,10 +48,10 @@ window resolution=800x600
 
 ; **** Media ****
 ; Example entries: media1=graphics\*.jpg
-media root path=C:\Users\memor\Desktop\dbpro_space_invaders\
+media root path=E:\SourceTree\space_invaders_project_nunu\experimental\dbpro_space_invaders\
 
 ; **** Icons ****
-icon1=C:\Users\memor\Desktop\dbpro_space_invaders\rd\icon.ico
+icon1=E:\SourceTree\space_invaders_project_nunu\experimental\dbpro_space_invaders\rd\icon.ico
 
 ; **** Cursors ****
 
@@ -74,6 +74,6 @@ comments1=
 
 ; **** Advanced (setup.ini) configuration ****
 RemoveSafetyCode=NO
-SafeArrays=YES
+SafeArrays=NO
 LocalTempFolder=NO
 ExternaliseDLLS=NO

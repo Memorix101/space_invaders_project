@@ -1,10 +1,10 @@
-// Project: Space Invaders
-// Created: Thursday, December 23, 2021
-// Created by Memorix101
-// Written using version 12.02.16 - Dark Basic Pro Binary 120216
-// Open Source release https://github.com/TheGameCreators/Dark-Basic-Pro/releases/tag/12.02.16
+rem Project: Space Invaders
+rem Created: Thursday, December 23, 2021
+rem Created by Memorix101
+rem Written using version 12.02.16 - Dark Basic Pro Binary 120216
+rem Open Source release https:remgithub.com/TheGameCreators/Dark-Basic-Pro/releases/tag/12.02.16
 
-// ***** Main Source File *****
+rem ***** Main Source File *****
 
 rem #include "./Utils.dba"
 rem #include "./Player.dba"
@@ -16,92 +16,93 @@ sync on : sync rate 60 : backdrop off
 set display mode 800,600,32
 set window on
 
-// setup global game variables
+rem setup global game variables
 score = 0
 global spacekey_down = 0
 
-// setup gloabl game assets
-// set text font "rd/vermin_vibes_1989.ttf" // does not work but should? https://forum.thegamecreators.com/thread/63687
-load image "rd/space3.png",1 // background
-//set sprite 1,0,1
+rem setup gloabl game assets
+rem set text font "rd/vermin_vibes_1989.ttf" rem does not work but should? https:remforum.thegamecreators.com/thread/63687
+load image "rd/space3.png",1
+rem set sprite 1,0,1
 
-// create player
+rem create player
 dim laser(0) as laser_type
 player as player_type
 player_init()
 load image "rd/bullet.png", 4
 
-// create enemy
+rem create enemy - sprite id 3 to 42
 dim enemy(0) as enemy_type
-enemy_init() // sprite id 3 to 42
+enemy_init()
 dim explo(0) as explo_type
 
-//load audio
+rem load audio
 load music "rd/bodenstaendig.mp3",1
-//loop music 1
+loop music 1
 
 load sound "rd/blaster.wav",1
 load sound "rd/explode1.wav",2
 
-do // main loop
+rem main loop
+do
+   rem player input
+   player_input()
+   enemy_update()
+   laser_update()
 
-	// player input
-	player_input()	
-	enemy_update()
-	laser_update()
-	
-	for e=0 to array count(enemy())-1 // enemy is sprite id 3 to 42
-		for l=0 to array count(laser())-1
-			if sprite collision (enemy(e).sprite_id, laser(l).sprite_id) and enemy(e).alive = 1 and laser(l).kill_me = 0
-				laser(l).kill_me = 1
-				enemy(e).alive = 0
-				hide sprite laser(l).sprite_id 
-				hide sprite enemy(e).sprite_id
-				score = score + 100
-				play sound 2
-				explo_spawn(enemy(e).x - 64+16, enemy(e).y - 64+16)
-			endif
-		next
-	next
+   rem enemy is sprite id 3 to 42
+   for e=0 to array count(enemy())-1
+      for l=0 to array count(laser())-1
+         if sprite collision (enemy(e).sprite_id, laser(l).sprite_id) and enemy(e).alive = 1 and laser(l).kill_me = 0
+            laser(l).kill_me = 1
+            enemy(e).alive = 0
+            hide sprite laser(l).sprite_id
+            hide sprite enemy(e).sprite_id
+            score = score + 100
+            play sound 2
+            explo_spawn(enemy(e).x - 64+16, enemy(e).y - 64+16)
+         endif
+      next
+   next
 
-	// draw stuff here
-	paste image 1,0,0 // drawing background as image because sprites are drawn over text
-	sprite 2, player.x, player.y, 2 // draw and set position of player
-		
-	//enemy draw stuff
-	for t=0 to array count(enemy())-1 // enemy is sprite id 3 to 42
-		play sprite enemy(t).sprite_id,1,4,60
-		sprite t+3, enemy(t).x, enemy(t).y, 3
-	next
-	
-	//explo draw stuff
-	for t=0 to array count(explo())-1 // explo is sprite id 70 to something
-		play sprite explo(t).sprite_id,1,16,60
-		if sprite frame(explo(t).sprite_id) = 16
-			hide sprite explo(t).sprite_id
-		endif
-	next
-	
-	// score text formatting
-	score_numbers$ = "";
-	pad = len(str$(score))
-	for t=1 to 4-pad
-		score_numbers$ = score_numbers$ + "0"
-	next t
-	score_numbers$ = score_numbers$ + str$(score)	
-	// score text
-	text screen width()-text width("SCORE: 0000")-20, 20, "SCORE: "+score_numbers$
+   rem draw stuff here
+   paste image 1,0,0 rem drawing background as image because sprites are drawn over text
+   sprite 2, player.x, player.y, 2 rem draw and set position of player
 
-	// show framerate
-	//text 20,screen height()-40,desc$
-	//fps$="FPS: "+str$(screen fps())
-	//text screen width()-5-text width(fps$),screen height()-20,fps$
-	
-	//debug text stuff
-	set cursor 0,0
-	//print "Player_X: "+str$(player.x) 
-	//print "Enemy Pos: "+str$(enemy(0).x)
-	print "Laser Array: "+str$(array count(laser()))
-	
-	sync // upddate screen
-loop // end of loop
+   rem enemy draw stuff
+   for t=0 to array count(enemy())-1 rem enemy is sprite id 3 to 42
+      play sprite enemy(t).sprite_id,1,4,60
+      sprite t+3, enemy(t).x, enemy(t).y, 3
+   next
+
+   rem explo draw stuff
+   for t=0 to array count(explo())-1 rem explo is sprite id 70 to something
+      play sprite explo(t).sprite_id,1,16,60
+      if sprite frame(explo(t).sprite_id) = 16
+         hide sprite explo(t).sprite_id
+      endif
+   next
+
+   rem score text formatting
+   score_numbers$ = "";
+   pad = len(str$(score))
+   for t=1 to 4-pad
+      score_numbers$ = score_numbers$ + "0"
+   next t
+   score_numbers$ = score_numbers$ + str$(score)
+   rem score text
+   text screen width()-text width("SCORE: 0000")-20, 20, "SCORE: "+score_numbers$
+
+   rem show framerate
+   rem text 20,screen height()-40,desc$
+   rem fps$="FPS: "+str$(screen fps())
+   rem text screen width()-5-text width(fps$),screen height()-20,fps$
+
+   rem debug text stuff
+   set cursor 0,0
+   rem print "Player_X: "+str$(player.x)
+   rem print "Enemy Pos: "+str$(enemy(0).x)
+   print "Laser Array: "+str$(array count(laser()))
+
+   sync rem upddate screen
+loop rem end of loop
