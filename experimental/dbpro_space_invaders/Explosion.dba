@@ -9,7 +9,7 @@ endtype
 
 function explo_spawn(x, y)
    i = array count(explo())
-   s_id = array count(explo()) + 700 : rem if other ids reach here things will get ugly
+   s_id = array count(explo()) + 200 : rem if other ids reach here things will get ugly
    create animated sprite s_id,"rd/explode.png",16,1,5 : rem https://forum.thegamecreators.com/thread/181773
    sprite s_id, x, y, 5
    explo(i).x = sprite x(s_id)

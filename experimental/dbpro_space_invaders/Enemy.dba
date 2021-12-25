@@ -6,6 +6,14 @@ type enemy_type
    sprite_id
    start_pos
    alive
+   counter
+endtype
+
+type enemy_laser_type
+   x
+   y
+   sprite_id
+   kill_me
 endtype
 
 global go_left = 0
@@ -27,6 +35,7 @@ for t=0 to 39 rem enemy is sprite id 3 to 42
    enemy(t).start_pos = enemy(t).x
    enemy(t).alive = 1
    enemy(t).sprite_id = s_id
+   enemy(t).counter = 0
    array insert at bottom enemy()
 next t
 endfunction
@@ -48,7 +57,29 @@ function enemy_update()
             go_left = 0
          endif
       endif
-
       enemy(t).x = clampn(enemy(t).x, 0, screen width() - 60+sprite width(t+3))
+      
+      inc enemy(t).counter
+      if enemy(t).counter >= 300 + rnd(500-300) and enemy(t).alive = 1
+      	shoot_laser(t)
+      	enemy(t).counter = 0
+      endif  
    next t
+   
+   for t=0 to array count(enemy_laser())-1 
+   		sprite enemy_laser(t).sprite_id, enemy_laser(t).x, enemy_laser(t).y, 5
+   		enemy_laser(t).y = enemy_laser(t).y + 10
+	next t
+endfunction
+
+function shoot_laser(t) : rem buggy ... spirte_id issue causes glitches
+	s_id = array count(enemy_laser()) + 900
+   	i = array count(enemy_laser())
+   	enemy_laser(i).x = enemy(t).x
+   	enemy_laser(i).y = enemy(t).y
+   	enemy_laser(i).sprite_id = s_id
+   	enemy_laser(i).kill_me = 0
+   	set sprite s_id,0,1 : rem sprite id 6000 to eternity
+  	array insert at bottom enemy_laser()
+	play sound 3
 endfunction

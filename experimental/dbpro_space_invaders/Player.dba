@@ -6,7 +6,6 @@ type player_type
 endtype
 
 function player_init()
-   load image "rd/player.png",2
    set sprite 2,0,1
    player.x = screen width()/2 - 28/2
    player.y = screen height() - 21*2

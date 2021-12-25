@@ -23,13 +23,15 @@ global spacekey_down = 0
 rem setup gloabl game assets
 rem set text font "rd/vermin_vibes_1989.ttf" : rem does not work but should? https://forum.thegamecreators.com/thread/63687
 load image "rd/space3.png",1
-rem set sprite 1,0,1
+load image "rd/player.png",2
+load image "rd/bullet.png", 4
+load image "rd/enemy-bullet.png",5
 
 rem create player
 dim laser(0) as laser_type
+dim enemy_laser(0) as enemy_laser_type
 player as player_type
 player_init()
-load image "rd/bullet.png", 4
 
 rem create enemy - sprite id 3 to 42
 dim enemy(0) as enemy_type
@@ -42,6 +44,7 @@ loop music 1
 
 load sound "rd/blaster.wav",1
 load sound "rd/explode1.wav",2
+load sound "rd/pusher.wav",3
 
 rem main loop
 do
@@ -64,6 +67,14 @@ do
          endif
       next l
    next e
+   
+   rem breaks the whole game
+   for t=0 to array count(enemy_laser())-1 
+   		if sprite collision (enemy_laser(t).sprite_id, 2)
+   			explo_spawn(player.x - 64+16, player.y - 64+16)
+   			hide sprite 2
+   		endif
+	next t
 
    rem draw stuff here
    rem drawing background as image because sprites are drawn over text
@@ -106,10 +117,11 @@ do
    rem print "Player_X: "+str$(player.x)
    rem print "Enemy Pos: "+str$(enemy(0).x)
    print "Laser Array: "+str$(array count(laser()))
-
+   print "Timer: "+str$(counter)
+	
    if escapekey()=1
       exit
-   endif
+   endif   
 
    sync : rem update screen
 loop : rem end of loop
