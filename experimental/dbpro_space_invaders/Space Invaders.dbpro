@@ -5,13 +5,13 @@ project name=Space Invaders
 
 ; **** source file information ****
 main=Space Invaders.dba
-LineMain=27
+LineMain=137
 include1=Utils.dba
 LineInclude1=0
 include2=Player.dba
-LineInclude2=0
+LineInclude2=5
 include3=Enemy.dba
-LineInclude3=69
+LineInclude3=33
 include4=Laser.dba
 LineInclude4=8
 include5=Explosion.dba
@@ -42,7 +42,7 @@ graphics mode=window
 fullscreen resolution=640x480x32
 
 ; arbitrary sizes are valid for windowed mode
-window resolution=800x600
+window resolution=640x480
 
 ; **** External Files Information ****
 

@@ -13,11 +13,12 @@ rem #include "./Laser.dba"
 rem #include "./Explosion.dba"
 
 sync on : sync rate 60 : backdrop off
-set display mode 800,600,32
+set display mode 640,480,32
 set window on
 
 rem setup global game variables
 score = 0
+game_over = 0
 global spacekey_down = 0
 
 rem setup gloabl game assets
@@ -26,6 +27,7 @@ load image "rd/space3.png",1
 load image "rd/player.png",2
 load image "rd/bullet.png", 4
 load image "rd/enemy-bullet.png",6
+load image "rd/gameover_ui.png",7
 
 rem create player
 dim laser(0) as laser_type
@@ -73,14 +75,27 @@ do
    			player.alive = 0
    			explo_spawn(player.x - 64+16, player.y - 64+16)
    			hide sprite 2
+   			play sound 2
+   			game_over = 1
    		endif
 	next t
+	
+	if score >= 4000
+		game_over = 1
+	endif
 
    rem draw stuff here
    rem drawing background as image because sprites are drawn over text
-   paste image 1,0,0
+   paste image 1,0,0   
    rem draw and set position of player
    sprite 2, player.x, player.y, 2
+   sprite 7000, 0, 0, 7
+   
+	if game_over = 1
+		show sprite 7000
+	else
+		hide sprite 7000
+	endif
 
    rem enemy draw stuff
    for t=0 to array count(enemy())-1 rem enemy is sprite id 3 to 42
@@ -119,6 +134,19 @@ do
    print "Laser Array: "+str$(array count(laser()))
    print "Explo Array: "+str$(array count(explo()))
    rem print "cur_explo: "+str$(cur_explo)
+   print "timer: "+str$(shoot_counter)
+   
+	if returnkey()=1 and game_over=1
+		game_over = 0
+		score = 0
+		shoot_counter = 0
+		player_init()
+		show sprite 2
+		for t=0 to 39 rem enemy is sprite id 3 to 42
+			show sprite enemy(t).sprite_id
+			enemy(t).alive = 1
+		next t
+   endif 
 	
    if escapekey()=1
       exit
