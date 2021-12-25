@@ -10,3 +10,15 @@ rem else rem elseif or else if does not exist
    endif
 rem endif
 endfunction v
+
+function LoadFont(file as string)
+  load dll "gdi32.dll", 1
+  result = call dll(1, "AddFontResourceA", file)
+  delete dll 1
+endfunction result
+ 
+function UnloadFont(file as string)
+  load dll "gdi32.dll", 1
+  call dll 1, "RemoveFontResourceA", file
+  delete dll 1
+endfunction
