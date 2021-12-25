@@ -151,12 +151,12 @@ repeat
          show sprite enemy(t).sprite_id
          enemy(t).alive = 1
       next t
-	endif
+   endif
 
-	if escapekey()=1
-		UnloadFont("rd/vermin_vibes_1989.ttf")
-		wait 1000
-      	quit = 1
+   if escapekey()=1
+      UnloadFont("rd/vermin_vibes_1989.ttf")
+      wait 1000
+         quit = 1
    endif
    sync : rem update screen
 until quit = 1: rem end of loop
