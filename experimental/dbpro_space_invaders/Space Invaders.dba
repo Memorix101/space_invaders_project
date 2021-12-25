@@ -21,7 +21,7 @@ score = 0
 global spacekey_down = 0
 
 rem setup gloabl game assets
-rem set text font "rd/vermin_vibes_1989.ttf" rem does not work but should? https:remforum.thegamecreators.com/thread/63687
+rem set text font "rd/vermin_vibes_1989.ttf" : rem does not work but should? https://forum.thegamecreators.com/thread/63687
 load image "rd/space3.png",1
 rem set sprite 1,0,1
 
