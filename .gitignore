@@ -132,4 +132,6 @@ experimental/wii_space_invaders/source/.vscode/
 
 *.BAK
 
+*.bak
+
 experimental/dbpro_space_invaders/Space Invaders.exe

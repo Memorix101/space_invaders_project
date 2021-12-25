@@ -56,8 +56,7 @@ do
          if sprite collision (enemy(e).sprite_id, laser(l).sprite_id) and enemy(e).alive = 1 and laser(l).kill_me = 0
             laser(l).kill_me = 1
             enemy(e).alive = 0
-            rem we hide the sprites off screen until they get reused
-            laser(l).x = -10
+            laser(l).x = -10 : rem we hide the sprites off screen until they get reused
             hide sprite enemy(e).sprite_id
             score = score + 100
             play sound 2
@@ -107,6 +106,10 @@ do
    rem print "Player_X: "+str$(player.x)
    rem print "Enemy Pos: "+str$(enemy(0).x)
    print "Laser Array: "+str$(array count(laser()))
+
+   if escapekey()=1
+      exit
+   endif
 
    sync : rem update screen
 loop : rem end of loop
