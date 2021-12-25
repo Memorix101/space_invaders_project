@@ -61,13 +61,13 @@ function enemy_update()
       
       inc enemy(t).counter
       if enemy(t).counter >= 300 + rnd(500-300) and enemy(t).alive = 1
-      	rem shoot_laser(t)
+      	shoot_laser(t)
       	enemy(t).counter = 0
       endif  
    next t
    
    for t=0 to array count(enemy_laser())-1 
-   		sprite enemy_laser(t).sprite_id, enemy_laser(t).x, enemy_laser(t).y, 5
+   		sprite enemy_laser(t).sprite_id, enemy_laser(t).x, enemy_laser(t).y, 6
    		enemy_laser(t).y = enemy_laser(t).y + 10
 	next t
 endfunction

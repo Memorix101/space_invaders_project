@@ -25,7 +25,7 @@ rem set text font "rd/vermin_vibes_1989.ttf" : rem does not work but should? htt
 load image "rd/space3.png",1
 load image "rd/player.png",2
 load image "rd/bullet.png", 4
-load image "rd/enemy-bullet.png",5
+load image "rd/enemy-bullet.png",6
 
 rem create player
 dim laser(0) as laser_type
@@ -68,9 +68,9 @@ do
       next l
    next e
    
-   rem breaks the whole game
    for t=0 to array count(enemy_laser())-1 
-   		if sprite collision (enemy_laser(t).sprite_id, 2)
+   		if sprite collision (enemy_laser(t).sprite_id, 2) and player.alive = 1
+   			player.alive = 0
    			explo_spawn(player.x - 64+16, player.y - 64+16)
    			hide sprite 2
    		endif

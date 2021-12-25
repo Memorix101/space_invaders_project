@@ -3,19 +3,21 @@ Rem ***** Included Source File *****
 type player_type
    x
    y
+   alive
 endtype
 
 function player_init()
    set sprite 2,0,1
    player.x = screen width()/2 - 28/2
    player.y = screen height() - 21*2
+   player.alive = 1
 endfunction
 
 function player_input()
    if spacekey()=1 and spacekey_down=0
        spacekey_down = 1
     else
-       if spacekey_down=1
+       if spacekey_down=1 and player.alive = 1
           play sound 1
           laser_spawn() : rem SHOOT HERE
           spacekey_down = -1
