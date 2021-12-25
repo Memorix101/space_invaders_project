@@ -61,7 +61,7 @@ function enemy_update()
       
       inc enemy(t).counter
       if enemy(t).counter >= 300 + rnd(500-300) and enemy(t).alive = 1
-      	shoot_laser(t)
+      	rem shoot_laser(t)
       	enemy(t).counter = 0
       endif  
    next t
@@ -73,13 +73,13 @@ function enemy_update()
 endfunction
 
 function shoot_laser(t) : rem buggy ... spirte_id issue causes glitches
-	s_id = array count(enemy_laser()) + 900
+	s_id = array count(enemy_laser()) + 500
    	i = array count(enemy_laser())
    	enemy_laser(i).x = enemy(t).x
    	enemy_laser(i).y = enemy(t).y
    	enemy_laser(i).sprite_id = s_id
    	enemy_laser(i).kill_me = 0
-   	set sprite s_id,0,1 : rem sprite id 6000 to eternity
+   	rem set sprite s_id,0,1 : rem sprite id 6000 to eternity
   	array insert at bottom enemy_laser()
 	play sound 3
 endfunction

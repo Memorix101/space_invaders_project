@@ -7,14 +7,24 @@ type explo_type
    alive
 endtype
 
+global cur_explo = 0
+global explo_arr_full = 0
 function explo_spawn(x, y)
-   i = array count(explo())
-   s_id = array count(explo()) + 200 : rem if other ids reach here things will get ugly
-   create animated sprite s_id,"rd/explode.png",16,1,5 : rem https://forum.thegamecreators.com/thread/181773
-   sprite s_id, x, y, 5
-   explo(i).x = sprite x(s_id)
-   explo(i).y = sprite y(s_id)
-   explo(i).alive = 1
+   i = cur_explo
+   if cur_explo > 9
+   		cur_explo = 0
+   endif
+   s_id = i + 200 : rem if other ids reach here things will get ugly
    explo(i).sprite_id = s_id
-   array insert at bottom explo()
+   if sprite exist(explo(i).sprite_id) = 0
+   		create animated sprite explo(i).sprite_id,"rd/explode.png",16,1,5 : rem https://forum.thegamecreators.com/thread/181773
+   		array insert at bottom explo()
+   	endif
+   	explo(i).x = x
+   	explo(i).y = y
+   	explo(i).alive = 1
+   	set sprite frame explo(i).sprite_id, 1 : rem reset frame to 1
+   	show sprite explo(i).sprite_id : rem show hidden frame (we are reusing frames)
+   	sprite explo(i).sprite_id, x, y, 5
+   	inc cur_explo
 endfunction

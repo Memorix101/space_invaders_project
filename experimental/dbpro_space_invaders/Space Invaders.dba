@@ -117,7 +117,8 @@ do
    rem print "Player_X: "+str$(player.x)
    rem print "Enemy Pos: "+str$(enemy(0).x)
    print "Laser Array: "+str$(array count(laser()))
-   print "Timer: "+str$(counter)
+   print "Explo Array: "+str$(array count(explo()))
+   rem print "cur_explo: "+str$(cur_explo)
 	
    if escapekey()=1
       exit

@@ -5,17 +5,17 @@ project name=Space Invaders
 
 ; **** source file information ****
 main=Space Invaders.dba
-LineMain=70
+LineMain=120
 include1=Utils.dba
 LineInclude1=0
 include2=Player.dba
-LineInclude2=7
+LineInclude2=0
 include3=Enemy.dba
-LineInclude3=84
+LineInclude3=73
 include4=Laser.dba
-LineInclude4=19
+LineInclude4=15
 include5=Explosion.dba
-LineInclude5=11
+LineInclude5=15
 
 ; **** Executable Information  ***
 ; build types: exe, media, installer, alone

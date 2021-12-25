@@ -7,17 +7,23 @@ type laser_type
    kill_me
 endtype
 
+
+global cur_laser = 0
+global laser_arr_full = 0
 function laser_spawn()
-   s_id = array count(laser()) + 50
-   i = array count(laser())
-   laser(i).x = player.x + 10
-   laser(i).y = player.y - 32
-   laser(i).sprite_id = s_id
-   laser(i).kill_me = 0
-   set sprite s_id,0,1 : rem sprite id 50 to 70
-   sprite s_id, laser(i).x, laser(i).y, 4
-   rem show sprite laser(i).sprite_id
-   array insert at bottom laser()
+	if cur_laser > 9
+		cur_laser = 0
+		laser_arr_full = 1
+	endif
+   	i = cur_laser
+   	laser(i).x = player.x + 10
+   	laser(i).y = player.y - 32
+   	laser(i).kill_me = 0
+   	if laser_arr_full = 0
+   		laser(i).sprite_id = cur_laser + 50 : rem 50 to 60
+   		array insert at bottom laser()
+   	endif
+   	inc cur_laser
 endfunction
 
 function delete_laser(i)
