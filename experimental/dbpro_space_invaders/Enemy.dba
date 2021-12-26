@@ -73,14 +73,13 @@ function enemy_update()
 	inc shoot_counter
 endfunction
 
-function shoot_laser(t) : rem buggy ... spirte_id issue causes glitches
+function shoot_laser(t)
 	s_id = array count(enemy_laser()) + 500
    	i = array count(enemy_laser())
-   	enemy_laser(i).x = enemy(t).x
-   	enemy_laser(i).y = enemy(t).y
+   	enemy_laser(i).x = enemy(t).x + 10
+   	enemy_laser(i).y = enemy(t).y + 32
    	enemy_laser(i).sprite_id = s_id
    	enemy_laser(i).kill_me = 0
-   	rem set sprite s_id,0,1 : rem sprite id 6000 to eternity
   	array insert at bottom enemy_laser()
 	play sound 3
 endfunction

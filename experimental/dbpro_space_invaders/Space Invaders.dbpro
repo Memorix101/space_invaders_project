@@ -1,29 +1,29 @@
 ; **** Dark BASIC Professional Project File ****
+; **** Written by Synergy Editor ****
 version=DBP1.00
 project name=Space Invaders
 
-
-
 ; **** source file information ****
 main=Main.dba
+LineMain=95
 include1=Utils.dba
+LineInclude1=0
 include2=Player.dba
+LineInclude2=21
 include3=Enemy.dba
+LineInclude3=60
 include4=Laser.dba
+LineInclude4=50
 include5=Explosion.dba
-; The compiler only needs to read the final source from this entry - the editor
-; handles include files, concatenation, etc.
-final source=_Temp.dbsource
-
-; The editor will replace any references to %temp in the EXE path/filename
-executable=Space Invaders.exe
+LineInclude5=14
 
 ; **** Executable Information  ***
-; build types: exe, media, installer,alone
+; build types: exe, media, installer, alone
+executable=Space Invaders.exe
 build type=exe
-
 ; ** Media file compression **
 compression=NO
+
 ; ** Media file encryption **
 encryption=NO
 ; ** Display the card options screen window? **
@@ -32,19 +32,23 @@ card options window=NO
 ; **** debugger information ****
 ; If the editor sets this to yes, it is running in debug mode
 CLI=NO
+CommandLineArguments=
 
 ; **** display mode information ****
 app title=Space Invaders
-; graphics mode options: fullscreen, window, desktop,fulldesktop, hidden
+
+; graphics mode options: fullscreen, window, desktop, fulldesktop, hidden
 graphics mode=window
 fullscreen resolution=640x480x32
+
 ; arbitrary sizes are valid for windowed mode
 window resolution=640x480
 
 ; **** External Files Information ****
+
 ; **** Media ****
+; Example entries: media1=graphics\*.jpg
 media root path=E:\SourceTree\space_invaders_project_nunu\experimental\dbpro_space_invaders\
-; example entries: media1=graphics\*.jpg
 
 ; **** Icons ****
 
@@ -61,3 +65,14 @@ VerTrademark=
 VerFilename=
 VerProduct=
 VerProductNumber=v1.0
+
+; **** To Do ****
+
+; **** Comments ****
+comments1=
+
+; **** Advanced (setup.ini) configuration ****
+RemoveSafetyCode=NO
+SafeArrays=YES
+LocalTempFolder=NO
+ExternaliseDLLS=NO

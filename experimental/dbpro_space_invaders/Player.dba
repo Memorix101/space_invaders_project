@@ -19,7 +19,7 @@ function player_input()
     else
        if spacekey_down=1 and player.alive = 1
           play sound 1
-          laser_spawn() : rem SHOOT HERE
+          laser_spawn()
           spacekey_down = -1
        endif
     endif

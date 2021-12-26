@@ -33,6 +33,7 @@ load image "rd/player.png",2
 load image "rd/bullet.png", 4
 load image "rd/enemy-bullet.png",6
 load image "rd/gameover_ui.png",7
+load image "rd/fmg_splash.png",8
 
 rem create player
 dim laser(0) as laser_type
@@ -52,6 +53,18 @@ loop music 1
 load sound "rd/blaster.wav",1
 load sound "rd/explode1.wav",2
 load sound "rd/pusher.wav",3
+
+wait_ = 0
+do
+	sprite 43,0,0,8
+	inc wait_
+
+		if wait_ > 150
+			delete sprite 43
+			exit
+		endif
+	sync
+loop 
 
 rem main loop
 repeat
@@ -90,10 +103,8 @@ repeat
    endif
 
    rem draw stuff here
-   rem drawing background as image because sprites are drawn over text
-   paste image 1,0,0
-   rem draw and set position of player
-   sprite 2, player.x, player.y, 2
+   paste image 1,0,0 : rem drawing background as image because sprites are drawn over text
+   sprite 2, player.x, player.y, 2 : rem draw and set position of player
    sprite 7000, 0, 0, 7
 
    if game_over = 1
@@ -109,8 +120,7 @@ repeat
    next t
 
    rem explo draw stuff
-   rem explo is sprite id 70 to something
-   for t=0 to array count(explo())-1
+   for t=0 to array count(explo())-1 : rem explo is sprite id 70 to something
       play sprite explo(t).sprite_id,1,16,60
       if sprite frame(explo(t).sprite_id) = 16
          hide sprite explo(t).sprite_id

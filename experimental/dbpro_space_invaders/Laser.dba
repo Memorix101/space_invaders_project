@@ -44,11 +44,11 @@ function laser_update()
             rem delete sprite laser(t).sprite_id
             rem array delete element laser()
          rem endif
-         if laser(t).y < -100 : rem buggy as hell but I can't see why?
-            laser(t).x = -10 : rem we hide the sprites off screen until they get reused
+         if laser(t).y < -100
+            laser(t).x = -10 : rem we hide the sprites off screen until they get reused (pooling)
             laser(t).kill_me = 1
             rem array delete element laser(), i rem deletes stuff too early if spamming
-            rem delete_laser(t) : rem fucntion call does not work as intended
+            rem delete_laser(t) : rem fucntion does not work as intended
          endif
       next t
    endif
