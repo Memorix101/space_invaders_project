@@ -19,9 +19,10 @@ disable escapekey
 
 rem setup global game variables
 score = 0
-game_over = 0
+gameover = 0
 quit = 0
 global spacekey_down = 0
+global fire_a_down = 0
 
 rem setup gloabl game assets
 LoadFont("rd/vermin_vibes_1989.ttf") : rem installing font temporary into system
@@ -34,6 +35,12 @@ load image "rd/bullet.png", 4
 load image "rd/enemy-bullet.png",6
 load image "rd/gameover_ui.png",7
 load image "rd/fmg_splash.png",8
+load image "rd/win_ui.png",9
+
+sprite 7000, 0, 0, 7
+hide sprite 7000
+sprite 7001, 0, 0, 9
+hide sprite 7001
 
 rem create player
 dim laser(0) as laser_type
@@ -94,24 +101,19 @@ repeat
             explo_spawn(player.x - 64+16, player.y - 64+16)
             hide sprite 2
             play sound 2
-            game_over = 1
+            gameover = 1
+            show sprite 7000
          endif
    next t
 
    if score >= 4000
-      game_over = 1
+      gameover = 1
+      show sprite 7001
    endif
 
    rem draw stuff here
    paste image 1,0,0 : rem drawing background as image because sprites are drawn over text
    sprite 2, player.x, player.y, 2 : rem draw and set position of player
-   sprite 7000, 0, 0, 7
-
-   if game_over = 1
-      show sprite 7000
-   else
-      hide sprite 7000
-   endif
 
    rem enemy draw stuff
    for t=0 to array count(enemy())-1 rem enemy is sprite id 3 to 42
@@ -150,13 +152,29 @@ repeat
    rem print "Explo Array: "+str$(array count(explo()))
    rem print "cur_explo: "+str$(cur_explo)
    rem print "timer: "+str$(shoot_counter)
+   remstart print "joystick left "+str$(joystick left())
+	print "joystick right "+str$(joystick right())
+ 	print "joystick x "+str$(joystick x())
+	print "joystick y "+str$(joystick y())
+	print "joystick z "+str$(joystick z())
+	print "joystick fire a "+str$(joystick fire a())
+	print "joystick fire b "+str$(joystick fire b())
+	print "joystick fire c "+str$(joystick fire c())
+	print "joystick fire d "+str$(joystick fire d())
+	print "joystick fire x "+str$(joystick fire x(0)) remend
+	remstart print "joystick hat angle(0)"+str$(joystick hat angle(0))
+	print "joystick hat angle(1)"+str$(joystick hat angle(1))
+	print "joystick hat angle(2)"+str$(joystick hat angle(2))
+	print "joystick hat angle(3)"+str$(joystick hat angle(3)) remend
 
-   if returnkey()=1 and game_over=1
-      game_over = 0
+   if returnkey()=1 and gameover=1 or joystick fire b()=1 and gameover=1
+      gameover = 0
       score = 0
       shoot_counter = 0
       player_init()
       show sprite 2
+      hide sprite 7000 : rem hide gameover ui
+      hide sprite 7001 : rem hide win ui
       for t=0 to 39 rem enemy is sprite id 3 to 42
          show sprite enemy(t).sprite_id
          enemy(t).alive = 1
