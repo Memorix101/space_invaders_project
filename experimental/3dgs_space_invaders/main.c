@@ -157,15 +157,16 @@ action player_action()
 	
 	while (my != NULL)
 	{
-		if(key_cul || joy_raw.x <= 100) 
+		
+		if(key_cul || joy_raw.x < -150 || joy_hat == 270) 
 		{
 			my.x -= 30 * time_step;
-		} 
-	
-		if(key_cur || joy_raw.x >= -100)
+		} 		
+		else if(key_cur || joy_raw.x > 150 || joy_hat == 90)
 		{
 			my.x += 30 * time_step;
 		}
+			
 		my.x = clamp(my.x,-290,290); 
 		
 		if (key_space && spacekey_pressed == false) 
