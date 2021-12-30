@@ -1,5 +1,6 @@
 #include <acknex.h>
 #include <default.c>
+#include <windows.h>
 
 #define PRAGMA_PATH "rd";
 
@@ -12,7 +13,6 @@ ENTITY* explode1_ent;
 SOUND* blaster_wav = "blaster.wav";
 SOUND* pusher_wav = "pusher.wav";
 SOUND* explode1_wav = "explode1.wav";
-SOUND* bodenstaendig_wav = "bodenstaendig.wav";
 
 STRING* score_str = "";
 
@@ -51,13 +51,14 @@ PANEL* gameover_pan =
   flags = SHOW;
 }
 
+FONT* vermin_font = "Vermin Vibes 1989#24";
+
 TEXT* score_txt =	
 {
   layer = 10;
   pos_x = 450;
   pos_y = 20;
-  font = "Vermin24.bmp"; // worked and now doesn't anymore
-  //font = "Arial#24bi";
+  font = vermin_font;
   string = score_str;
   flags = SHOW;
 } 
@@ -261,7 +262,10 @@ function init_enemies()
 function main()
 {
 	fps_max = 60;	// limit the frame rate to 60 fps 
-	video_set(640, 480, 32, 2);
+	video_set(640, 480, 32, 2);	
+		
+	AddFontResource("rd/vermin_vibes_1989.ttf"); // neat trick from AUM 114 how to use TTF without installing it
+	wait(1);
 	
 	//set(score_txt, SHOW); // invisible
 	
@@ -274,7 +278,7 @@ function main()
 
 	level_load ("game.wmb");
 	
-	snd_loop(bodenstaendig_wav,100,0);
+	media_loop("rd/bodenstaendig.ogg", NULL, 100);
 	
 	wait(100);
 	reset(fmg_pan, SHOW); // invisible
@@ -284,7 +288,7 @@ function main()
 	
 	while(1) // update
 	{
-		str_cpy(score_str,"Score:");
+		str_cpy(score_str,"Score: ");
 		str_cat_num(score_str,"%04.0f", score);
 		
 		//debug stuff

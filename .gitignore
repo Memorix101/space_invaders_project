@@ -135,3 +135,11 @@ experimental/wii_space_invaders/source/.vscode/
 *.bak
 
 experimental/dbpro_space_invaders/Space Invaders.exe
+
+experimental/3dgs_space_invaders/rd/game.$$M
+
+experimental/3dgs_space_invaders/rd/game.$$w
+
+experimental/3dgs_space_invaders/rd/game.raw
+
+experimental/3dgs_space_invaders/rd/game.wed
