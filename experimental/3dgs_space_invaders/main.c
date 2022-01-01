@@ -39,7 +39,7 @@ PANEL* you_win_pan =
   pos_x = 0; 
   pos_y = 0;
   bmap = "win_ui.tga";
-  flags = SHOW;
+  //flags = SHOW;
 }
 
 PANEL* gameover_pan =
@@ -48,7 +48,7 @@ PANEL* gameover_pan =
   pos_x = 0; 
   pos_y = 0;
   bmap = "gameover_ui.tga";
-  flags = SHOW;
+  //flags = SHOW;
 }
 
 FONT* vermin_font = "Vermin Vibes 1989#24";
@@ -272,9 +272,6 @@ function main()
 	// setup camera
 	//camera.bg = pixel_for_vec(COLOR_BLACK,0,8888); // clear view to transparent black
 	camera.arc = 50;	
-	
-	reset(you_win_pan, SHOW); // invisible
-	reset(gameover_pan, SHOW); // invisible
 
 	level_load ("game.wmb");
 	
