@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(Windows) Запустить",
+            "name": "Windows",
             "type": "cppvsdbg",
             "request": "launch",
             "program": "C:\\Program Files (x86)\\GStudio8\\acknex.exe",
