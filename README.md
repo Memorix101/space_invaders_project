@@ -3,17 +3,17 @@
 
 ### Platforms
 - Android
-  - Godot
+  - [Godot](https://godotengine.org/)
   - Unity
   - Unreal Engine 4
-  - LibGDX
+  - [LibGDX](https://libgdx.com/)
   - [LÖVE](https://love2d.org/)
   <br/>
 - iOS
-  - Godot
+  - [Godot](https://godotengine.org/)
   - Unity
   - Unreal Engine 4
-  - LibGDX
+  - [LibGDX](https://libgdx.com/)
   <br/>
 - PC (Windows / Linux / Mac)
   - MonoGame (UWP / Desktop)
@@ -21,24 +21,26 @@
   - SDL
   - SDL2
   - GLFW3
-  - Godot
+  - [Godot](https://godotengine.org/)
   - Unity
-  - SFML 2.5
+  - [SFML 2](https://www.sfml-dev.org/)
   - Unreal Engine 4
-  - LibGDX
+  - [LibGDX](https://libgdx.com/)
   - [Pygame](https://www.pygame.org/)
   - XNA 4.0 (Windows only, but you can use MonoGame or relink with [FNA](https://fna-xna.github.io/) instead)
   - [LÖVE](https://love2d.org/)
+  - [DarkBASIC Professional](https://second.wiki/wiki/darkbasic)
+  - [3D GameStudio](https://en.wikipedia.org/wiki/3D_GameStudio)
   <br/>
 - Xbox 360
     - XNA 4.0 (App Hub is offline 😥)
   <br/>
 - Xbox One ([UWP](https://docs.microsoft.com/en-us/windows/uwp/design/basics/design-and-ui-intro) only; [Xbox Live Creators Program](https://docs.microsoft.com/en-gb/gaming/xbox-live/get-started-with-creators/get-started-with-xbox-live-creators))
   - MonoGame
-  - Godot
+  - [Godot](https://godotengine.org/)
   - Unity
   - Unreal Engine 4
-  - raylib
+  - [raylib](https://www.raylib.com/)
   <br/>
 - GameBoy Advance
     - [smgbalib](http://sebastianmihai.com/main.php?t=40&n=Gameboy-Advance-development-smgbalib-library)
@@ -65,10 +67,10 @@
     - SDL 1.2 ([devkitPro](https://devkitpro.org/))
   <br/>
 - HTML5
-  - Godot
+  - [Godot](https://godotengine.org/)
   - Unity
   - Unreal Engine 4
-  - LibGDX
+  - [LibGDX](https://libgdx.com/)
   - [Phaser](http://phaser.io/)
   - Emscripten (raylib, SDL2, GLFW3)
   <br/> 
@@ -83,8 +85,9 @@
   <br/> 
 ### Game Engines
 - Unity
-- Godot
+- [Godot](https://godotengine.org/)
 - Unreal Engine 4
+- [3D GameStudio](https://en.wikipedia.org/wiki/3D_GameStudio)
   <br/> 
 ### Programming Languages
 - C
