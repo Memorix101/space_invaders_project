@@ -1,5 +1,7 @@
 # Platform ideas and status
 
+- ###### Dates are notated as DD/MM/YYYY
+
 - PlayStation 2
   - ps2sdk has no (useful) documentation. ~~There is a booting build of the game but it's not working and I actually don't know why. Just black screen. IOP modules load correctly but something is wrong here~~ 😞<br/>
   - Seems like ps2sdk is partly broken here and there. 🤔😮
@@ -15,7 +17,7 @@
     <br/>
     <br/>
 - SNES
-  - No plans. Also it seems there is no C compiler. Only ASM. I prefer Sega ❤ btw.
+  - No plans. ~~Also it seems there is no C compiler. Only ASM.~~ I prefer Sega 💙 btw.
     <br/>
     <br/>
 - Sega Mega Drive / Genesis
@@ -38,11 +40,11 @@
     <br/>
 - PS3
   - Not sure. I looked a bit into it and development seems not very appealing.
-  - Waiting until it's safe to install CFW without the worry about a ban. Homebrew on RPCS3 is not good yet (It's slow and unstable).
+  - ~~Waiting until it's safe to install CFW without the worry about a ban.~~ ~~Homebrew on RPCS3 is not good yet (It's slow and unstable).~~
     <br/>
     <br/>
 - Original Xbox
-  - I don't own one (yet). Is CXBX-Reloaded capable to run homebrew flawlessly?! Homebrew games were much too slow last time I tested it.
+  - ~~I don't own one (yet).~~ Is CXBX-Reloaded capable to run homebrew flawlessly?! Homebrew games were much too slow last time I tested it.
   - Tricky situation. Developing with the XDK needs quite some work to setup (A virtual machine with Windows XP is recommended). The [nxdk](https://github.com/XboxDev/nxdk) does not work with CXBX-Reloaded. 🙁
     <br/>
     <br/>
