@@ -114,7 +114,7 @@ static char actAlign[6];
 static int actuators;
 
 // audio
-Mix_Music *music = NULL;
+Mix_Chunk *music = NULL;
 Mix_Chunk *snd_pusher = NULL;
 Mix_Chunk *snd_blaster = NULL;
 Mix_Chunk *snd_explo = NULL;
@@ -265,7 +265,7 @@ void addEnemy()
 		enemy[i]->hitbox.y = enemy[i]->pos.y;
 		enemy[i]->shoot = 0;
 		enemy[i]->shootTimer = 0;
-		enemy[i]->shootTimeLimit = (rand() % (20 - 3)) + 3; // MAX - MIN + MIN
+		enemy[i]->shootTimeLimit = (rand() % (20 - 3)) + 3; // MAX - MIN + MIN // possible fix https://forums.ps2dev.org/viewtopic.php?t=1878
 		printf("shootTimeLimit %d\n", enemy[i]->shootTimeLimit);
 	}
 }
@@ -785,7 +785,7 @@ int main(int argc, char *argv[]) {
 
 	//Start SDL
 	printf("Set up SDL\n"); 
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0) //
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) //SDL_INIT_AUDIO crashes the whole thing...
 	{
 		printf("Couldn't initialize SDL: %s\n", SDL_GetError());
 		return -1;
@@ -813,7 +813,7 @@ int main(int argc, char *argv[]) {
 
 	//Initialize audio
 	/*printf("Initialize SDL_mixer\n"); 
-	if (Mix_OpenAudio(22050, AUDIO_S16MSB, 2, 512) < 0) 
+	if (Mix_OpenAudio(44100, AUDIO_S16, 2, 512) < 0) 
 	{
 		printf("Couldn't open audio: %s\n", SDL_GetError());
 		return 0;
@@ -857,6 +857,9 @@ int main(int argc, char *argv[]) {
 
 	//load audio
 	//music = Mix_LoadMUS("cdrom0:\\RD\\BODENSTA.WAV"); //FILE NAMES UPPERCASE AND NOT MORE THAN 8 CHARACTERS
+	/*sprintf(filename, "cdrom0:\\RD\\BODENSTA.WAV");
+	rwop = SDL_RWFromFile(filename, "rb");
+	music = Mix_LoadWAV_RW(rwop, 1);*/
 
 	/*sprintf(filename, "host:rd/blaster.wav");
 	rwop = SDL_RWFromFile(filename, "rb");
@@ -871,7 +874,7 @@ int main(int argc, char *argv[]) {
 	snd_pusher = Mix_LoadWAV_RW(rwop, 1);*/
 
 	//Play the music
-	/*if (Mix_PlayMusic(music, -1) == -1)
+	/*if (Mix_PlayChannel(-1, music, -1) == -1)
 	{
 		return -1;
 	}*/
@@ -1075,7 +1078,7 @@ int main(int argc, char *argv[]) {
 	SDL_FreeSurface(gameover_tex2D);
 	SDL_FreeSurface(win_tex2d);
 	TTF_CloseFont(vermin_ttf);
-	Mix_FreeMusic(music);
+	Mix_FreeChunk(music);
 	Mix_FreeChunk(snd_blaster);
 	Mix_FreeChunk(snd_explo);
 	Mix_FreeChunk(snd_pusher);
