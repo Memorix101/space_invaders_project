@@ -119,7 +119,7 @@ static char actAlign[6];
 static int actuators;
 
 // audio
-Mix_Chunk *music = NULL;
+Mix_Music* music = NULL;
 Mix_Chunk *snd_pusher = NULL;
 Mix_Chunk *snd_blaster = NULL;
 Mix_Chunk *snd_explo = NULL;
@@ -627,7 +627,7 @@ static void loadModules(void)
         SleepThread();
     }
 
-	/*ret = SifLoadModule("rom0:LIBSD", 0, NULL);
+	ret = SifLoadModule("rom0:LIBSD", 0, NULL);
     if (ret < 0) {
         printf("sifLoadModule libsd failed: %d\n", ret);
         SleepThread();
@@ -637,7 +637,7 @@ static void loadModules(void)
     if (ret < 0) {
         printf("sifLoadModule audsrv failed: %d\n", ret);
         SleepThread();
-    }*/
+    }
 }
 
 static int waitPadReady(int port, int slot)
@@ -783,7 +783,7 @@ int main(int argc, char *argv[]) {
 
 	//Start SDL
 	printf("Set up SDL\n"); 
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) //SDL_INIT_AUDIO crashes the whole thing...
+	if(SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) //SDL_INIT_AUDIO is broken .. glitchy sound ....
 	{
 		printf("Couldn't initialize SDL: %s\n", SDL_GetError());
 		return -1;
@@ -810,12 +810,12 @@ int main(int argc, char *argv[]) {
 	}
 
 	//Initialize audio
-	/*printf("Initialize SDL_mixer\n"); 
+	printf("Initialize SDL_mixer\n"); 
 	if (Mix_OpenAudio(44100, AUDIO_S16, 2, 512) < 0) 
 	{
 		printf("Couldn't open audio: %s\n", SDL_GetError());
 		return 0;
-	}*/
+	}
 
 	printf("Loading assets ... \n"); 
 	load_assets();
@@ -855,24 +855,25 @@ int main(int argc, char *argv[]) {
 
 	//load audio
 	//music = Mix_LoadMUS("cdrom0:\\RD\\BODENSTA.WAV"); //FILE NAMES UPPERCASE AND NOT MORE THAN 8 CHARACTERS
+	
 	/*sprintf(filename, "cdrom0:\\RD\\BODENSTA.WAV");
 	rwop = SDL_RWFromFile(filename, "rb");
 	music = Mix_LoadWAV_RW(rwop, 1);*/
 
-	/*sprintf(filename, "host:rd/blaster.wav");
+	/*sprintf(filename, "cdrom0:\\RD\\BLASTER.WAV");
 	rwop = SDL_RWFromFile(filename, "rb");
 	snd_blaster = Mix_LoadWAV_RW(rwop, 1);
 
-	sprintf(filename, "host:rd/explode.wav");
+	sprintf(filename, "cdrom0:\\RD\\EXPLODE1.WAV");
 	rwop = SDL_RWFromFile(filename, "rb");
 	snd_explo = Mix_LoadWAV_RW(rwop, 1);
 
-	sprintf(filename, "host:rd/pusher.wav");
+	sprintf(filename, "cdrom0:\\RD\\PUSHER.WAV");
 	rwop = SDL_RWFromFile(filename, "rb");
 	snd_pusher = Mix_LoadWAV_RW(rwop, 1);*/
 
 	//Play the music
-	/*if (Mix_PlayChannel(-1, music, -1) == -1)
+	/*if (Mix_PlayMusic(music, -1) == -1)
 	{
 		return -1;
 	}*/
@@ -1082,7 +1083,7 @@ int main(int argc, char *argv[]) {
 	SDL_FreeSurface(gameover_tex2D);
 	SDL_FreeSurface(win_tex2d);
 	TTF_CloseFont(vermin_ttf);
-	Mix_FreeChunk(music);
+	Mix_FreeMusic(music);
 	Mix_FreeChunk(snd_blaster);
 	Mix_FreeChunk(snd_explo);
 	Mix_FreeChunk(snd_pusher);

@@ -3,7 +3,7 @@
 Space Invaders written in C++ for PS2 using [ps2dev](https://github.com/ps2dev/ps2dev)
 
 ##### Note: This is experimental and broken !!!
-- audio is not working (program stalls on SDL_INIT_AUDIO)
+- audio is not working properly (glitchy sound)
 - minimal performance issue
 - ~~enemy shooting is not working (not sure if rand or deltatime issue) edit: it was both~~ 
 
