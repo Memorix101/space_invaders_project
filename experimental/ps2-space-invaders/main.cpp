@@ -15,6 +15,13 @@
 #include <cstdlib>
 #include <audsrv.h>
 
+// This is the rand from K&R.  rand() is supposed to be portable, but..
+unsigned long int next = 1;
+int Rand(void)
+{
+    next = next * 1103515245 + 12345;
+    return (unsigned int)(next / 65536) % 32768;
+}
 
 struct player_t {
 	SDL_Rect hitbox;
@@ -88,8 +95,6 @@ struct enemy_bullet_t* enemy_bullets[MAX_ENEMY_BULLETS] = { NULL };
 struct explo_t* explo[MAX_EXPLO] = { NULL };
 int rowCount = 0;
 int itemCount = 0;
-int DeltaTime;
-int lastTick;
 int score = 0;
 int gameover = 0;
 int quit = 0;
@@ -120,10 +125,12 @@ Mix_Chunk *snd_blaster = NULL;
 Mix_Chunk *snd_explo = NULL;
 
 //time
-float Timestep = 0;
-float lastdelta = 0;
-float curTime = 0;
-float prewarm = 0;
+float deltatime = 0.0f;
+float lastdelta = 0.0f;
+float curTime = 0.0f;
+float prewarm = 0.0f;
+
+int gamestart = 0;
 
 // workaround http://lukasz.dk/mirror/forums.ps2dev.org/viewtopicb2f6.html?t=11437
 SDL_RWops *rwop;
@@ -264,9 +271,9 @@ void addEnemy()
 		enemy[i]->hitbox.x = enemy[i]->pos.x;
 		enemy[i]->hitbox.y = enemy[i]->pos.y;
 		enemy[i]->shoot = 0;
-		enemy[i]->shootTimer = 0;
-		enemy[i]->shootTimeLimit = (rand() % (20 - 3)) + 3; // MAX - MIN + MIN // possible fix https://forums.ps2dev.org/viewtopic.php?t=1878
-		printf("shootTimeLimit %d\n", enemy[i]->shootTimeLimit);
+		enemy[i]->shootTimer = 0.0f;
+		enemy[i]->shootTimeLimit = Rand() % (20-3) + 3; // MAX - MIN + MIN // possible fix https://forums.ps2dev.org/viewtopic.php?t=1878
+		//printf("shootTimeLimit %d\n", enemy[i]->shootTimeLimit);
 	}
 }
 
@@ -329,20 +336,11 @@ void updateEnemies()
 			enemy[e]->goLeft = 0;
 		}
 
-		enemy[e]->shootTimer += 1 * DeltaTime;
+		enemy[e]->shootTimer += deltatime;
 
-		if (enemy[e]->shootTimer >= enemy[e]->shootTimeLimit)
+		if (enemy[e]->shootTimer >= enemy[e]->shootTimeLimit && enemy[e]->alive == 1)
 		{
 			enemy[e]->shootTimer = 0;
-			enemy[e]->shoot = 1;
-		}
-		else
-		{
-			enemy[e]->shoot = 0;
-		}
-
-		if (enemy[e]->shoot == 1 && enemy[e]->alive == 1)
-		{
 			addEnemyBullet(enemy[e]->pos.x + enemy[e]->rect.w / 2 - 4, enemy[e]->pos.y - 4);
 			//Mix_PlayChannel(-1, snd_pusher, 0);
 		}
@@ -622,24 +620,24 @@ static void loadModules(void)
         printf("sifLoadModule pad failed: %d\n", ret);
         SleepThread();
     }    
-	
-	ret = SifLoadModule("rom0:LIBSD", 0, NULL);
-    if (ret < 0) {
-        printf("sifLoadModule libsd failed: %d\n", ret);
-        SleepThread();
-    }	
 
 	ret = SifLoadModule("rom0:MCMAN", 0, NULL);
     if (ret < 0) {
         printf("sifLoadModule MCMAN failed: %d\n", ret);
         SleepThread();
-    }		
+    }
+
+	/*ret = SifLoadModule("rom0:LIBSD", 0, NULL);
+    if (ret < 0) {
+        printf("sifLoadModule libsd failed: %d\n", ret);
+        SleepThread();
+    }	
 
 	ret = SifLoadModule("cdrom0:\\IRX\\AUDSRV.IRX", 0, NULL);
     if (ret < 0) {
         printf("sifLoadModule audsrv failed: %d\n", ret);
         SleepThread();
-    }
+    }*/
 }
 
 static int waitPadReady(int port, int slot)
@@ -882,7 +880,7 @@ int main(int argc, char *argv[]) {
 	while (quit == 0)
 	{
 		curTime = (float)SDL_GetTicks()/1000.0f;
-    	DeltaTime = curTime - lastdelta;
+    	deltatime = curTime - lastdelta;
 
 		/*printf("shootTimer %d\n", enemy[0]->shootTimer);
 		printf("shootTimeLimit %d\n", enemy[0]->shootTimeLimit);*/
@@ -1054,6 +1052,12 @@ int main(int argc, char *argv[]) {
 		}
 
 		//printf("MAXCOUNT: %d\n", dead_enemies);
+
+		if(prewarm == 0.0f) // lazy fix for bullets spawning on level load
+		{
+			memset(enemy_bullets, 0, sizeof(enemy_bullets));
+			prewarm = 1.0f;
+		}
 
 		//this ugly block is updating the score
 		sprintf(textBuffer, "SCORE: % 05d", score);
