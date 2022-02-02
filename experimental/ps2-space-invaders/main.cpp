@@ -811,7 +811,7 @@ int main(int argc, char *argv[]) {
 
 	//Initialize audio
 	printf("Initialize SDL_mixer\n"); 
-	if (Mix_OpenAudio(44100, AUDIO_S16, 2, 512) < 0) 
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 512) < 0)
 	{
 		printf("Couldn't open audio: %s\n", SDL_GetError());
 		return 0;
