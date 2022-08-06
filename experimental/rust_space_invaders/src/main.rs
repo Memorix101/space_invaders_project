@@ -15,11 +15,11 @@ use std::time::Duration;
 use std::time::Instant;
 
 mod enemy;
+mod explo;
 mod laser;
 mod player;
 
 fn main() -> Result<(), String> {
-    
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
     let image_context = image::init(InitFlagImage::PNG | InitFlagImage::JPG)?;
@@ -51,6 +51,7 @@ fn main() -> Result<(), String> {
     let bullet_sprite = texture_creator.load_texture("rd/bullet.png")?;
     let ebullet_sprite = texture_creator.load_texture("rd/enemy-bullet.png")?;
     let enemy_sprite = texture_creator.load_texture("rd/invader32x32x4.png")?;
+    let explo_sprite = texture_creator.load_texture("rd/explode.png")?;
 
     let music = sdl2::mixer::Music::from_file("rd/bodenstaendig.ogg")?;
     let blaster_snd = sdl2::mixer::Chunk::from_file("rd/blaster.ogg")?;
@@ -60,6 +61,8 @@ fn main() -> Result<(), String> {
     let mut player = player::Player::new();
 
     let mut font = ttf_context.load_font("rd/vermin_vibes_1989.ttf", 24)?;
+
+    let mut exploVec: Vec<explo::Explo> = Vec::new();
 
     let mut enemyVec: Vec<enemy::Enemy> = Vec::new();
     let mut itemCount = 0;
@@ -132,6 +135,7 @@ fn main() -> Result<(), String> {
                             //enemyVec.remove(e);
                             enemyVec[e].alive = false;
                             player.score += 100;
+                            exploVec.push(explo::Explo::new(enemyVec[e].position.x, enemyVec[e].position.y));
                             sdl2::mixer::Channel::all().play(&explo_snd, 0);
                         }
                     }
@@ -164,9 +168,27 @@ fn main() -> Result<(), String> {
                 {
                     player.alive = false;
                     enemyVec[e].laserList[l].alive = false;
+                    exploVec.push(explo::Explo::new(enemyVec[e].position.x, enemyVec[e].position.y));
                     sdl2::mixer::Channel::all().play(&explo_snd, 0);
                 }
             }
+        }
+
+        for e in (0..exploVec.len()).rev() {
+            if exploVec[e].alive == false
+            {
+                exploVec.remove(e);
+                //println!("exploVec: {}", exploVec.len());
+            }
+        }
+
+        for l in (0..exploVec.len()).rev() {
+            exploVec[l].update(&deltaTime);
+            canvas.copy(
+                &explo_sprite,
+                exploVec[l].rect,
+                exploVec[l].position                
+            )?;
         }
 
         for l in (0..player.laserList.len()).rev() {
