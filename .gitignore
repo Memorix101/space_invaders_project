@@ -164,3 +164,8 @@ experimental/rust_space_invaders/.vscode/
 experimental/rust_space_invaders/SDL2_image.dll
 
 experimental/rust_space_invaders/SDL2.dll
+
+experimental/rust_space_invaders/SDL2_mixer.dll
+
+experimental/rust_space_invaders/SDL2_ttf.dll
+
