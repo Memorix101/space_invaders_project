@@ -169,7 +169,7 @@ fn main() -> Result<(), String> {
                                 enemyVec[e].position.x,
                                 enemyVec[e].position.y,
                             ));
-                            sdl2::mixer::Channel::all().play(&explo_snd, 0);
+                            sdl2::mixer::Channel::all().play(&explo_snd, 0).unwrap();
                         }
                     }
                 }
@@ -201,7 +201,7 @@ fn main() -> Result<(), String> {
                         player.position.x,
                         player.position.y,
                     ));
-                    sdl2::mixer::Channel::all().play(&explo_snd, 0);
+                    sdl2::mixer::Channel::all().play(&explo_snd, 0).unwrap();
                 }
             }
         }

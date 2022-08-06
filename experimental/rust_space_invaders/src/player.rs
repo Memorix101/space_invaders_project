@@ -57,7 +57,7 @@ impl Player {
                 6,
                 36,
             )));
-            sdl2::mixer::Channel::all().play(&blaster_snd, 0);
+            sdl2::mixer::Channel::all().play(&blaster_snd, 0).unwrap();
         } else if event_pump
             .keyboard_state()
             .is_scancode_pressed(Scancode::Space)

@@ -66,7 +66,7 @@ impl Enemy {
                 9,
             )));
             self.timer = 0.0;
-            sdl2::mixer::Channel::all().play(&pusher_snd, 0);
+            sdl2::mixer::Channel::all().play(&pusher_snd, 0).unwrap();
         }
 
         if self.goLeft == false {
