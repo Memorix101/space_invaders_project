@@ -2,7 +2,7 @@ use sdl2::{
     keyboard::Scancode,
     rect::Rect,
     render::{Texture, WindowCanvas},
-    EventPump,
+    EventPump, mixer::Chunk,
 };
 
 use crate::laser::{self, *};
@@ -14,7 +14,8 @@ pub struct Player {
     //texture: Texture,
     pub laserList: Vec<Laser>,
     fire_pressed: bool,
-    pub alive: bool
+    pub alive: bool,
+    pub score: i32
 }
 
 impl Player {
@@ -25,10 +26,11 @@ impl Player {
             laserList: Vec::new(),
             fire_pressed: false,
             alive: true,
+            score: 0
         }
     }
 
-    pub fn update(&mut self, event_pump: &EventPump) {
+    pub fn update(&mut self, event_pump: &EventPump, blaster_snd: &Chunk) {
         if event_pump
             .keyboard_state()
             .is_scancode_pressed(Scancode::Left)
@@ -55,6 +57,7 @@ impl Player {
                 6,
                 36,
             )));
+            sdl2::mixer::Channel::all().play(&blaster_snd, 0);
         } else if event_pump
             .keyboard_state()
             .is_scancode_pressed(Scancode::Space)

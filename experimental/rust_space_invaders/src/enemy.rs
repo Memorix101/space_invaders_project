@@ -6,7 +6,7 @@ use sdl2::{
     keyboard::Scancode,
     rect::Rect,
     render::{Texture, WindowCanvas},
-    EventPump,
+    EventPump, mixer::Chunk,
 };
 
 #[derive(Debug)]
@@ -46,7 +46,7 @@ impl Enemy {
         }
     }
 
-    pub fn update(&mut self, deltaTime: &f32) {
+    pub fn update(&mut self, deltaTime: &f32, pusher_snd: &Chunk) {
         self.timer += deltaTime;
         //println!("timer: {}", self.timer);
 
@@ -65,6 +65,7 @@ impl Enemy {
                 9,
             )));
             self.timer = 0.0;
+            sdl2::mixer::Channel::all().play(&pusher_snd, 0);
         }
 
         if self.goLeft == false {
