@@ -145,3 +145,9 @@ experimental/3dgs_space_invaders/rd/game.raw
 experimental/3dgs_space_invaders/rd/game.wed
 
 experimental/3dgs_space_invaders/acklog.txt
+
+experimental/rust_space_invaders/.vscode/
+
+experimental/rust_space_invaders/SDL2_image.dll
+
+experimental/rust_space_invaders/SDL2.dll

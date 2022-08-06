@@ -91,6 +91,7 @@
 - C++
 - C#
 - Java
+- [Rust](https://en.wikipedia.org/wiki/Rust_(programming_language))
 - [F#](https://en.wikipedia.org/wiki/F_Sharp_(programming_language))
 - JavaScript
 - Lua

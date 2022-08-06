@@ -1,5 +1,7 @@
 # Platform ideas and status
 
+DATE_FORMAT(DD/MM/YYYY)
+
 - PlayStation 2
   - ps2sdk has no (useful) documentation. ~~There is a booting build of the game but it's not working and I actually don't know why. Just black screen. IOP modules load correctly but something is wrong here~~ 😞<br/>
   - Seems like ps2sdk is partly broken here and there. 🤔😮
@@ -28,7 +30,8 @@
     <br/>
     <br/>
 - [Rust](https://www.rust-lang.org/)
-  - This will take sometime. I want it to become nice but there is a unfinished build.
+  - ~~This will take sometime. I want it to become nice but there is a unfinished build.~~
+  - Added on 06/08/2022 &#x2611;
     <br/>
     <br/>
 - Python
