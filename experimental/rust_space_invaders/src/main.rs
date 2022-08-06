@@ -18,8 +18,12 @@ mod explo;
 mod laser;
 mod player;
 
-fn reset(exploVec: &mut Vec<explo::Explo>, player: &mut player::Player, enemyVec: &mut Vec<enemy::Enemy>) {
-    player.laserList.clear();  
+fn reset(
+    exploVec: &mut Vec<explo::Explo>,
+    player: &mut player::Player,
+    enemyVec: &mut Vec<enemy::Enemy>,
+) {
+    player.laserList.clear();
     player.score = 0;
     player.alive = true;
     enemyVec.clear();
@@ -73,6 +77,7 @@ fn main() -> Result<(), String> {
     let ebullet_sprite = texture_creator.load_texture("rd/enemy-bullet.png")?;
     let enemy_sprite = texture_creator.load_texture("rd/invader32x32x4.png")?;
     let explo_sprite = texture_creator.load_texture("rd/explode.png")?;
+    let fmg_sprite = texture_creator.load_texture("rd/fmg_splash.png")?;
 
     let gameover_sprite = texture_creator.load_texture("rd/gameover_ui.png")?;
     let win_sprite = texture_creator.load_texture("rd/win_ui.png")?;
@@ -82,6 +87,9 @@ fn main() -> Result<(), String> {
     let pusher_snd = sdl2::mixer::Chunk::from_file("rd/pusher.ogg")?;
     let explo_snd = sdl2::mixer::Chunk::from_file("rd/explode1.ogg")?;
 
+    let mut gameStart = false;
+    let mut gameTimer = 0.0;
+
     let mut player = player::Player::new();
 
     let mut font = ttf_context.load_font("rd/vermin_vibes_1989.ttf", 24)?;
@@ -89,7 +97,7 @@ fn main() -> Result<(), String> {
     let mut exploVec: Vec<explo::Explo> = Vec::new();
 
     let mut enemyVec: Vec<enemy::Enemy> = Vec::new();
-    let mut itemCount = 0;
+    /*let mut itemCount = 0;
     let mut rowCount = 0;
     for e in 0..40 {
         if e % 10 == 0 {
@@ -100,7 +108,7 @@ fn main() -> Result<(), String> {
         enemyVec.push(enemy::Enemy::new(itemCount * 40, 40 * rowCount));
         enemyVec[e].startPos = itemCount * 40;
         enemyVec[e].rowPosID = 40 * (11 - itemCount);
-    }
+    }*/
 
     let mut event_pump = sdl_context.event_pump()?;
 
@@ -109,7 +117,7 @@ fn main() -> Result<(), String> {
     let mut NOW: f32 = timer.performance_counter() as f32;
     let mut LAST: f32 = 0.0;
     let mut deltaTime: f32 = 0.0;
-    
+
     music.play(-1);
     sdl2::mixer::Music::set_volume(128);
 
@@ -142,136 +150,141 @@ fn main() -> Result<(), String> {
         //LAST = NOW;
         //NOW = timer.performance_counter() as f32;
 
-        // The rest of the game loop goes here...
-        if player.alive == true {
-            player.update(&event_pump, &blaster_snd);
-        }
-
-        for e in (0..enemyVec.len()).rev() {
-            //let dt = deltaTime as i32;
-            if enemyVec[e].alive == true {
-                enemyVec[e].update(&deltaTime, &pusher_snd);
-
-                for b in (0..player.laserList.len()).rev() {
-                    if e != enemyVec.len() {
-                        if enemyVec[e]
-                            .position
-                            .has_intersection(player.laserList[b].position)
-                            && player.laserList[b].alive == true
-                            && enemyVec[e].alive == true
-                        {
-                            player.laserList[b].alive = false;
-                            //player.laserList.remove(b);
-                            //enemyVec.remove(e);
-                            enemyVec[e].alive = false;
-                            player.score += 100;
-                            exploVec.push(explo::Explo::new(
-                                enemyVec[e].position.x,
-                                enemyVec[e].position.y,
-                            ));
-                            sdl2::mixer::Channel::all().play(&explo_snd, 0).unwrap();
-                        }
-                    }
-                }
-            }
-        }
-
         // Rendering routine
         canvas.set_draw_color(Color::RGB(0, 0, 0));
         canvas.clear();
 
-        canvas.copy(&space_sprite, None, None)?;
+        if gameStart == false {
+            canvas.copy(&fmg_sprite, None, None)?;
+            gameTimer += deltaTime;
 
-        for e in (0..enemyVec.len()).rev() {
-            if enemyVec[e].alive == true {
-                canvas.copy(&enemy_sprite, enemyVec[e].rect, enemyVec[e].position)?;
+            if gameTimer >= 5.0 {
+                gameStart = true;
+                reset(&mut exploVec, &mut player, &mut enemyVec);
+                std::thread::sleep(Duration::from_millis(500));
+            }
+        } else {
+            // The rest of the game loop goes here...
+            if player.alive == true {
+                player.update(&event_pump, &blaster_snd);
             }
 
-            for l in (0..enemyVec[e].laserList.len()).rev() {
-                enemyVec[e].laserList[l].setPos(true);
-                canvas.copy(&ebullet_sprite, None, enemyVec[e].laserList[l].position)?;
-                if enemyVec[e].laserList[l]
-                    .position
-                    .has_intersection(player.position)
-                    && player.alive == true
-                {
-                    player.alive = false;
-                    enemyVec[e].laserList[l].alive = false;
-                    exploVec.push(explo::Explo::new(
-                        player.position.x,
-                        player.position.y,
-                    ));
-                    sdl2::mixer::Channel::all().play(&explo_snd, 0).unwrap();
+            for e in (0..enemyVec.len()).rev() {
+                //let dt = deltaTime as i32;
+                if enemyVec[e].alive == true {
+                    enemyVec[e].update(&deltaTime, &pusher_snd);
+
+                    for b in (0..player.laserList.len()).rev() {
+                        if e != enemyVec.len() {
+                            if enemyVec[e]
+                                .position
+                                .has_intersection(player.laserList[b].position)
+                                && player.laserList[b].alive == true
+                                && enemyVec[e].alive == true
+                            {
+                                player.laserList[b].alive = false;
+                                //player.laserList.remove(b);
+                                //enemyVec.remove(e);
+                                enemyVec[e].alive = false;
+                                player.score += 100;
+                                exploVec.push(explo::Explo::new(
+                                    enemyVec[e].position.x,
+                                    enemyVec[e].position.y,
+                                ));
+                                sdl2::mixer::Channel::all().play(&explo_snd, 0).unwrap();
+                            }
+                        }
+                    }
                 }
             }
-        }
+            canvas.copy(&space_sprite, None, None)?;
 
-        for e in (0..exploVec.len()).rev() {
-            if exploVec[e].alive == false {
-                exploVec.remove(e);
-                //println!("exploVec: {}", exploVec.len());
+            for e in (0..enemyVec.len()).rev() {
+                if enemyVec[e].alive == true {
+                    canvas.copy(&enemy_sprite, enemyVec[e].rect, enemyVec[e].position)?;
+                }
+
+                for l in (0..enemyVec[e].laserList.len()).rev() {
+                    enemyVec[e].laserList[l].setPos(true);
+                    canvas.copy(&ebullet_sprite, None, enemyVec[e].laserList[l].position)?;
+                    if enemyVec[e].laserList[l]
+                        .position
+                        .has_intersection(player.position)
+                        && player.alive == true
+                    {
+                        player.alive = false;
+                        enemyVec[e].laserList[l].alive = false;
+                        exploVec.push(explo::Explo::new(player.position.x, player.position.y));
+                        sdl2::mixer::Channel::all().play(&explo_snd, 0).unwrap();
+                    }
+                }
             }
-        }
 
-        for l in (0..exploVec.len()).rev() {
-            exploVec[l].update(&deltaTime);
-            canvas.copy(&explo_sprite, exploVec[l].rect, exploVec[l].position)?;
-        }
-
-        for l in (0..player.laserList.len()).rev() {
-            player.laserList[l].setPos(false);
-            canvas.copy(&bullet_sprite, None, player.laserList[l].position)?;
-            if player.laserList[l].position.y <= 10 && player.laserList[l].alive == true {
-                player.laserList[l].alive = false;
-                //player.laserList.remove(l);
+            for e in (0..exploVec.len()).rev() {
+                if exploVec[e].alive == false {
+                    exploVec.remove(e);
+                    //println!("exploVec: {}", exploVec.len());
+                }
             }
-        }
 
-        if player.score >= 4000 {
-            canvas.copy(&win_sprite, None, None)?;
-
-            if event_pump
-                .keyboard_state()
-                .is_scancode_pressed(Scancode::Return)
-            {
-                reset(&mut exploVec, &mut player, &mut enemyVec);
+            for l in (0..exploVec.len()).rev() {
+                exploVec[l].update(&deltaTime);
+                canvas.copy(&explo_sprite, exploVec[l].rect, exploVec[l].position)?;
             }
-        }
 
-        if player.alive == true {
-            canvas.copy(&player_sprite, None, player.position)?;
-        } else {
-            canvas.copy(&gameover_sprite, None, None)?;
-
-            if event_pump
-                .keyboard_state()
-                .is_scancode_pressed(Scancode::Return)
-            {
-                reset(&mut exploVec, &mut player, &mut enemyVec);
+            for l in (0..player.laserList.len()).rev() {
+                player.laserList[l].setPos(false);
+                canvas.copy(&bullet_sprite, None, player.laserList[l].position)?;
+                if player.laserList[l].position.y <= 10 && player.laserList[l].alive == true {
+                    player.laserList[l].alive = false;
+                    //player.laserList.remove(l);
+                }
             }
+
+            if player.score >= 4000 {
+                canvas.copy(&win_sprite, None, None)?;
+
+                if event_pump
+                    .keyboard_state()
+                    .is_scancode_pressed(Scancode::Return)
+                {
+                    reset(&mut exploVec, &mut player, &mut enemyVec);
+                }
+            }
+
+            if player.alive == true {
+                canvas.copy(&player_sprite, None, player.position)?;
+            } else {
+                canvas.copy(&gameover_sprite, None, None)?;
+
+                if event_pump
+                    .keyboard_state()
+                    .is_scancode_pressed(Scancode::Return)
+                {
+                    reset(&mut exploVec, &mut player, &mut enemyVec);
+                }
+            }
+
+            // maybe there is a better way ...
+            let score_surface = font
+                .render(format!("{}{:04}", "SCORE: ", player.score).as_str()) // https://stackoverflow.com/a/50458253/9296008
+                .blended(Color::RGBA(255, 255, 255, 255))
+                .map_err(|e| e.to_string())?;
+            let score_texture = texture_creator
+                .create_texture_from_surface(&score_surface)
+                .map_err(|e| e.to_string())?;
+
+            canvas.copy(
+                &score_texture,
+                None,
+                Rect::new(
+                    640 - score_texture.query().width as i32 - 20,
+                    20,
+                    score_texture.query().width,
+                    score_texture.query().height,
+                ),
+            )?;
         }
-
-
-        // maybe there is a better way ...
-        let score_surface = font
-            .render(format!("{}{:04}", "SCORE: ", player.score).as_str()) // https://stackoverflow.com/a/50458253/9296008
-            .blended(Color::RGBA(255, 255, 255, 255))
-            .map_err(|e| e.to_string())?;
-        let score_texture = texture_creator
-            .create_texture_from_surface(&score_surface)
-            .map_err(|e| e.to_string())?;
-
-        canvas.copy(
-            &score_texture,
-            None,
-            Rect::new(
-                640 - score_texture.query().width as i32 - 20,
-                20,
-                score_texture.query().width,
-                score_texture.query().height,
-            ),
-        )?;
-
         canvas.present();
 
         lastTick = ticks as f32 / 1000.0;
