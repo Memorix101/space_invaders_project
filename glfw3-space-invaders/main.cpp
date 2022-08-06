@@ -1,11 +1,18 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <FMOD/fmod.h>
 #include "glfx.h"
 #include "font.h"
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
+
+#define STB_VORBIS_HEADER_ONLY
+#include <stb/stb_vorbis.c>    // Enables Vorbis decoding.
+#define MINIAUDIO_IMPLEMENTATION
+#include <miniaudio.h>
+// The stb_vorbis implementation must come after the implementation of miniaudio.
+#undef STB_VORBIS_HEADER_ONLY
+#include <stb/stb_vorbis.c> 
 
 struct player_t {
 	struct rect hitbox;
@@ -86,11 +93,9 @@ float gameSessionTime = 0.f; // time since start
 int gpad_firePressed = 0; // bool
 int key_firePressed = 0; // bool
 
-//FMOD
-FMOD_SYSTEM* fmod_system;
-FMOD_SOUND* snd_blaster, * snd_pusher, * snd_explo, * music;
-FMOD_CHANNEL* channel = 0;
-FMOD_RESULT result;
+// miniaudio - high level API
+ma_result result;
+ma_engine engine;
 
 //GLFW
 GLFWwindow* window;
@@ -279,7 +284,7 @@ void updateEnemies()
 		if (enemy[e]->shoot == 1 && enemy[e]->alive == 1)
 		{
 			addEnemyBullet(enemy[e]->pos.x + enemy[e]->rect.w / 2 - 4, enemy[e]->pos.y - 4);
-			FMOD_System_PlaySound(fmod_system, snd_pusher, 0, false, &channel);
+			ma_engine_play_sound(&engine, "rd/pusher.ogg", NULL);
 		}
 
 		enemy[e]->hitbox.x = enemy[e]->pos.x;
@@ -373,7 +378,7 @@ void initPlayer()
 void fire()
 {
 	addBullet(player.pos.x + player.hitbox.w / 2 - 3, player.pos.y - player.hitbox.w / 2);
-	FMOD_System_PlaySound(fmod_system, snd_blaster, 0, false, &channel);
+	ma_engine_play_sound(&engine, "rd/blaster.ogg", NULL);
 }
 
 void input(GLFWwindow * w)
@@ -524,7 +529,7 @@ void updateLogic()
 				enemy[e]->alive = 0;
 				addExplo(bullets[i]->pos.x - 128 / 2, bullets[i]->pos.y - 128 / 2);
 				removeBullet(i);
-				FMOD_System_PlaySound(fmod_system, snd_explo, 0, false, &channel);
+				ma_engine_play_sound(&engine, "rd/explode1.ogg", NULL);
 				score += 100;
 				enemies_killed--;
 				break;
@@ -549,7 +554,7 @@ void updateLogic()
 			player.alive = 0;
 			addExplo(player.pos.x - 128 / 2, player.pos.y - 128 / 2);
 			removeEnemyBullet(b);
-			FMOD_System_PlaySound(fmod_system, snd_explo, 0, false, &channel);
+			ma_engine_play_sound(&engine, "rd/explode1.ogg", NULL);
 			break;
 		}
 	}
@@ -614,9 +619,11 @@ int main(int argc, char* argv[]) {
 	// load sprites
 	preload_assets();
 
-	// Init FMOD Soundsystem
-	FMOD_System_Create(&fmod_system);
-	FMOD_System_Init(fmod_system, 32, FMOD_INIT_NORMAL, NULL);
+	result = ma_engine_init(NULL, &engine);
+	if (result != MA_SUCCESS) {
+		printf("Failed to initialize audio engine.");
+		return -1;
+	}
 
 	// Setup controller
 	joystickIsConnected = glfwJoystickPresent(GLFW_JOYSTICK_1);
@@ -637,14 +644,8 @@ int main(int argc, char* argv[]) {
 	initEnemies();
 	initPlayer();
 
-	// Load sounds
-	FMOD_System_CreateSound(fmod_system, "rd/blaster.ogg", FMOD_CREATESAMPLE, 0, &snd_blaster);
-	FMOD_System_CreateSound(fmod_system, "rd/explode1.ogg", FMOD_CREATESAMPLE, 0, &snd_explo);
-	FMOD_System_CreateSound(fmod_system, "rd/pusher.ogg", FMOD_CREATESAMPLE, 0, &snd_pusher);
-	FMOD_System_CreateSound(fmod_system, "rd/bodenstaendig.ogg", FMOD_LOOP_NORMAL, 0, &music);
-
 	// Play music
-	FMOD_System_PlaySound(fmod_system, music, 0, false, &channel);
+	ma_engine_play_sound(&engine, "rd/bodenstaendig.ogg", NULL); // does not loop
 
 	// Loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
@@ -746,7 +747,7 @@ int main(int argc, char* argv[]) {
 		glfwPollEvents();
 	}
 
-	FMOD_System_Close(fmod_system);
+	ma_engine_uninit(&engine);
 	glfwTerminate();
 	return 0;
 }

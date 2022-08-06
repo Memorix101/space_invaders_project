@@ -146,6 +146,19 @@ experimental/3dgs_space_invaders/rd/game.wed
 
 experimental/3dgs_space_invaders/acklog.txt
 
+ue4_space_invaders_cpp/.idea/
+
+ue4_space_invaders_cpp/.vs/
+
+ue4_space_invaders_cpp/Binaries/
+
+ue4_space_invaders_cpp/Saved/
+
+ue4_space_invaders_cpp/Intermediate/
+
+ue4_space_invaders_cpp/Build/
+
+ue4_space_invaders_cpp/Content/StarterContent/
 experimental/rust_space_invaders/.vscode/
 
 experimental/rust_space_invaders/SDL2_image.dll
