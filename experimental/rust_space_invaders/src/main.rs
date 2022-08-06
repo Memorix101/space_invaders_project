@@ -12,7 +12,6 @@ use sdl2::mixer::{InitFlag as InitFlagMixer, AUDIO_S16LSB, DEFAULT_CHANNELS};
 use std::env;
 use std::path::Path;
 use std::time::Duration;
-use std::time::Instant;
 
 mod enemy;
 mod explo;
@@ -104,8 +103,7 @@ fn main() -> Result<(), String> {
 
     let mut event_pump = sdl_context.event_pump()?;
     let mut lastTick: f32 = 0.0;
-    let start = Instant::now();
-
+    
     music.play(-1);
     sdl2::mixer::Music::set_volume(128);
 
