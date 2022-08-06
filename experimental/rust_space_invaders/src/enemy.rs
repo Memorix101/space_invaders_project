@@ -49,6 +49,7 @@ impl Enemy {
     pub fn update(&mut self, deltaTime: &f32, pusher_snd: &Chunk) {
         self.timer += deltaTime;
         //println!("timer: {}", self.timer);
+        //println!("deltaTime: {}", deltaTime);
 
         self.curFrame += 25.0 * deltaTime;
         self.rect.x = self.curFrame as i32 * 32;

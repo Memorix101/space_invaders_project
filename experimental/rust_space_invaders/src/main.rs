@@ -37,6 +37,7 @@ fn reset(exploVec: &mut Vec<explo::Explo>, player: &mut player::Player, enemyVec
         enemyVec[e].startPos = itemCount * 40;
         enemyVec[e].rowPosID = 40 * (11 - itemCount);
     }
+    std::thread::sleep(Duration::from_millis(500));
 }
 
 fn main() -> Result<(), String> {
@@ -102,7 +103,12 @@ fn main() -> Result<(), String> {
     }
 
     let mut event_pump = sdl_context.event_pump()?;
+
     let mut lastTick: f32 = 0.0;
+    let mut ticks = 0;
+    let mut NOW: f32 = timer.performance_counter() as f32;
+    let mut LAST: f32 = 0.0;
+    let mut deltaTime: f32 = 0.0;
     
     music.play(-1);
     sdl2::mixer::Music::set_volume(128);
@@ -131,8 +137,10 @@ fn main() -> Result<(), String> {
             }
         }
 
-        let ticks = timer.ticks() as i32;
-        let deltaTime = ticks as f32 / 1000.0 - lastTick;
+        ticks = timer.ticks() as i32;
+        deltaTime = ticks as f32 / 1000.0 - lastTick;
+        //LAST = NOW;
+        //NOW = timer.performance_counter() as f32;
 
         // The rest of the game loop goes here...
         if player.alive == true {
@@ -174,30 +182,6 @@ fn main() -> Result<(), String> {
 
         canvas.copy(&space_sprite, None, None)?;
 
-        if player.score >= 4000 {
-            canvas.copy(&win_sprite, None, None)?;
-
-            if event_pump
-                .keyboard_state()
-                .is_scancode_pressed(Scancode::Return)
-            {
-                reset(&mut exploVec, &mut player, &mut enemyVec);
-            }
-        }
-
-        if player.alive == true {
-            canvas.copy(&player_sprite, None, player.position)?;
-        } else {
-            canvas.copy(&gameover_sprite, None, None)?;
-
-            if event_pump
-                .keyboard_state()
-                .is_scancode_pressed(Scancode::Return)
-            {
-                reset(&mut exploVec, &mut player, &mut enemyVec);
-            }
-        }
-
         for e in (0..enemyVec.len()).rev() {
             if enemyVec[e].alive == true {
                 canvas.copy(&enemy_sprite, enemyVec[e].rect, enemyVec[e].position)?;
@@ -214,8 +198,8 @@ fn main() -> Result<(), String> {
                     player.alive = false;
                     enemyVec[e].laserList[l].alive = false;
                     exploVec.push(explo::Explo::new(
-                        enemyVec[e].position.x,
-                        enemyVec[e].position.y,
+                        player.position.x,
+                        player.position.y,
                     ));
                     sdl2::mixer::Channel::all().play(&explo_snd, 0);
                 }
@@ -243,6 +227,31 @@ fn main() -> Result<(), String> {
             }
         }
 
+        if player.score >= 4000 {
+            canvas.copy(&win_sprite, None, None)?;
+
+            if event_pump
+                .keyboard_state()
+                .is_scancode_pressed(Scancode::Return)
+            {
+                reset(&mut exploVec, &mut player, &mut enemyVec);
+            }
+        }
+
+        if player.alive == true {
+            canvas.copy(&player_sprite, None, player.position)?;
+        } else {
+            canvas.copy(&gameover_sprite, None, None)?;
+
+            if event_pump
+                .keyboard_state()
+                .is_scancode_pressed(Scancode::Return)
+            {
+                reset(&mut exploVec, &mut player, &mut enemyVec);
+            }
+        }
+
+
         // maybe there is a better way ...
         let score_surface = font
             .render(format!("{}{:04}", "SCORE: ", player.score).as_str()) // https://stackoverflow.com/a/50458253/9296008
@@ -266,7 +275,8 @@ fn main() -> Result<(), String> {
         canvas.present();
 
         lastTick = ticks as f32 / 1000.0;
-        //std::thread::sleep(Duration::from_millis(100));
+        //deltaTime = (NOW - LAST)*1.0 / timer.performance_frequency() as f32;
+        //std::thread::sleep(Duration::from_millis(10));
         std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
     }
 
