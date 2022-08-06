@@ -19,6 +19,27 @@ mod explo;
 mod laser;
 mod player;
 
+fn reset(exploVec: &mut Vec<explo::Explo>, player: &mut player::Player, enemyVec: &mut Vec<enemy::Enemy>) {
+    player.laserList.clear();  
+    player.score = 0;
+    player.alive = true;
+    enemyVec.clear();
+    exploVec.clear();
+
+    let mut itemCount = 0;
+    let mut rowCount = 0;
+    for e in 0..40 {
+        if e % 10 == 0 {
+            itemCount = 0;
+            rowCount += 1;
+        }
+        itemCount += 1;
+        enemyVec.push(enemy::Enemy::new(itemCount * 40, 40 * rowCount));
+        enemyVec[e].startPos = itemCount * 40;
+        enemyVec[e].rowPosID = 40 * (11 - itemCount);
+    }
+}
+
 fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
@@ -52,6 +73,9 @@ fn main() -> Result<(), String> {
     let ebullet_sprite = texture_creator.load_texture("rd/enemy-bullet.png")?;
     let enemy_sprite = texture_creator.load_texture("rd/invader32x32x4.png")?;
     let explo_sprite = texture_creator.load_texture("rd/explode.png")?;
+
+    let gameover_sprite = texture_creator.load_texture("rd/gameover_ui.png")?;
+    let win_sprite = texture_creator.load_texture("rd/win_ui.png")?;
 
     let music = sdl2::mixer::Music::from_file("rd/bodenstaendig.ogg")?;
     let blaster_snd = sdl2::mixer::Chunk::from_file("rd/blaster.ogg")?;
@@ -135,7 +159,10 @@ fn main() -> Result<(), String> {
                             //enemyVec.remove(e);
                             enemyVec[e].alive = false;
                             player.score += 100;
-                            exploVec.push(explo::Explo::new(enemyVec[e].position.x, enemyVec[e].position.y));
+                            exploVec.push(explo::Explo::new(
+                                enemyVec[e].position.x,
+                                enemyVec[e].position.y,
+                            ));
                             sdl2::mixer::Channel::all().play(&explo_snd, 0);
                         }
                     }
@@ -149,8 +176,28 @@ fn main() -> Result<(), String> {
 
         canvas.copy(&space_sprite, None, None)?;
 
+        if player.score >= 4000 {
+            canvas.copy(&win_sprite, None, None)?;
+
+            if event_pump
+                .keyboard_state()
+                .is_scancode_pressed(Scancode::Return)
+            {
+                reset(&mut exploVec, &mut player, &mut enemyVec);
+            }
+        }
+
         if player.alive == true {
             canvas.copy(&player_sprite, None, player.position)?;
+        } else {
+            canvas.copy(&gameover_sprite, None, None)?;
+
+            if event_pump
+                .keyboard_state()
+                .is_scancode_pressed(Scancode::Return)
+            {
+                reset(&mut exploVec, &mut player, &mut enemyVec);
+            }
         }
 
         for e in (0..enemyVec.len()).rev() {
@@ -168,15 +215,17 @@ fn main() -> Result<(), String> {
                 {
                     player.alive = false;
                     enemyVec[e].laserList[l].alive = false;
-                    exploVec.push(explo::Explo::new(enemyVec[e].position.x, enemyVec[e].position.y));
+                    exploVec.push(explo::Explo::new(
+                        enemyVec[e].position.x,
+                        enemyVec[e].position.y,
+                    ));
                     sdl2::mixer::Channel::all().play(&explo_snd, 0);
                 }
             }
         }
 
         for e in (0..exploVec.len()).rev() {
-            if exploVec[e].alive == false
-            {
+            if exploVec[e].alive == false {
                 exploVec.remove(e);
                 //println!("exploVec: {}", exploVec.len());
             }
@@ -184,11 +233,7 @@ fn main() -> Result<(), String> {
 
         for l in (0..exploVec.len()).rev() {
             exploVec[l].update(&deltaTime);
-            canvas.copy(
-                &explo_sprite,
-                exploVec[l].rect,
-                exploVec[l].position                
-            )?;
+            canvas.copy(&explo_sprite, exploVec[l].rect, exploVec[l].position)?;
         }
 
         for l in (0..player.laserList.len()).rev() {

@@ -22,7 +22,7 @@ pub struct Enemy {
     animationSpeed: f32,
     pub alive: bool,
     pub startPos: i32,
-    goLeft: bool,
+    pub goLeft: bool,
     pub rowPosID: i32,
     pos_x: f32
 }
