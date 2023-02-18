@@ -7,7 +7,7 @@ ifeq ($(strip $(DEVKITPPC)),)
 $(error "Please set DEVKITPPC in your environment. export DEVKITPPC=<path to>devkitPPC)
 endif
 
-include $(DEVKITPPC)/wii_rules
+include $(DEVKITPRO)/libogc-mod/wii_rules
 
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
@@ -18,29 +18,29 @@ include $(DEVKITPPC)/wii_rules
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	source source/gfx GRRLIB_addon
-DATA		:=	data
-INCLUDES	:=
+DATA		:=	rd
+INCLUDES	:= 	include
 
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
 
-CFLAGS	= -g -O2 -mrvl -Wall $(MACHDEP) $(INCLUDE)
-CXXFLAGS	=	$(CFLAGS)
+CFLAGS	= -g -O2 -mrvl -Wall $(MACHDEP) $(INCLUDE) -fpermissive
+CXXFLAGS	= $(CFLAGS)
 
-LDFLAGS	=	-g $(MACHDEP) -mrvl -Wl,-Map,$(notdir $@).map
+LDFLAGS	= -g $(MACHDEP) -mrvl -Wl,-Map,$(notdir $@).map
 
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:=	-lvorbisidec -logg -lasnd -lgrrlib -lfreetype -lpngu -lpng -ljpeg -lz\
-			-lfat -lwiiuse -lbte -logc -lm
+LIBS	:=	-lgrrlib -lfreetype -lbz2 -lpngu -lpng -ljpeg -lz\
+			-laudiogc -laesnd -lfat -lwiiuse -lbte -logc -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:= $(CURDIR)/$(GRRLIB)
+LIBDIRS	:= $(CURDIR)/$(GRRLIB) $(PORTLIBS) 
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -128,7 +128,38 @@ $(OUTPUT).elf: $(OFILES)
 #---------------------------------------------------------------------------------
 # This rule links in binary data with the .jpg extension
 #---------------------------------------------------------------------------------
+%.png.o	:	%.png
+#---------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	$(bin2o)
+
+#---------------------------------------------------------------------------------
+# This rule links in binary data with the .jpg extension
+#---------------------------------------------------------------------------------
 %.jpg.o	:	%.jpg
+#---------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	$(bin2o)
+#---------------------------------------------------------------------------------
+# This rule links in binary data with the .wav extension
+#---------------------------------------------------------------------------------
+%.wav.o	:	%.wav
+#---------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	$(bin2o)
+
+#---------------------------------------------------------------------------------
+# This rule links in binary data with the .mp3 extension
+#---------------------------------------------------------------------------------
+%.mp3.o	:	%.mp3
+#---------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	$(bin2o)
+
+#---------------------------------------------------------------------------------
+# This rule links in binary data with the .ogg extension
+#---------------------------------------------------------------------------------
+%.ogg.o	:	%.ogg
 #---------------------------------------------------------------------------------
 	@echo $(notdir $<)
 	$(bin2o)
