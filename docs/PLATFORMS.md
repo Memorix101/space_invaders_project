@@ -68,8 +68,9 @@
     <br/>
     <br/>
 - GameCube
-  - Same situation as Wii. Audio would be a mess (Both use the same [SDK](https://devkitpro.org/wiki/Getting_Started)). Also I don't know if SDL is there and actually I don't want to rework it for [GX](https://devkitpro.org/wiki/libogc/GX).
-  - The issue with the audio is that SDL is throwing errors while linking which I can't resolve. The other is that I am too lazy to write something on my own using the SDK tools (which are quite good so far).
+  - ~~Same situation as Wii. Audio would be a mess (Both use the same [SDK](https://devkitpro.org/wiki/Getting_Started)). Also I don't know if SDL is there and actually I don't want to rework it for [GX](https://devkitpro.org/wiki/libogc/GX).~~
+  - ~~The issue with the audio is that SDL is throwing errors while linking which I can't resolve. The other is that I am too lazy to write something on my own using the SDK tools (which are quite good so far).~~
+  - [AudiOGC](https://github.com/HTV04/audiogc) fixed it.
     <br/>
     <br/>
 - MS-DOS
