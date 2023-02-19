@@ -189,3 +189,7 @@ experimental/wii_space_invaders/wii_space_invaders.elf
 experimental/wii_space_invaders/wii_space_invaders.dol
 
 experimental/wii_space_invaders/build
+
+*.elf
+
+*.dol
