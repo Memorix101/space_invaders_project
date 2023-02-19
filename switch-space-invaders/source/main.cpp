@@ -407,7 +407,7 @@ void updatePlayer()
 		player.pos.x = 640 - player.size.w;
 	}
 
-	player.hitbox = { 0,0, player.pos.x, player.pos.y };
+	player.hitbox = { player.pos.x, player.pos.y, player.size.w, player.size.h };
 	player.vec = { player.pos.x, player.pos.y, player.size.w, player.size.h };
 }
 

@@ -63,7 +63,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -fpermissive
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:=	-lSDL2_image -lSDL2_mixer -lSDL2_ttf -lSDL2 \
+LIBS	:=	`$(PREFIX)pkg-config --libs sdl2 SDL2_mixer SDL2_image SDL2_ttf` -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lSDL2 \
 			-lpng -lz -ljpeg -lfreetype \
 			-lvorbisidec -logg -lmpg123 -lmodplug -lstdc++ \
 			-lnx -lm `sdl2-config --libs` `freetype-config --libs`
