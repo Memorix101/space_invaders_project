@@ -171,3 +171,15 @@ experimental/rust_space_invaders/SDL2_mixer.dll
 experimental/rust_space_invaders/SDL2_ttf.dll
 
 experimental/rust_space_invaders/target/
+
+wiiu_space_invaders/space-invaders-wiiu.elf
+
+wiiu_space_invaders/space-invaders-wiiu.rpx
+
+wiiu_space_invaders/wiiu_space_invaders.lst
+
+wiiu_space_invaders/build/
+
+wiiu_space_invaders/src/main.d
+
+wiiu_space_invaders/src/main.o

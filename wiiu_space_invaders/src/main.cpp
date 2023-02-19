@@ -1,6 +1,12 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <string>
+
+#include <unistd.h>
+#include <whb/log.h>
+#include <whb/log_udp.h>
+#include <sys/iosupport.h>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>

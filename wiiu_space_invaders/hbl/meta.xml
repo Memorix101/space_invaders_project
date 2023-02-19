@@ -2,7 +2,7 @@
 <app version="1">
   <name>Space Invaders WiiU</name>
   <coder>Memorix101</coder>
-  <version>1.0</version>
+  <version>1.0.1</version>
   <url>https://github.com/Memorix101/space_invaders_project</url>
   <release_date>2019-18-04</release_date>
   <short_description>A Space invaders game for WiiU</short_description>
