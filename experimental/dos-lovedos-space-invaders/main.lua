@@ -39,21 +39,21 @@ function init()
 end
 
 function load_assets()
-  vermin_ttf = love.graphics.newFont("rd/vermin.ttf", 28)
-  space3_tex = love.graphics.newImage("rd/space3.png")
-  player_tex = love.graphics.newImage("rd/player.png")
-  bullet_tex = love.graphics.newImage("rd/bullet.png")
-  enemy_bullet_tex = love.graphics.newImage("rd/ebullet.png")
-  gameover_tex = love.graphics.newImage("rd/gameover.png")
-  win_tex = love.graphics.newImage("rd/win_ui.png")
-  fmg_splash_tex = love.graphics.newImage("rd/fmg.png")
-  enemy_tex = love.graphics.newImage("rd/invader.png")
-  explo_tex = love.graphics.newImage("rd/explode.png")
+  vermin_ttf = love.graphics.newFont("RD/VERMIN.TTF", 15)
+  space3_tex = love.graphics.newImage("RD/SPACE3.PNG")
+  player_tex = love.graphics.newImage("RD/PLAYER.PNG")
+  bullet_tex = love.graphics.newImage("RD/BULLET.PNG")
+  enemy_bullet_tex = love.graphics.newImage("RD/EBULLET.PNG")
+  gameover_tex = love.graphics.newImage("RD/GAMEOVER.PNG")
+  win_tex = love.graphics.newImage("RD/WIN_UI.PNG")
+  fmg_splash_tex = love.graphics.newImage("RD/FMG.PNG")
+  enemy_tex = love.graphics.newImage("RD/INVADER.PNG")
+  explo_tex = love.graphics.newImage("RD/EXPLODE.PNG")
   enemy_quad = love.graphics.newQuad(0, 0, 16, 16, enemy_tex:getWidth(), enemy_tex:getHeight())
-  --music = love.audio.newSource("rd/boden.wav", "stream")
-  --snd_blaster = love.audio.newSource("rd/blaster.wav", "stream")
-  --snd_pusher = love.audio.newSource("rd/pusher.wav", "stream")
-  --snd_explo = love.audio.newSource("rd/explode1.wav", "stream")
+  --music = love.audio.newSource("RD/BODEN.WAV")
+  --snd_blaster = love.audio.newSource("RD/BLASTER.WAV")
+  --snd_pusher = love.audio.newSource("RD/PUSHER.WAV")
+  --snd_explo = love.audio.newSource("RD/EXPLODE1.WAV")
 end
 
 function init_enemies()
@@ -246,7 +246,7 @@ function love.update(dt)
     game_start = true
   end
 
-  if love.keyboard.isDown("space") then
+  if love.keyboard.isDown("space") and player_alive == true  then
     if key_firePressed == false then
       key_firePressed = true
       --snd_blaster:stop()
@@ -328,8 +328,8 @@ function love.draw()
     end
 
     -- Setting the font so that it is used when drawing the string.
-	  local ttf_ = love.graphics.newFont("rd/vermin.ttf", 15)
-    love.graphics.setFont(ttf_)
+	  --local ttf_ = love.graphics.newFont("rd/vermin.ttf", 15)
+    love.graphics.setFont(vermin_ttf)
  
     local ttf_w = vermin_ttf:getWidth("SCORE: " .. string.format("%04d", score))
     love.graphics.print("SCORE: " .. string.format("%04d", score), 250 - ttf_w*0.1, 10)
