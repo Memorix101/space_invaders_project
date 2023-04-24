@@ -114,6 +114,8 @@ GLuint fmg_splash_tex2d;
 GLuint gameover_tex2D;
 GLuint win_tex2d;
 
+float x_vec = 0.0f;
+
 void preload_assets()
 {
 	space3_tex2d = load_texture("rd/space3.png");
@@ -387,6 +389,106 @@ void input(GLFWwindow * w)
 	if (glfwGetKey(w, GLFW_KEY_RIGHT) == GLFW_PRESS || glfwGetKey(w, GLFW_KEY_D) == GLFW_PRESS)
 	{
 		player.pos.x += player.speed * deltaTime;
+	}
+
+	if (glfwGetKey(w, GLFW_KEY_O) == GLFW_PRESS)
+	{
+		GLfloat matrix[16];
+		glGetFloatv(GL_PROJECTION_MATRIX, matrix);/*
+		printf("Matrix 0 %4.2f\n", (float)matrix[11]);
+		printf("Matrix 4 %4.2f\n", (float)matrix[12]);
+		printf("Matrix 8 %4.2f\n", (float)matrix[13]);
+		printf("Matrix 12 %4.2f\n", (float)matrix[14]);*/
+		//glTranslatef(-5.0, 0.0, 0.0); // translation NOT position // https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml
+		matrix[0] = 1.0f;
+		matrix[1] = 0.0f;
+		matrix[2] = 0.0f;
+		matrix[3] = 0.0f;
+
+		matrix[4] = 0.0f;
+		matrix[5] = 1.0f;
+		matrix[6] = 0.0f;
+		matrix[7] = 0.0f;
+
+		matrix[8] = 0.0f;
+		matrix[9] = 0.0f;
+		matrix[10] = 1.0f;
+		matrix[11] = 0.0f;
+
+		// Translation Matrix - Where translation is a 3D vector that represent the position where we want to move our space to
+		x_vec -= 5.0f;
+		matrix[12] = x_vec;
+		matrix[13] = 0.0f;
+		matrix[14] = 0.0f;
+		matrix[15] = 1.0f;
+		glLoadMatrixf(matrix);
+	}
+
+	if (glfwGetKey(w, GLFW_KEY_I) == GLFW_PRESS)
+	{
+		GLfloat matrix[16];
+		glGetFloatv(GL_PROJECTION_MATRIX, matrix);/*
+		printf("Matrix 0 %4.2f\n", (float)matrix[12]);
+		printf("Matrix 4 %4.2f\n", (float)matrix[13]);
+		printf("Matrix 8 %4.2f\n", (float)matrix[14]);
+		printf("Matrix 12 %4.2f\n", (float)matrix[11]);*/
+		//glTranslatef(5.0, 0.0, 0.0); // translation NOT position
+		matrix[0] = 1.0f;
+		matrix[1] = 0.0f;
+		matrix[2] = 0.0f;
+		matrix[3] = 0.0f;
+
+		matrix[4] = 0.0f;
+		matrix[5] = 1.0f;
+		matrix[6] = 0.0f;
+		matrix[7] = 0.0f;
+
+		matrix[8] = 0.0f;
+		matrix[9] = 0.0f;
+		matrix[10] = 1.0f;
+		matrix[11] = 0.0f;
+
+		// Translation Matrix - Where translation is a 3D vector that represent the position where we want to move our space to
+		x_vec += 5.0f;
+		matrix[12] = x_vec;
+		matrix[13] = 0.0f;
+		matrix[14] = 0.0f;
+		matrix[15] = 1.0f;
+		glLoadMatrixf(matrix);
+	}
+
+	if (glfwGetKey(w, GLFW_KEY_P) == GLFW_PRESS)
+	{
+		GLfloat matrix[16];
+		glGetFloatv(GL_PROJECTION_MATRIX, matrix);
+		// http://www.songho.ca/opengl/gl_anglestoaxes.html
+		// https://open.gl/transformations
+		// https://www.songho.ca/opengl/files/gl_anglestoaxes01.png
+		// http://www.codinglabs.net/article_world_view_projection_matrix.aspx
+		matrix[0] = 1.0f;
+		matrix[1] = 0.0f;
+		matrix[2] = 0.0f;
+		matrix[3] = 0.0f;
+
+		matrix[4] = 0.0f;
+		matrix[5] = 1.0f;
+		matrix[6] = 0.0f;
+		matrix[7] = 0.0f;
+
+		matrix[8] = 0.0f;
+		matrix[9] = 0.0f;
+		matrix[10] = 1.0f;
+		matrix[11] = 0.0f;
+
+		// Translation Matrix - Where translation is a 3D vector that represent the position where we want to move our space to
+		matrix[12] = 0.0f;
+		matrix[13] = 0.0f;
+		matrix[14] = 0.0f;
+		matrix[15] = 1.0f;
+		//matrix[12] = 0.0f;
+		//glLoadIdentity(); 
+		glLoadMatrixf(matrix);
+		//glMultMatrixf(matrix);
 	}
 
 	if (glfwGetKey(w, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(w, GLFW_KEY_A) == GLFW_PRESS)
@@ -736,8 +838,23 @@ int main(int argc, char* argv[]) {
 				gameover = 1;
 			}
 
+			// render hud https://stackoverflow.com/a/5468894/9296008
+			/*glMatrixMode(GL_PROJECTION);
+			glPushMatrix();
+			glLoadIdentity();
+			glOrtho(0.0, 640, 480, 0.0, -1.0, 10.0);
+			glMatrixMode(GL_MODELVIEW);*/
+			glPushMatrix();        //----Not sure if I need this
+			glLoadIdentity();
+			//glDisable(GL_CULL_FACE);
+
 			sprintf(textBuffer, "SCORE: % 05d", score);
 			ttf_print(30 + 420, 30, textBuffer);
+			// Making sure we can render 3d again
+			/*glMatrixMode(GL_PROJECTION);
+			glPopMatrix();
+			glMatrixMode(GL_MODELVIEW);*/
+			glPopMatrix();        //----and this?
 		}
 
 		// Swap front and back buffers
