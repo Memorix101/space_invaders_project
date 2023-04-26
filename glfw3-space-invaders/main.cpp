@@ -416,8 +416,8 @@ void input(GLFWwindow * w)
 		matrix[11] = 0.0f;
 
 		// Translation Matrix - Where translation is a 3D vector that represent the position where we want to move our space to
-		x_vec -= 5.0f;
-		matrix[12] = x_vec;
+		x_vec += 5.0f;
+		matrix[12] = -x_vec;
 		matrix[13] = 0.0f;
 		matrix[14] = 0.0f;
 		matrix[15] = 1.0f;
@@ -449,8 +449,8 @@ void input(GLFWwindow * w)
 		matrix[11] = 0.0f;
 
 		// Translation Matrix - Where translation is a 3D vector that represent the position where we want to move our space to
-		x_vec += 5.0f;
-		matrix[12] = x_vec;
+		x_vec -= 5.0f;
+		matrix[12] = -x_vec;
 		matrix[13] = 0.0f;
 		matrix[14] = 0.0f;
 		matrix[15] = 1.0f;
@@ -481,7 +481,12 @@ void input(GLFWwindow * w)
 		matrix[11] = 0.0f;
 
 		// Translation Matrix - Where translation is a 3D vector that represent the position where we want to move our space to
-		matrix[12] = 0.0f;
+		float dest = 640/2;
+		float src = 0; // calculating direction vector to determin prefered x position in world
+		float ab = dest - src; // direction vector (dest b - src a or -a + b)
+		float b = src + ab;
+		x_vec = b; // update vector to position
+		matrix[12] = -b; 
 		matrix[13] = 0.0f;
 		matrix[14] = 0.0f;
 		matrix[15] = 1.0f;
