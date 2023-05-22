@@ -5,7 +5,7 @@
 - PlayStation 2
   - ps2sdk has no (useful) documentation. ~~There is a booting build of the game but it's not working and I actually don't know why. Just black screen. IOP modules load correctly but something is wrong here~~ 😞<br/>
   - Seems like ps2sdk is partly broken here and there. 🤔😮
-  - Done on 02/02/2021 &#x2611;
+  - Done on 02/02/2021 &#x2611; (audio is broken and performance issues on real hardware)
     <br/>
     <br/>
 - PlayStation
@@ -68,13 +68,14 @@
     <br/>
     <br/>
 - GameCube
-  - ~~Same situation as Wii. Audio would be a mess (Both use the same [SDK](https://devkitpro.org/wiki/Getting_Started)). Also I don't know if SDL is there and actually I don't want to rework it for [GX](https://devkitpro.org/wiki/libogc/GX).~~
-  - ~~The issue with the audio is that SDL is throwing errors while linking which I can't resolve. The other is that I am too lazy to write something on my own using the SDK tools (which are quite good so far).~~
-  - [AudiOGC](https://github.com/HTV04/audiogc) fixed it.
+  - Same situation as Wii. Audio would be a mess (Both use the same [SDK](https://devkitpro.org/wiki/Getting_Started)). Also I don't know if SDL is there and actually I don't want to rework it for [GX](https://devkitpro.org/wiki/libogc/GX).
+  - The issue with the audio is that SDL is throwing errors while linking which I can't resolve. The other one is that I am too lazy to write something on my own using the SDK tools (which are quite good so far).
+  - [AudiOGC](https://github.com/HTV04/audiogc) could be away to fix it. When I looked into it, it was not really easy to setup and results were a bit underwhelming. Playing multiple sounds at the same time is still an issue here.
     <br/>
     <br/>
 - MS-DOS
   - I'm planning to rework the DOS version at some point in the future as it is unstable/broken.
+  - Added LoveDOS port 19/02/2023
     <br/>
     <br/>
 - 3DS

@@ -35,7 +35,7 @@
 - Xbox 360
     - XNA 4.0 (App Hub is offline 😥)
   <br/>
-- Xbox One ([UWP](https://docs.microsoft.com/en-us/windows/uwp/design/basics/design-and-ui-intro) only; [Xbox Live Creators Program](https://docs.microsoft.com/en-gb/gaming/xbox-live/get-started-with-creators/get-started-with-xbox-live-creators))
+- Xbox One ([UWP](https://docs.microsoft.com/en-us/windows/uwp/design/basics/design-and-ui-intro) only; [Xbox Live Creators Program](https://learn.microsoft.com/en-gb/gaming/gdk/_content/gc/live/get-started/live-setup-partner-center-partners))
   - MonoGame
   - [Godot](https://godotengine.org/)
   - Unity
@@ -47,6 +47,7 @@
   <br/>
 - MS-DOS
     - Allegro 4.2.3 ([djgpp](http://www.delorie.com/djgpp/))
+    - [LoveDOS](https://github.com/rxi/lovedos)
   <br/>
 - Sega Dreamcast
     - [KallistiOS](https://segaretro.org/KallistiOS)
@@ -90,17 +91,19 @@
 - [3D GameStudio](https://en.wikipedia.org/wiki/3D_GameStudio)
   <br/> 
 ### Programming Languages
+- [Blueprints Visual Scripting](https://docs.unrealengine.com/en-us/Engine/Blueprints)
 - C
 - C++
-- C#
+- [C#](https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/)
+- [DarkBASIC](https://en.wikipedia.org/wiki/The_Game_Creators#DarkBASIC)
+- [F#](https://learn.microsoft.com/en-us/dotnet/fsharp/what-is-fsharp)
+- [GDScript](https://docs.godotengine.org/en/3.1/getting_started/scripting/gdscript/gdscript_basics.html#doc-gdscript)
 - Java
-- [Rust](https://en.wikipedia.org/wiki/Rust_(programming_language))
-- [F#](https://en.wikipedia.org/wiki/F_Sharp_(programming_language))
 - JavaScript
+- [Lite-C](https://en.wikipedia.org/wiki/Lite-C)
 - Lua
 - Python
-- [GDScript](https://docs.godotengine.org/en/3.1/getting_started/scripting/gdscript/gdscript_basics.html#doc-gdscript)
-- [Blueprints Visual Scripting](https://docs.unrealengine.com/en-us/Engine/Blueprints)
+- [Rust](https://en.wikipedia.org/wiki/Rust_(programming_language))
 ### Planned platforms roadmap
 [Planned platforms roadmap](https://github.com/Memorix101/space_invaders_project/blob/master/docs/PLATFORMS.md)
 
