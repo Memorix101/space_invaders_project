@@ -14,13 +14,20 @@
 #include <string.h>
 #include <cstdlib>
 #include <audsrv.h>
+#include <time.h>
 
-// This is the rand from K&R.  rand() is supposed to be portable, but..
-unsigned long int next = 1;
-int Rand(void)
+// rand() is supposed to be portable https://stackoverflow.com/a/4768189/9296008
+static unsigned long int next = 1;
+int rand(void) // RAND_MAX assumed to be 32767
 {
+	srand(clock()); // generate seed for rand
     next = next * 1103515245 + 12345;
-    return (unsigned int)(next / 65536) % 32768;
+    return (unsigned int)(next/65536) % 32768;
+}
+
+void srand(unsigned int seed)
+{
+    next = seed;
 }
 
 struct player_t {
@@ -272,8 +279,8 @@ void addEnemy()
 		enemy[i]->hitbox.y = enemy[i]->pos.y;
 		enemy[i]->shoot = 0;
 		enemy[i]->shootTimer = 0.0f;
-		enemy[i]->shootTimeLimit = Rand() % (20-3) + 3; // MAX - MIN + MIN // possible fix https://forums.ps2dev.org/viewtopic.php?t=1878
-		//printf("shootTimeLimit %d\n", enemy[i]->shootTimeLimit);
+		enemy[i]->shootTimeLimit = rand() % (20-3) + 3; // MAX - MIN + MIN // possible fix https://forums.ps2dev.org/viewtopic.php?t=1878
+		printf("shootTimeLimit %d\n", enemy[i]->shootTimeLimit);
 	}
 }
 
@@ -883,8 +890,8 @@ int main(int argc, char *argv[]) {
 		curTime = (float)SDL_GetTicks()/1000.0f;
     	deltatime = curTime - lastdelta;
 
-		/*printf("shootTimer %d\n", enemy[0]->shootTimer);
-		printf("shootTimeLimit %d\n", enemy[0]->shootTimeLimit);*/
+		printf("shootTimer %d\n", enemy[0]->shootTimer);
+		printf("shootTimeLimit %d\n", enemy[0]->shootTimeLimit);
 		
 		//Handle controller input
         ctr = 0;
