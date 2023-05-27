@@ -35,7 +35,7 @@
 - Xbox 360
     - XNA 4.0 (App Hub is offline 😥)
   <br/>
-- Xbox One ([UWP](https://docs.microsoft.com/en-us/windows/uwp/design/basics/design-and-ui-intro) only; [Xbox Live Creators Program](https://learn.microsoft.com/en-gb/gaming/gdk/_content/gc/live/get-started/live-setup-partner-center-partners))
+- Xbox One ([UWP](https://docs.microsoft.com/en-us/windows/uwp/design/basics/design-and-ui-intro) only; [Xbox Live Creators Program](https://developer.microsoft.com/en-gb/microsoft-store/register/)
   - MonoGame
   - [Godot](https://godotengine.org/)
   - Unity
