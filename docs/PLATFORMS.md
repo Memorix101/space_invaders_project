@@ -21,7 +21,7 @@
     <br/>
     <br/>
 - Sega Mega Drive / Genesis
-  ~~- There are no tools to convert the colour palette of the sprites and the documentation is outdated. Tricky situation. 😬 There is a unfinished build.~~
+  - ~~There are no tools to convert the colour palette of the sprites and the documentation is outdated. Tricky situation. 😬 There is a unfinished build.~~
   Problem has been resolved with [PaletteBatch ](https://allone-works.itch.io/palette-batch) so [a port is possible now!](https://twitter.com/memorix101/status/1662904843835506691?s=20)
     <br/>
     <br/>
