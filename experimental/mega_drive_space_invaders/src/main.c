@@ -74,6 +74,8 @@ int main()
 	//XGM_setPCM(MS_BODEN, boden_sfx, sizeof(boden_sfx));
 
 	//XGM_startPlayPCM(MS_BODEN, 1, SOUND_PCM_CH1);
+	XGM_setLoopNumber(-1);
+	XGM_startPlay(xgm_music);
 
 #define MAX_ENEMIES 13
 	Entity enemies[MAX_ENEMIES];
@@ -244,7 +246,7 @@ int main()
 							Entity_setPos(&explos[cur_explo], enemies[e].x + 4, enemies[e].y + 8);
 							SPR_setAnim(explos[cur_explo].sprite, 0);
 							SPR_setFrame(explos[cur_explo].sprite, 0);
-							XGM_startPlayPCM(SFX_EXLODE1, 1, SOUND_PCM_CH3);
+							XGM_startPlayPCM(SFX_EXLODE1, 15, SOUND_PCM_CH1);
 						}
 					}
 				}
@@ -315,7 +317,7 @@ int main()
 						cur_bullet = 0;
 					}
 
-					XGM_startPlayPCM(SFX_BLASTER, 1, SOUND_PCM_CH2);
+					XGM_startPlayPCM(SFX_BLASTER, 15, SOUND_PCM_CH1);
 				}
 			}
 			else
