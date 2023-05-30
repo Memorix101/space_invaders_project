@@ -55,6 +55,9 @@
 - Sega Saturn
     - [Jo Engine](https://jo-engine.org/)
   <br/>
+- Sega Mega Drive / Genesis
+  - [SGDK](https://github.com/Stephane-D/SGDK)
+  <br/> 
 - PlayStation 2
     - SDL 1.2 ([PS2SDK](https://github.com/ps2dev/ps2dev))
   <br/>
