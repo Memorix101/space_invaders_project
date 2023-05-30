@@ -158,7 +158,7 @@ int main()
 
 		game_timer++;
 
-		if (game_timer <= 200)
+		if (game_timer <= 400)
 		{
 			// VDP_setPlaneSize(320, 240, TRUE);
 			// VDP_drawImageEx(BG_A, &fmg_png, TILE_ATTR_FULL(PAL1, TRUE, FALSE, FALSE, 1), 0, 0, TRUE, DMA);
