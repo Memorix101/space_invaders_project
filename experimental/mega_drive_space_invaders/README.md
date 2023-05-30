@@ -8,5 +8,4 @@ Space Invaders Game written in C for Sega Mega Drive / Genesis
 
 Compiled using [SGDK](https://github.com/Stephane-D/SGDK)
 
-![image](https://github.com/Memorix101/space_invaders_project/assets/1466920/596bec91-1cdf-4ce8-b6e7-4b8210c12ad7)
-
+![image](https://github.com/Memorix101/space_invaders_project/assets/1466920/3c03fb22-bee0-499a-9c36-b5500cf65823)
