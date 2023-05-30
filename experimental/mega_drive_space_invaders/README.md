@@ -2,7 +2,7 @@
 
 Space Invaders Game written in C for Sega Mega Drive / Genesis
 
-**Currently unfinished**
+**Note: This is experimental and unfinished**
 
 # Seutp Guide
 
