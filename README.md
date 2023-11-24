@@ -66,6 +66,7 @@
   <br/>
 - PlayStation Portable
     - SDL 1.2 ([Minimalist PSPSDK](https://sourceforge.net/projects/minpspw/))
+    - Godot 2.1.6 ([Godot PSP Export Template](https://github.com/PSVita-Dev/godot-psp/releases))
   <br/>
 - PlayStation Vita
     - SDL 2 ([Vita SDK](https://vitasdk.org/))
