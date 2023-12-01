@@ -70,6 +70,10 @@
   <br/>
 - PlayStation Vita
     - SDL 2 ([Vita SDK](https://vitasdk.org/))
+    - raylib ([raylib4PlayStation](https://github.com/raylib4PlayStation/raylib4PlayStation))
+  <br/>
+- PlayStation 4
+  - raylib ([raylib4PlayStation](https://github.com/raylib4PlayStation/raylib4PlayStation))
   <br/>
 - Nintendo 3DS
     - SDL 1.2 ([devkitPro](https://devkitpro.org/))
@@ -90,6 +94,7 @@
   <br/> 
 - Nintendo Switch
   - SDL2 (devkitPro)
+  - raylib ([raylib-nx](https://github.com/luizpestana/raylib-nx))
   <br/> 
 ### Game Engines
 - Unity
