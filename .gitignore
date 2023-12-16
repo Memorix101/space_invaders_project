@@ -193,3 +193,7 @@ experimental/wii_space_invaders/build
 *.elf
 
 *.dol
+
+experimental/irrlicht_space_invaders/x64/
+
+experimental/irrlicht_space_invaders/.vs/

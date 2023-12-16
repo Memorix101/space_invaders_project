@@ -34,6 +34,7 @@
   - [DarkBASIC Professional](https://second.wiki/wiki/darkbasic)
   - [3D GameStudio](https://en.wikipedia.org/wiki/3D_GameStudio)
   - [GameMaker](https://gamemaker.io/)
+  - [Irrlicht](https://irrlicht.sourceforge.io/)
   <br/>
 - Xbox 360
     - XNA 4.0 (App Hub is offline 😥)
