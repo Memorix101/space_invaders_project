@@ -720,7 +720,6 @@ int main()
 	driver->draw2DImage(fmg_tex, position2d<s32>(0, 0));
 	driver->endScene();
 	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-	//Undriver->getTexture(fmg_splash);
 
 	//Load image
 	space = space_tex;
