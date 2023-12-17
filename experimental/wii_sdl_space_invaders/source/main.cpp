@@ -643,10 +643,10 @@ int main(int argc, char *argv[]) {
 	game_over_pos.y = 480 / 2 - gameOver->h / 2;
 
 	//load audio
-	music = Mix_LoadMUS("sd:/rd/bodenstaendig.ogg");
-	snd_blaster = Mix_LoadWAV("sd:/rd/blaster.ogg");
-	snd_explo = Mix_LoadWAV("sd:/rd/explode1.ogg");
-	snd_pusher = Mix_LoadWAV("sd:/rd/pusher.ogg");
+	music = Mix_LoadMUS("sd:/rd/bodenstaendig.mp3");
+	snd_blaster = Mix_LoadWAV("sd:/rd/blaster.mp3");
+	snd_explo = Mix_LoadWAV("sd:/rd/explode1.mp3");
+	snd_pusher = Mix_LoadWAV("sd:/rd/pusher.mp3");
 
 	//Play the music
 	if (Mix_PlayMusic(music, -1) == -1)
@@ -705,7 +705,7 @@ int main(int argc, char *argv[]) {
 					Mix_PlayChannel(-1, snd_blaster, 0);
 				}
 
-				if (e.jbutton.button == 7 && gameover == 1)
+				if (e.jbutton.button == 5 && gameover == 1)
 				{
 					reset();
 				}
@@ -714,12 +714,13 @@ int main(int argc, char *argv[]) {
 				{
 					quit = 1;
 				}
+				
 				break;
 			case SDL_JOYHATMOTION:
 				// handle hat motion
 				LX_HAT= (float)e.jhat.value;
 				//printf("LX_HAT: %f\n", LX_HAT);
-				if (LX_HAT == 8.0f)
+				if (e.jhat.value == SDL_HAT_LEFT)
 				{
 					move_left = 1;
 				}
@@ -728,7 +729,7 @@ int main(int argc, char *argv[]) {
 					move_left = 0;
 				}
 
-				if (LX_HAT == 2.0f)
+				if (e.jhat.value == SDL_HAT_RIGHT)
 				{
 					move_right = 1;
 				}
