@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<app version="1">
+	<name>Space Invaders - SDL Port</name>
+	<coder>Memorix101</coder>
+	<version>1.0.0</version>
+	<short_description>A space invaders game for Wii</short_description> 
+	<long_description>A space invaders game for Wii</long_description> 
+</app>
+
