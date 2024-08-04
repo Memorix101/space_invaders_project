@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <pbkit/pbkit.h>
+#include <stdbool.h>
 
 #include <SDL.h>
 //#include <SDL_mixer.h>
@@ -618,12 +619,12 @@ int main(int argc, char* argv[])
 	//init SDL and setup window
 	XVideoSetMode(640, 480, 32, REFRESH_DEFAULT);
 
-/*    sdl_init = SDL_Init(SDL_INIT_GAMECONTROLLER);
+    sdl_init = SDL_Init(SDL_INIT_GAMECONTROLLER);
     if (sdl_init != 0) {
         debugPrint("SDL_Init failed: %s\n", SDL_GetError());
         Sleep(2000);
     }
-*/
+
 
     initialized_SDL = SDL_VideoInit(NULL);
     if (initialized_SDL != 0) {
@@ -650,7 +651,7 @@ int main(int argc, char* argv[])
     }
 
 	//Get the first available controller
-	for (int i = 0; i < SDL_NumJoysticks(); ++i)
+/*	for (int i = 0; i < SDL_NumJoysticks(); ++i)
 	{
 		if (SDL_IsGameController(i))
 		{
@@ -659,7 +660,7 @@ int main(int argc, char* argv[])
 			{
 				const char* name = SDL_GameControllerNameForIndex(i);
 				if (name)
-					printf("Controller %i has game controller name '%s'\n", i, name);
+					debugPrint("Controller %i has game controller name '%s'\n", i, name);
 
 				// Open the device
 				haptic = SDL_HapticOpen(0);
@@ -677,6 +678,7 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
+*/
 
 	//prepare assets
 	load_assets();
@@ -717,8 +719,28 @@ int main(int argc, char* argv[])
 		deltaTime = ((float)SDL_GetTicks() / 1000.0f) - lastTick;
 
 		//Handle events on queue
-		while (SDL_PollEvent(&e) != 0)
-		{
+		while (SDL_PollEvent(&e))
+		{    
+
+// xbox controller stuff
+     if (e.type == SDL_CONTROLLERDEVICEADDED) {
+        SDL_GameController *new_pad = SDL_GameControllerOpen(e.cdevice.which);
+        if (controller == NULL) {
+          controller = new_pad;
+        }
+      }
+      else if (e.type == SDL_CONTROLLERDEVICEREMOVED) {
+        if (controller == SDL_GameControllerFromInstanceID(e.cdevice.which)) {
+          controller = NULL;
+        }
+        SDL_GameControllerClose(SDL_GameControllerFromInstanceID(e.cdevice.which));
+      }
+      else if (e.type == SDL_CONTROLLERBUTTONDOWN) {
+        if (e.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
+          controller = (SDL_GameControllerFromInstanceID(e.cdevice.which));
+        }
+      }
+
 			switch (e.type)
 			{
 			case SDL_KEYDOWN:

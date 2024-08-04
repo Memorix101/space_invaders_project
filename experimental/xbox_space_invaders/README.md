@@ -3,9 +3,8 @@
 Space Invaders written in C++ for OG Xbox using [nxdk](https://github.com/XboxDev/nxdk)
 
 ### Current issue
-- SDL_Mixer not implemented -> No sound
-- Initializing Gamepad in SDL fails -> Game does not boot
-- TODO buttons prompts are still PC ones
+- SDL_Mixer not implemented -> No sound, maybe use XAudio instead
+- Collision hitboxe issues -> maybe bullet without print or collision size is incorrect for bullet and/or player
 
 ## Note: This is experimental and broken !!!
 
