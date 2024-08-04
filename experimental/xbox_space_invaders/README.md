@@ -4,7 +4,7 @@ Space Invaders written in C++ for OG Xbox using [nxdk](https://github.com/XboxDe
 
 ### Current issue
 - SDL_Mixer not implemented -> No sound, maybe use XAudio instead
-- Collision hitboxe issues -> maybe bullet without print or collision size is incorrect for bullet and/or player
+- Collision hitbox issues -> maybe bullet without print or collision size is incorrect for bullet and/or player
 
 ## Note: This is experimental and broken !!!
 
