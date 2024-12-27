@@ -93,6 +93,9 @@
 - Nintendo WiiU
   - SDL2 (devkitPro)
   <br/> 
+- Nintendo GameCube
+  - SDL2 (devkitPro)
+  <br/> 
 - Nintendo Switch
   - SDL2 (devkitPro)
   - raylib ([raylib-nx](https://github.com/luizpestana/raylib-nx))
