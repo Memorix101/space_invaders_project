@@ -11,7 +11,7 @@ clean:
 	-rm -f $(TARGET) $(OBJS) romdisk.*
 
 $(TARGET): $(OBJS)
-	kos-cc -o $(TARGET) $(OBJS) $(DATAOBJS) $(OBJEXTRA) -lz -lGL -lpcx -lkosutils -lmp3 -lm -ltremor
+	kos-cc -o $(TARGET) $(OBJS) $(DATAOBJS) $(OBJEXTRA) -lz -lKGL -lpcx -lkosutils -lmp3 -lm -ltremor
 
 run:
 	$(KOS_LOADER) $(TARGET)

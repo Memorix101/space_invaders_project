@@ -6,14 +6,11 @@
 #include <math.h>
 #include <zlib/zlib.h>
 #include <dc/fmath.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
 #include "glfx.h"
 #include "timer.h"
 
-extern uint8 romdisk[];
-KOS_INIT_ROMDISK(romdisk); //virtual filesystem
+//extern uint8 romdisk[];
+//KOS_INIT_ROMDISK(romdisk); //virtual filesystem
 
 extern GLuint glTextureLoadPVR(char *fname, unsigned char isMipMapped, unsigned char glMipMap);
 

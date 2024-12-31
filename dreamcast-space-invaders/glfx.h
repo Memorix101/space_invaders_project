@@ -1,7 +1,8 @@
 #include <kos.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+#include <KGL/gl.h>
+#include <KGL/glu.h>
+#include <KGL/glut.h>
+#include <KGL/glext.h>
 
 struct vector2
 {
