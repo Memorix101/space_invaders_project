@@ -173,8 +173,8 @@ void lcd_test() {
     lcd_gs_setup();
     while(vmu_task == 0) {
         maple_device_t *addr = maple_enum_type(0, MAPLE_FUNC_LCD);
-
-        if(addr) {
+        printf(">> CHECKING VMU: %d\n", addr);
+        if(addr != 0) { // check if vmu is connected
             int rv = vmu_draw_lcd(addr, lcd_disp);
 
             if(rv < 0)
@@ -184,6 +184,9 @@ void lcd_test() {
               vmu_task = 1;
               break;
             }
+        } else {
+           vmu_task = 1;   
+           printf(">> VMU NOT FOUND! \n");        
         }
     }
 }
