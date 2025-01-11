@@ -12,7 +12,7 @@ project(space_invaders)
 include("${VITASDK}/share/vita.cmake" REQUIRED)
 
 set(VITA_APP_NAME "Space Invaders")
-set(VITA_TITLEID  "SPCNVD")
+set(VITA_TITLEID  "SPACINVPV")
 set(VITA_VERSION  "01.00")
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11")
@@ -35,12 +35,20 @@ webp
 freetype
 vorbisfile
 vorbis
+modplug
 ogg
+opus
+opusfile
 mikmod
+bz2
+opus
 pthread
 jpeg
 png16
 mpg123
+xmp
+webp
+webpdemux
 z
 c
 m
@@ -53,6 +61,7 @@ vita2d
 SceDisplay_stub
 SceCtrl_stub
 SceAudio_stub
+SceAudioIn_stub
 SceSysmodule_stub
 SceGxm_stub
 SceCommonDialog_stub
