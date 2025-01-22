@@ -197,3 +197,5 @@ experimental/wii_space_invaders/build
 experimental/irrlicht_space_invaders/x64/
 
 experimental/irrlicht_space_invaders/.vs/
+
+*.Identifier

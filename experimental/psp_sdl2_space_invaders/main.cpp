@@ -137,34 +137,43 @@ SDL_Rect score_tex_pos;
 
 void load_assets()
 {
+	printf("Loading assets space3.png\n");
 	space3_surface = IMG_Load("./rd/space3.png");
 	space3_tex = SDL_CreateTextureFromSurface(renderer, space3_surface);
 	SDL_FreeSurface(space3_surface);
 
+	printf("Loading assets invader32x32x4.png\n");
 	enemy_surface = IMG_Load("./rd/invader32x32x4.png"); //invader32x32x4
 	enemy_tex = SDL_CreateTextureFromSurface(renderer, enemy_surface);
 
+	printf("Loading assets player.png\n");
 	player_surface = IMG_Load("./rd/player.png");
 	player_tex = SDL_CreateTextureFromSurface(renderer, player_surface);
 
+	printf("Loading assets bullet.png\n");
 	bullet_surface = IMG_Load("./rd/bullet.png");
 	bullet_tex = SDL_CreateTextureFromSurface(renderer, bullet_surface);
 
+	printf("Loading assets enemy-bullet.png\n");
 	enemy_bullet_surface = IMG_Load("./rd/enemy-bullet.png");
 	enemy_bullet_tex = SDL_CreateTextureFromSurface(renderer, enemy_bullet_surface);
 
+	printf("Loading assets explode.png\n");
 	explo_surface = IMG_Load("./rd/explode.png");
 	explo_tex = SDL_CreateTextureFromSurface(renderer, explo_surface);
 
+	printf("Loading assets fmg_splash.png\n");
 	fmg_splash_surface = IMG_Load("./rd/fmg_splash.png");
 	fmg_splash_tex = SDL_CreateTextureFromSurface(renderer, fmg_splash_surface);
 	SDL_FreeSurface(fmg_splash_surface);
 
+	printf("Loading assets gameover_ui.png\n");
 	gameover_surface = IMG_Load("./rd/gameover_ui.png");
 	gameover_tex = SDL_CreateTextureFromSurface(renderer, gameover_surface);
 	SDL_FreeSurface(gameover_surface);
 
-	win_surface = IMG_Load("./rd/win_ui.png");
+	printf("Loading assets gameover_ui.png\n");
+	win_surface = IMG_Load("./rd/gameover_ui.png");
 	win_tex = SDL_CreateTextureFromSurface(renderer, win_surface);
 	SDL_FreeSurface(win_surface);
 }
@@ -598,8 +607,8 @@ int main(int argc, char* argv[]) {
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 
-	window = SDL_CreateWindow(nullptr, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 480, 272, SDL_WINDOW_FULLSCREEN_DESKTOP); //SDL_WINDOW_FULLSCREEN
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	window = SDL_CreateWindow(nullptr, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 480, 272, SDL_WINDOW_SHOWN); //SDL_WINDOW_FULLSCREEN
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_RenderSetLogicalSize(renderer, 640, 480);
 
 	//Initialize SDL_mixer
@@ -625,6 +634,7 @@ int main(int argc, char* argv[]) {
 	joystick = SDL_JoystickOpen(0);
 
 	load_assets();
+	printf("Loading assets bodenstaendig.ogg\n");
 	music = Mix_LoadMUS("./rd/bodenstaendig.ogg");
 
 	SDL_RenderCopy(renderer, fmg_splash_tex, NULL, NULL);
@@ -635,18 +645,22 @@ int main(int argc, char* argv[]) {
 	initEnemies();
 	initPlayer();
 
-	vermin_ttf = TTF_OpenFont("./rd/vermin_vibes_1989.ttf", 24);
+	printf("Loading assets vermin_vibes_1989.ttf\n");
+	vermin_ttf = TTF_OpenFont("./rd/vermin_vibes_1989.ttf", 24); // https://github.com/pspdev/psp-packages/issues/45
 	char textBuffer[64];
 	sprintf(textBuffer, "SCORE: % 05d", score);
-	scoreText = TTF_RenderText_Solid(vermin_ttf, textBuffer, { 255, 255, 255 });
+	scoreText = TTF_RenderUTF8_Blended(vermin_ttf, textBuffer, { 255, 255, 255 }); // workound for TTF_RenderText_Solid -> https://github.com/sharkwouter/psp-sdl2-tff-example/blob/master/main.c
 	font_tex = SDL_CreateTextureFromSurface(renderer, scoreText);
 	score_pos = { 640 - scoreText->w - 10, 10 };
 	score_tex_pos = { score_pos.x, score_pos.y, scoreText->w, scoreText->h };
 	SDL_FreeSurface(scoreText);
 
 	//load audio
+	printf("Loading assets blaster.ogg\n");
 	snd_blaster = Mix_LoadWAV("./rd/blaster.ogg");
+	printf("Loading assets explode1.ogg\n");
 	snd_explo = Mix_LoadWAV("./rd/explode1.ogg");
+	printf("Loading assets pusher.ogg\n");
 	snd_pusher = Mix_LoadWAV("./rd/pusher.ogg");
 
 	//Play the music
@@ -682,42 +696,59 @@ int main(int argc, char* argv[]) {
 				}
 
 				break;
-			case SDL_JOYBUTTONDOWN:
-				if (e.jbutton.button == 0 && player.alive || e.jbutton.button == 1 && player.alive ||
-					e.jbutton.button == 3 && player.alive || e.jbutton.button == 7 && player.alive || 
-					e.jbutton.button == 9 && player.alive)
+			case SDL_JOYBUTTONDOWN: // https://github.com/libsdl-org/SDL/blob/5bf8955b25db87bee6eefd9c8ff8c7eb3b53c999/src/joystick/psp/SDL_sysjoystick.c#L39
+
+enum {
+    PSP_CTRL_TRIANGLE = 0,  // 0
+    PSP_CTRL_CIRCLE = 1,    // 1
+    PSP_CTRL_CROSS = 2,     // 2
+    PSP_CTRL_SQUARE = 3,    // 3
+    PSP_CTRL_LTRIGGER = 4,  // 4
+    PSP_CTRL_RTRIGGER = 5,  // 5
+    PSP_CTRL_DOWN = 6,      // 6
+    PSP_CTRL_LEFT = 7,      // 7
+    PSP_CTRL_UP = 8,        // 8
+    PSP_CTRL_RIGHT = 9,     // 9
+    PSP_CTRL_SELECT = 10,   // 10
+    PSP_CTRL_START = 11,    // 11
+    PSP_CTRL_HOME = 12,     // 12
+    PSP_CTRL_HOLD = 13      // 13
+};
+
+
+				if (e.jbutton.button == PSP_CTRL_SQUARE && player.alive || e.jbutton.button == PSP_CTRL_CROSS && player.alive || e.jbutton.button == PSP_CTRL_RTRIGGER && player.alive) 
 				{
 					addBullet(player.pos.x + player.size.w / 2 - 3, player.size.y);
 					Mix_PlayChannel(-1, snd_blaster, 0);
 				}
 
-				if (e.jbutton.button == 10 && gameover == 1)
+				if (e.jbutton.button == PSP_CTRL_START && gameover == 1)
 				{
 					reset();
 				}
 
-				if (e.jbutton.button == 12 && e.jbutton.state == SDL_PRESSED)
+				if (e.jbutton.button == PSP_CTRL_LEFT && e.jbutton.state == SDL_PRESSED)
 				{
 					move_left = 1;
 				}		
 
-				if (e.jbutton.button == 14 && e.jbutton.state == SDL_PRESSED)
+				if (e.jbutton.button == PSP_CTRL_RIGHT && e.jbutton.state == SDL_PRESSED)
 				{
 					move_right = 1;
 				}	
 
-				if (e.jbutton.button == 11)
+				if (e.jbutton.button == PSP_CTRL_SELECT)
 				{
 					quit = 1;
 				}
 				break;
 			case SDL_JOYBUTTONUP:
-				if (e.jbutton.button == 12 && e.jbutton.state == SDL_RELEASED)
+				if (e.jbutton.button == PSP_CTRL_LEFT && e.jbutton.state == SDL_RELEASED)
 				{
 					move_left = 0;
 				}
 
-				if (e.jbutton.button == 14 && e.jbutton.state == SDL_RELEASED)
+				if (e.jbutton.button == PSP_CTRL_RIGHT && e.jbutton.state == SDL_RELEASED)
 				{
 					move_right = 0;
 				}	
@@ -789,14 +820,13 @@ int main(int argc, char* argv[]) {
 			gameover = 1;
 		}
 
-
 		//printf("MAXCOUNT: %d\n", dead_enemies);
 
 		//this ugly block is updating the score
 		sprintf(textBuffer, "SCORE: % 05d", score);
 		SDL_RenderCopy(renderer, font_tex, NULL, &score_tex_pos);
 		scoreText = NULL;
-		scoreText = TTF_RenderText_Solid(vermin_ttf, textBuffer, { 255, 255, 255 });
+		scoreText = TTF_RenderUTF8_Blended(vermin_ttf, textBuffer, { 255, 255, 255 }); // TTF_RenderText_Solid
 		font_tex = SDL_CreateTextureFromSurface(renderer, scoreText);
 		score_pos = { 640 - scoreText->w - 10, 10 };
 		score_tex_pos = { score_pos.x, score_pos.y, scoreText->w, scoreText->h };

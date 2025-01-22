@@ -27,6 +27,8 @@ if(PSP)
         jpeg
         png
         SDL2
+        modplug
+        harfbuzz
         vorbisfile
         vorbis
         ogg
