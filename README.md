@@ -103,6 +103,9 @@
 - OG Xbox
   - SDL2 ([nxdk](https://github.com/XboxDev/nxdk))
   <br/> 
+- Nintendo 64
+  - [libdragon](https://github.com/DragonMinded/libdragon)
+  <br/> 
 ### Game Engines
 - Unity
 - [Godot](https://godotengine.org/)

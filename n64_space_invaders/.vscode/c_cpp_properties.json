@@ -1,0 +1,39 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "N64 (libdragon)",
+            "compilerPath": "D:/Dev/libdragon/pyrite64-sdk/bin/mips64-elf-gcc.exe",
+            "compilerArgs": [
+                "-march=vr4300",
+                "-mtune=vr4300",
+                "-mabi=o64",
+                "-std=gnu17"
+            ],
+            "intelliSenseMode": "gcc-x64",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "D:/Dev/libdragon/pyrite64-sdk/mips64-elf/include/newlib_overrides",
+                "D:/Dev/libdragon/pyrite64-sdk/mips64-elf/include",
+                "D:/Dev/libdragon/pyrite64-sdk/mips64-elf/include/t3d",
+                "D:/Dev/libdragon/pyrite64-sdk/mips64-elf/include/GL"
+            ],
+            "forcedInclude": [
+                "D:/Dev/libdragon/pyrite64-sdk/mips64-elf/include/ktls.h"
+            ],
+            "defines": [
+                "N64",
+                "__mips__"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}",
+                    "D:/Dev/libdragon/pyrite64-sdk/mips64-elf/include"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ]
+}

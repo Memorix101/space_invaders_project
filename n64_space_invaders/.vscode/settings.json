@@ -1,0 +1,73 @@
+{
+  // ---------------------------------------------------------------
+  // MSYS2 / libdragon terminal
+  // D:\Dev\libdragon is the MSYS2 root ("/"),
+  // the SDK lives in D:\Dev\libdragon\pyrite64-sdk ("/pyrite64-sdk").
+  // ---------------------------------------------------------------
+  "terminal.integrated.profiles.windows": {
+    "MSYS2 / libdragon": {
+      "path": "D:\\Dev\\libdragon\\usr\\bin\\bash.exe",
+      "args": ["--login", "-i"],
+      "env": {
+        "MSYSTEM": "MINGW64",
+        "CHERE_INVOKING": "1",
+        "MSYS2_PATH_TYPE": "inherit",
+        "N64_INST": "/pyrite64-sdk",
+        "T3D_INST": "/pyrite64-sdk",
+        "ARES": "/home/memor/ares-v148/ares.exe"
+      },
+      "icon": "chip",
+      "color": "terminal.ansiGreen"
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "MSYS2 / libdragon",
+
+  // Make N64_INST available in every integrated terminal
+  "terminal.integrated.env.windows": {
+    "N64_INST": "/pyrite64-sdk"
+  },
+
+  "files.associations": {
+    "*.h": "c",
+    "*.inc": "mips",
+    "n64.mk": "makefile",
+    "t3d.mk": "makefile"
+  },
+  "files.eol": "\n",
+
+  "[makefile]": {
+    "editor.insertSpaces": false,
+    "editor.detectIndentation": false
+  },
+  "[c]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    // Force the suggest widget on. wordBasedSuggestions is off on purpose:
+    // if suggestions still appear, they come from cpptools, not from VS Code
+    // scraping words out of the open file.
+    "editor.quickSuggestions": { "other": "on", "comments": "off", "strings": "off" },
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.wordBasedSuggestions": "off",
+    "editor.suggest.showFunctions": true,
+    "editor.suggest.showKeywords": true
+  },
+
+  // Do NOT set C_Cpp.default.configurationProvider here: it must name a *different*
+  // extension that supplies configurations (makefile-tools, cmake-tools). Pointing it
+  // at cpptools itself makes IntelliSense wait forever and ignore c_cpp_properties.json.
+  "C_Cpp.errorSquiggles": "enabled",
+  "C_Cpp.intelliSenseEngine": "default",
+  "C_Cpp.loggingLevel": "Error",
+
+  // Keep Makefile Tools from taking over IntelliSense for this workspace
+  "makefile.configureOnOpen": false,
+
+  "files.exclude": {
+    "**/build": false
+  },
+  "search.exclude": {
+    "build": true,
+    "**/*.z64": true,
+    "**/*.elf": true
+  }
+}

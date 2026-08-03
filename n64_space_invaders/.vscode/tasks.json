@@ -1,0 +1,106 @@
+{
+  "version": "2.0.0",
+
+  // All tasks run in the MSYS2 bash from D:\Dev\libdragon
+  "options": {
+    "cwd": "${workspaceFolder}",
+    "env": {
+      "MSYSTEM": "MINGW64",
+      "CHERE_INVOKING": "1",
+      "MSYS2_PATH_TYPE": "inherit",
+      "N64_INST": "/pyrite64-sdk",
+      "T3D_INST": "/pyrite64-sdk"
+    },
+    "shell": {
+      "executable": "D:\\Dev\\libdragon\\usr\\bin\\bash.exe",
+      "args": ["--login", "-c"]
+    }
+  },
+
+  "tasks": [
+    {
+      "label": "libdragon: build",
+      "type": "shell",
+      "command": "make -j$(nproc)",
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": {
+        "owner": "cpp",
+        "fileLocation": ["autoDetect", "${workspaceFolder}"],
+        "pattern": {
+          "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error|note):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5
+        }
+      }
+    },
+    {
+      "label": "libdragon: clean",
+      "type": "shell",
+      "command": "make clean",
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "dedicated" },
+      "problemMatcher": []
+    },
+    {
+      "label": "libdragon: rebuild",
+      "dependsOrder": "sequence",
+      "dependsOn": ["libdragon: clean", "libdragon: build"],
+      "group": "build",
+      "problemMatcher": []
+    },
+
+    {
+      "label": "ares: start ROM ",
+      "type": "shell",
+      // No --terminal on purpose: this task runs ares in the foreground, so its stdout
+      // (including libdragon's debugf via ISViewer) lands right here in the VS Code
+      // task terminal. --terminal would move it into a separate ares console window.
+      "command": "/home/memor/ares-v148/ares.exe --system 'Nintendo 64' --no-file-prompt --setting General/HomebrewMode=true space_invaders_64.z64",
+      "dependsOn": ["libdragon: build"],
+      "group": { "kind": "test", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "ares: start ROM (GDB-Server :9123)",
+      "type": "shell",
+      // Keeps --terminal: this task detaches ares and exits, so there is no terminal
+      // left to print into. The separate ares console window is the only place the
+      // debugf output can go here.
+      // Launch ares detached, then poll until the GDB server actually listens on 9123
+      // before letting F5 continue. A fixed sleep is not enough: ares needs several
+      // seconds to boot, and gdb fails with "Unable to establish a connection to GDB"
+      // if it connects too early. Kill any leftover ares first, it would hold the port.
+      "command": "taskkill //IM ares.exe //F >/dev/null 2>&1; sleep 1; ( nohup /home/memor/ares-v148/ares.exe --terminal --system 'Nintendo 64' --no-file-prompt --setting General/HomebrewMode=true --setting DebugServer/Enabled=true --setting DebugServer/Port=9123 --setting DebugServer/UseIPv4=true space_invaders_64.z64 >/dev/null 2>&1 & ); for i in $(seq 1 60); do if netstat -an | grep -q ':9123 .*LISTENING'; then echo 'GDB server ready on port 9123'; exit 0; fi; sleep 0.5; done; echo 'ERROR: GDB server did not come up on port 9123 within 30s' >&2; exit 1",
+      "dependsOn": ["libdragon: build"],
+      "presentation": { "reveal": "silent", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "ares: only open",
+      "type": "shell",
+      "command": "/home/memor/ares-v148/ares.exe",
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": []
+    },
+
+    {
+      "label": "n64: ROM-Info display",
+      "type": "shell",
+      "command": "$N64_INST/bin/n64tool --help 2>/dev/null | head -5; ls -lh *.z64; $N64_INST/bin/mips64-elf-size build/*.elf",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "n64: Toolchain validate",
+      "type": "shell",
+      "command": "echo \"N64_INST = $N64_INST\"; $N64_INST/bin/mips64-elf-gcc --version | head -1; make --version | head -1; ls /home/memor/ares-v148/ares.exe",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    }
+  ]
+}

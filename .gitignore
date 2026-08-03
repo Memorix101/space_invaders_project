@@ -199,3 +199,5 @@ experimental/irrlicht_space_invaders/x64/
 experimental/irrlicht_space_invaders/.vs/
 
 *.Identifier
+
+n64_space_invaders/assets/gameover_ui.af~lock~

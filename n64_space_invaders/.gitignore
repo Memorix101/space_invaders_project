@@ -1,0 +1,7 @@
+build/
+*.z64
+*.v64
+*.elf
+*.dfs
+*.sym
+filesystem/

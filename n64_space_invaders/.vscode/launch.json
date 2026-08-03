@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // Single configuration on purpose. There used to be a second, attach-only one
+      // without a preLaunchTask; picking it with ares closed always failed with
+      // "could not connect (error 138)", which is gdb's wording for "nothing listening".
+      // This one always builds, starts ares and waits for port 9123 first.
+      "name": "N64: build + ares + attach (GDB)",
+      "type": "cppdbg",
+      "request": "launch",
+      "preLaunchTask": "ares: start ROM (GDB-Server :9123)",
+      "program": "${workspaceFolder}/build/space_invaders_64.elf",
+      "cwd": "${workspaceFolder}",
+      "MIMode": "gdb",
+      "miDebuggerPath": "D:\\Dev\\libdragon\\pyrite64-sdk\\bin\\mips64-elf-gdb.exe",
+      "miDebuggerServerAddress": "127.0.0.1:9123",
+      "stopAtConnect": true,
+      "externalConsole": false,
+      // NOTE: mips64-elf-gdb.exe is linked against libgcc_s_seh-1 / libstdc++-6 /
+      // libwinpthread-1. Those DLLs were copied from D:\Dev\libdragon\mingw64\bin into
+      // pyrite64-sdk\bin next to gdb. Without them gdb dies with 0xC0000135
+      // (STATUS_DLL_NOT_FOUND) and VS Code reports "Unable to establish a connection to GDB".
+      // Setting "environment" here does NOT help: cppdbg applies it to the debuggee,
+      // not to the gdb process itself.
+      "setupCommands": [
+        { "description": "Target architecture VR4300", "text": "set arch mips:4300", "ignoreFailures": true },
+        { "description": "ares sends an XML target description this gdb cannot parse (built without expat)", "text": "set remote target-features-packet off", "ignoreFailures": true },
+        { "description": "Big endian", "text": "set endian big", "ignoreFailures": true },
+        { "description": "Pretty printing", "text": "-enable-pretty-printing", "ignoreFailures": true },
+        { "description": "Disable paging", "text": "set pagination off", "ignoreFailures": true }
+      ],
+      // Temporary: writes the full gdb/MI exchange to the Debug Console.
+      // Set back to false once debugging works.
+      "logging": { "engineLogging": true, "trace": true, "traceResponse": true }
+    }
+  ]
+}
