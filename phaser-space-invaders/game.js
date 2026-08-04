@@ -190,7 +190,7 @@ function create() {
     win_ui.visible = false;
     gameover_ui = this.add.image(640 / 2, 480 / 2 - 10, 'gameover_ui');
     gameover_ui.visible = false;
-    scoreText = this.add.text(480, 10, scoreLabel.concat(convertPad(score.toString())), {
+    scoreText = this.add.text(480, -120, scoreLabel.concat(convertPad(score.toString())), {
         fontFamily: 'vermin',
         fontSize: 24,
         color: '#ffffff'
